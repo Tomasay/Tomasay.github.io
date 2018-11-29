@@ -187,10 +187,8 @@ input, textarea{
     text-align: center;
 }
 
-#phone{
-    float:left;
-}
-
-#email{
-    float:right;
+#phone, #email{
+    display: inline-block;
+    padding-left: 7%;
+    padding-right: 7%;
 }
