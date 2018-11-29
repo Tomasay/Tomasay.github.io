@@ -32,7 +32,7 @@ function getData(){
         console.log($); // $ is an alias to the jQuery object
 
         // Tell jQuery to download the data
-        $.ajax({
+        /*$.ajax({
             type: "GET",
             dataType: "json",
             url: url,
@@ -41,6 +41,10 @@ function getData(){
                             console.log(error);
                             console.log(status);
                         }
+        });*/
+        
+        $.getJSON(url, function(user) {
+            jsonLoaded(user);
         });
     }
 }
