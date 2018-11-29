@@ -14,20 +14,24 @@ function getData(){
     
     console.log(url);
     
+    //If there is already a parsed json stored, run method with it
     if(sessionStorage.getItem("behanceProjects")){
         jsonLoaded(sessionStorage.getItem("behanceProjects"));
     }
     
-    $.ajax({
-            type: "GET",
-            dataType: "jsonp",
-            url: url,
-            success: jsonLoaded,
-            error: function(xhr, error, status) {
-                            console.log(error);
-                            console.log(status);
-                        }
-        });
+    //If not, run ajax to retrieve new json
+    else{
+        $.ajax({
+                type: "GET",
+                dataType: "jsonp",
+                url: url,
+                success: jsonLoaded,
+                error: function(xhr, error, status) {
+                                console.log(error);
+                                console.log(status);
+                            }
+            });
+    }
 }
 
     function jsonLoaded(obj){
