@@ -32,19 +32,15 @@ function getData(){
         console.log($); // $ is an alias to the jQuery object
 
         // Tell jQuery to download the data
-        /*$.ajax({
+        $.ajax({
             type: "GET",
-            dataType: "json",
+            dataType: "jsonp",
             url: url,
             success: jsonLoaded,
             error: function(xhr, error, status) {
                             console.log(error);
                             console.log(status);
                         }
-        });*/
-        
-        $.getJSON(url, function(user) {
-            jsonLoaded(user);
         });
     }
 }
