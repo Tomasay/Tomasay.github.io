@@ -23,6 +23,8 @@ function getData(){
 
         url += "?api_key=" + BEHANCE_KEY;
 
+        url += "&callback=";
+        
         // 11 what the url looks like
         console.log(url);
 
