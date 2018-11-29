@@ -1,7 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="js/main.js"></script>
+	<title>Thomas Ratliff Portfolio</title>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <main>
+        <h1><i>Thomas Ratliff</i></h1>
+
+        <nav>
+            <ul id="links">
+                <li class="navbar"><a href="#aboutInfo" id="current">About</a></li>
+                <li class="navbar"><a href="#projects">Projects</a></li>
+                <li class="navbar"><a href="#contact">Contact</a></li>
+                <li class="navbar"><a href="ThomasRatliffResume.pdf">Resume</a></li>
+            </ul>
+        </nav>
+        
+        <div id = "aboutInfo">
+            <img class = "profile" src="media/Thomas%20Palm%20Tree%20Profile.jpg" alt="Thomas Ratliff">
+
+            <div id = "socialMediaIcons">
+
+                <a href="https://www.linkedin.com/in/thomas-ratliff-83599a154/" target="_blank"><img class = "icon" border="0" alt="LinkedIn" src="media/Social%20Media%20Icons/Linkedin%20Icon.png" width="32" height="32"></a>
+
+                <a href="https://instagram.com/devtom7/" target="_blank"><img class = "icon" border="0" alt="Instagram" src="media/Social%20Media%20Icons/Instagram%20Icon.png" width="32" height="32"></a>
+
+                <a href="https://sketchfab.com/thomasratliff5" target="_blank"><img class = "icon" border="0" alt="Sketchfab" src="media/Social%20Media%20Icons/Sketchfab%20Icon.png" width="32" height="32"></a>
+
+                <a href="https://www.behance.net/thomasratlf5ed" target="_blank"><img class = "icon" border="0" alt="Behance" src="media/Social%20Media%20Icons/Behance%20Icon.png" width="32" height="32"></a>
+
+            </div>
+            
+            <p>My name is Thomas Ratliff and I am a second year Game Design & Development student at RIT. I am passionate about gameplay programming as well as 3D design, and love incorporating my skills into both my personal and academic projects.</p>
+        </div>
+        
+        
+        <div id="projects">
+            <h2>Projects</h2>
+            
+        </div>
+        
+        <br><br><br>
+        
+        <div id="contact">
+            
+            <h2>Contact Me</h2>
+            
+            <form method="post" action="contact.php">
+        
+                <label>Name</label>
+                <input name="name" placeholder="Type Here">
+
+                <label>Email</label>
+                <input name="email" type="email" placeholder="person@sample.com">
+
+                <label>Message</label>
+                <textarea name="message" placeholder="Type Here"></textarea>
+
+                <input id="submit" name="submit" type="submit" value="Submit">
+        
+            </form>
+        </div>
+        
+    </main>
+    
 </body>
 </html>

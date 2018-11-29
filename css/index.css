@@ -1,0 +1,184 @@
+body{
+    background-color: #2A637A;
+    background-image: linear-gradient(#2A637A, #92c5da);
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', sans-serif;
+}
+
+main{
+    background-color: #86CDEA;
+    background-image: linear-gradient(#86CDEA, #d6edf8);
+    width: 50%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 1%;
+    padding-bottom: 10%;
+    margin: auto;
+}
+
+h1{
+    text-align: center;
+    padding: 1%;
+    outline-style: solid;
+    outline-color: #9b104c;
+    line-height: 100%;
+}
+
+.center{
+    display: block;
+    margin: auto;
+}
+
+.navbar {
+	margin-bottom: 12px;
+    display: inline;
+    border-style: solid;
+    border-width:thin;
+    width: 100%;
+}
+
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: #9b104c;
+    
+}
+
+#active a
+{
+    background-color: #682c46;
+}
+
+.navbar a:hover {
+    background-color: #2a0716;
+}
+
+#links{
+    display: flex;
+    flex-direction: row;
+    padding-left: 0;
+}
+
+nav{
+    
+}
+
+@media only screen and (max-width: 768px) {
+        #links {
+            flex-direction: column;
+        }
+}
+
+ul{
+}
+
+li{
+    border-bottom: 3px solid #9b104c;
+}
+
+ol{
+    list-style: upper-roman;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.profile{
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    border:2px solid #021a40;
+}
+
+#aboutInfo{
+    display: inline-block;
+    text-align: center;
+}
+
+#projects{
+    text-align: center;
+}
+
+#aboutInfo, #projects{
+    padding-bottom: 5%;
+}
+
+h1{
+    font-size: 40px;
+}
+
+h2{
+    font-size: 30px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.inspiration{
+    margin: 1em;
+    border: 2px solid black;
+}
+
+.projectImageContainer{
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.overlay{
+    cursor: pointer;
+}
+
+.imageText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.projectImageContainer:hover .overlay {
+  opacity: 1;
+}
+
+input, textarea{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#socialMediaIcons{
+    padding: 10px;
+}
+
+.icon{
+    padding: 3px;
+    transition: .5s;
+}
+
+.icon:hover{
+    transform: scale(1.3) rotate(15deg);
+    transition: .5s;
+}
