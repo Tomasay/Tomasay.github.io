@@ -182,3 +182,15 @@ input, textarea{
     transform: scale(1.3) rotate(15deg);
     transition: .5s;
 }
+
+#contact{
+    text-align: center;
+}
+
+#phone{
+    float:left;
+}
+
+#email{
+    float:right;
+}

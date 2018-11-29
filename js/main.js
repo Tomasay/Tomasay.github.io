@@ -3,9 +3,6 @@ window.onload = getData;
 
 function getData(){
     let projects = document.getElementById("projects");
-    
-    
-    var PROXY_URL = "proxy.php?format=json&filename=";
 
     const BEHANCE_URL = "https://www.behance.net/v2/projects/";
 
@@ -13,26 +10,15 @@ function getData(){
     const BEHANCE_KEY = "0fGEGMtzawy4t8b8kP8LXtizXksi86Ju";
 
     // build up our URL string
-    let url = "";
-
-    for(var i=projectIDs.length-1; i>=0; i--){
-
-        url = BEHANCE_URL;
-        
-        url += projectIDs[i];
-
-        url += "?api_key=" + BEHANCE_KEY;
-
-        url += "&callback=";
-        
-        // 11 what the url looks like
-        console.log(url);
-
-        console.log(jQuery);
-        console.log($); // $ is an alias to the jQuery object
-
-        // Tell jQuery to download the data
-        $.ajax({
+    let url = "https://www.behance.net/v2/users/thomasratlf5ed/projects?api_key=" + BEHANCE_KEY + "&callback=";
+    
+    console.log(url);
+    
+    if(sessionStorage.getItem("behanceProjects")){
+        jsonLoaded(sessionStorage.getItem("behanceProjects"));
+    }
+    
+    $.ajax({
             type: "GET",
             dataType: "jsonp",
             url: url,
@@ -42,37 +28,47 @@ function getData(){
                             console.log(status);
                         }
         });
-    }
 }
 
     function jsonLoaded(obj){
         
-        let link = obj.project.url;
-        let name = obj.project.name;
+        //If obj is  string, meaning it is already in storage, parse it to a json
+        if(typeof obj == 'string'){
+            //console.log("A STRING WAS DETECTED");
+            obj = JSON.parse(obj);
+        }
         
-        console.log("obj = " + obj);
-        console.log("obj stringified = " + JSON.stringify(obj));
+        //Set session storage for string version of json file, so that it doesn't need to be retrieved every time the page is refreshed
+        sessionStorage.setItem("behanceProjects", JSON.stringify(obj));
         
-        console.log(obj.project.covers);
+        for(var i=0; i<obj.projects.length; i++){
+            let link = obj.projects[i].url;
+            let name = obj.projects[i].name;
+
+            console.log("obj = " + obj);
+            console.log("obj stringified = " + JSON.stringify(obj));
+
+            let projectImageContainer = document.createElement("div");
+            projectImageContainer.className = "projectImageContainer";
+            projects.appendChild(projectImageContainer);
+
+            let projectImage = document.createElement("img");
+            projectImage.src = obj.projects[i].covers.original;
+            projectImageContainer.appendChild(projectImage);
+
+            let overlay = document.createElement("div");
+            overlay.className = "overlay";
+            projectImageContainer.appendChild(overlay);
+
+            let imageText = document.createElement("div");
+            imageText.className = "imageText";
+            imageText.innerHTML = name;
+            overlay.appendChild(imageText);
+
+            overlay.addEventListener("click", function(){
+                window.open(link, '_blank');
+            });
+        }
         
-        let projectImageContainer = document.createElement("div");
-        projectImageContainer.className = "projectImageContainer";
-        projects.appendChild(projectImageContainer);
         
-        let projectImage = document.createElement("img");
-        projectImage.src = obj.project.covers.original;
-        projectImageContainer.appendChild(projectImage);
-        
-        let overlay = document.createElement("div");
-        overlay.className = "overlay";
-        projectImageContainer.appendChild(overlay);
-        
-        let imageText = document.createElement("div");
-        imageText.className = "imageText";
-        imageText.innerHTML = name;
-        overlay.appendChild(imageText);
-        
-        overlay.addEventListener("click", function(){
-            window.open(link, '_blank');
-        });
 }
