@@ -17,7 +17,7 @@ function getData(){
 
     for(var i=projectIDs.length-1; i>=0; i--){
 
-        url = PROXY_URL + BEHANCE_URL;
+        url = BEHANCE_URL;
         
         url += projectIDs[i];
 
