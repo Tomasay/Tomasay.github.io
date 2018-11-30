@@ -64,10 +64,6 @@ h1{
     padding-left: 0;
 }
 
-nav{
-    
-}
-
 @media only screen and (max-width: 768px) {
         #links {
             flex-direction: column;
@@ -132,10 +128,6 @@ h2{
     color: white;
 }
 
-.overlay{
-    cursor: pointer;
-}
-
 .imageText{
     position: absolute;
     top: 50%;
@@ -144,6 +136,7 @@ h2{
 }
 
 .overlay {
+  cursor: pointer;
   position: absolute;
   top: 85%;
   bottom: 0;
@@ -170,16 +163,6 @@ h2{
 .projectImageContainer{
     position: relative;
     cursor: pointer;
-}
-
-input, textarea{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
 }
 
 #socialMediaIcons{

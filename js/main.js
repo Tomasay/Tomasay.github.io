@@ -69,7 +69,7 @@ function getData(){
             imageText.innerHTML = name;
             overlay.appendChild(imageText);
 
-            overlay.addEventListener("click", function(){
+            projectImageContainer.addEventListener("click", function(){
                 window.open(link, '_blank');
             });
         }
