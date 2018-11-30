@@ -2,6 +2,13 @@ let projectIDs = ["70930257", "69444965", "70841453", "63792165", "63791773", "6
 window.onload = getData;
 
 function getData(){
+    
+    //Smooth scrolling with links
+    $('a[href*=\\#]').on('click', function(event){     
+        event.preventDefault();
+        $('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
+    });
+    
     let projects = document.getElementById("projects");
 
     const BEHANCE_URL = "https://www.behance.net/v2/projects/";
