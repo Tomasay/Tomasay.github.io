@@ -1,0 +1,171 @@
+:root{
+}
+
+body{
+    background-color: #2A637A;
+    background-image: linear-gradient(#2A637A, #92c5da);
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', sans-serif;
+}
+
+main{
+    background-color: #86CDEA;
+    background-image: linear-gradient(#86CDEA, #d6edf8);
+    width: 75%;
+    padding-top: 2%;
+    padding-bottom: 10%;
+    margin: auto;
+}
+
+header{
+    background-color: #9b104c;
+    width: 75%;
+    margin: auto;
+}
+
+p{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#page-hero{
+    position: fixed;
+    right: 12.5%;
+    z-index: 1000;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.profile{
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    border:2px solid #021a40;
+}
+
+#aboutInfo{
+    text-align: center;
+}
+
+#reel{
+    width: 100%;
+}
+
+#reelContainer{
+    overflow: hidden;
+    max-height: 300px;
+    
+}
+
+#projects{
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#projects img{
+    
+}
+
+#aboutInfo, #projects{
+    padding-bottom: 5%;
+}
+
+h1{
+    font-size: 40px;
+}
+
+h2{
+    font-size: 30px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+#socialMediaIcons{
+    padding: 10px;
+}
+
+.icon{
+    padding: 3px;
+    transition: .5s;
+}
+
+.icon:hover{
+    transform: scale(1.3) rotate(15deg);
+    transition: .5s;
+}
+
+#contact{
+    text-align: center;
+}
+
+#phone, #email{
+    display: inline-block;
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-bottom: 5%;
+}
+
+#projects img{
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#projects img:hover{
+     transform: scale(1.3);
+     transition: 0.3s;
+}
+
+.col-lg{
+    overflow: hidden;
+    margin: 1%;
+}
+
+.col-lg p{
+    font-size: 20px;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 85%;
+    margin: auto;
+    color: ghostwhite;
+    pointer-events: none;
+    transition: 0.5s ease;
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+img:hover ~ p{
+     opacity: 1;
+}
+
+.modal-dialog{
+    background: none;
+    background-color: transparent;
+}
+
+iframe{
+    position: fixed;
+    left: 12.5%;
+    top: 12.5%;
+    width: 75%;
+    height: 75%;
+    border:2px solid #9b104c;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .col-lg p{
+      opacity: 1;
+   }
+    
+    #reel{
+        padding-top: 40px;
+    }
+}

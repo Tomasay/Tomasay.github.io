@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+	<title>Overdrive</title>
+</head>
+<body>
+    <main>
+        
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color:#9b104c;"></i></button>
+        
+        <h1>OverDrive</h1>
+        
+        <p>The project I am currently working on is a personal project being made with Unity. It is a music/rhythm game where the player controls a car driving down the streets of Miami, and can collect notes to the beat of the music to increase their score</p>
+        
+        <a href="https://drive.google.com/open?id=1nU28VdeYSUTjMewHph8OXySgit0EzeYQ">Download the current build!</a>
+        
+        <br><br>
+        
+        <video width="320" height="240" controls>
+        <source src="../media/Overdrive/overdriveVideo.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>I created scripts using C# for audio visualization, which add effect to the game by making the buildings bounce up and down, and the screen shake in rhythm with the music that's being played</p>
+        
+        <div class="imageContainer">
+            <img src="../media/Overdrive/OverDrive%20Screenshot%201.jpg" alt="overdrive screenshot 1" style="width: 500px">
+            <img src="../media/Overdrive/OverDrive%20Screenshot%202.jpg" alt="overdrive screenshot 1" style="width: 500px">
+        </div>
+        
+        <p>I started by using Unity's API to receive an array of frequency data corresponding to the current audio source that is updated every frame. Using this data I was able to create a basic visualization structure:</p>
+        
+        <video width="320" height="240" controls>
+        <source src="../media/Overdrive/AudioVisualization1.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>After sorting through the data and dividing the values into the 8 frequency bands, it becomes much easier to deal with and visualize. The values farthest to the right correspond to the deeper bass frequencies, while the values to the left are the higher pitched frequencies. Using this data I was able to manipulate other in-game data to react to the music such as textures, lights, and scales.</p>
+        
+        <video width="320" height="240" controls>
+        <source src="../media/Overdrive/AudioVisualization2.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>I also modeled and textured the 3D assets used in the game, including the car that the player controls. The models were created in Blender and textured in Substance Painter</p>
+        
+        <div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/61408e6aa8c54e1695087d0ab8696952/embed?autostart=1&amp;preload=1" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></div>
+        
+        <p>Using the points that are accumulated from levels, the player will be able to purchase skins for their car for customization</p>
+        
+        <div class="imageContainer">
+            <img src="../media/Overdrive/Car%20Skin%201.png" alt="overdrive skin 1" style="width: 500px">
+            <img src="../media/Overdrive/Car%20Skin%202.png" alt="overdrive skin 2" style="width: 500px">
+            <img src="../media/Overdrive/Car%20Skin%203.png" alt="overdrive skin 3" style="width: 500px">
+            <img src="../media/Overdrive/Car%20Skin%204.png" alt="overdrive skin 4" style="width: 500px">
+        </div>
+        
+        <br>
+        <img src="../media/Overdrive/Shop%20Animation.gif" alt="shop animation" style="width: 150px">
+        <p class="caption">example of in game shop menu</p>
+        
+    </main>  
+</body>
+</html>

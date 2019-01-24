@@ -122,10 +122,13 @@ h2{
 }
 
 .projectImageContainer{
+    cursor: pointer;
     position: relative;
     overflow: hidden;
     text-align: center;
     color: white;
+    width: 808px;
+    height: 632px;
 }
 
 .imageText{
@@ -158,11 +161,6 @@ h2{
     transition: 0.5s ease;
     cursor: pointer;
     
-}
-
-.projectImageContainer{
-    position: relative;
-    cursor: pointer;
 }
 
 #socialMediaIcons{

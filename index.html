@@ -1,39 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <script src="js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    
 	<title>Thomas Ratliff Portfolio</title>
 </head>
-<body>
-    <main>
-        <h1><i>Thomas Ratliff</i></h1>
+<body data-spy="scroll" data-target=".navbar" data-offset="85">
+    
+    <header id="page-hero">
+        <nav class="navbar navbar-fixed-top navbar-expand-sm navbar-dark">
 
-        <nav>
-            <ul id="links">
-                <li class="navbar"><a href="#aboutInfo" id="current">About</a></li>
-                <li class="navbar"><a href="#projects">Projects</a></li>
-                <li class="navbar"><a href="#contact">Contact</a></li>
-                <li class="navbar"><a href="ThomasRatliffResume.pdf">Resume</a></li>
-            </ul>
+            <div class="container">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myTogglerNav" aria-controls="#myTogglerNav" aria-label="Toggle Navigation"><span class="navbar-toggler-icon"></span></button>
+
+                <a class="navbar-brand" href="#page-hero"><b>Thomas Ratliff</b></a>
+
+                <section class="collapse navbar-collapse" id="myTogglerNav">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="#aboutInfo" id="current">About</a>
+                        <a class="nav-item nav-link" href="#projects">Projects</a>
+                        <a class="nav-item nav-link" href="#contact">Contact</a>
+                        <a class="nav-item nav-link" href="ThomasRatliffResume.pdf">Resume</a>
+                    </div>
+                </section>
+            </div>
         </nav>
-        
+    </header>
+    
+    <main>
         <div id = "aboutInfo">
+            
+            <!--
+            <div id="reelContainer">
+                <video id="reel" autoplay>
+                    <source src="media/Overdrive/AudioVisualization1.mp4" type="video/mp4">
+                    whoops, your browser does not support videos :/
+                </video>
+            </div>
+            -->
+            
+            
+            
+            <!--
+            <div class="embed-responsive embed-responsive-21by9">
+                <iframe class="embed-responsive-item" src="media/HighlightReel.mp4"></iframe>
+            </div>
+            -->
+            
+            <br><br>
             <img class = "profile" src="media/Thomas%20Palm%20Tree%20Profile.jpg" alt="Thomas Ratliff">
 
             <div id = "socialMediaIcons">
 
-                <a href="https://www.linkedin.com/in/thomas-ratliff-83599a154/" target="_blank"><img class = "icon" border="0" alt="LinkedIn" src="media/Social%20Media%20Icons/Linkedin%20Icon.png" width="32" height="32"></a>
+                <a href="https://www.linkedin.com/in/thomas-ratliff-83599a154/" target="_blank"><img class = "icon" border="0" alt="Linkedin" src="media/Social%20Media%20Icons/Linkedin%20Icon.png" width="32" height="32"></a>
 
                 <a href="https://instagram.com/devtom7/" target="_blank"><img class = "icon" border="0" alt="Instagram" src="media/Social%20Media%20Icons/Instagram%20Icon.png" width="32" height="32"></a>
 
                 <a href="https://sketchfab.com/thomasratliff5" target="_blank"><img class = "icon" border="0" alt="Sketchfab" src="media/Social%20Media%20Icons/Sketchfab%20Icon.png" width="32" height="32"></a>
 
-                <a href="https://www.behance.net/thomasratlf5ed" target="_blank"><img class = "icon" border="0" alt="Behance" src="media/Social%20Media%20Icons/Behance%20Icon.png" width="32" height="32"></a>
+                <a href="https://twitter.com/devtom7" target="_blank"><img class = "icon" border="0" alt="Twitter" src="media/Social%20Media%20Icons/Twitter%20Icon.png" width="32" height="32"></a>
 
             </div>
             
@@ -44,18 +84,110 @@
         <div id="projects">
             <h2>Projects</h2>
             
-            <!--
-            <div class = "projectImageContainer">
-                
-                <img src = "media/Thomas%20Palm%20Tree%20Profile.jpg" width="808px">
+            <div class="container">
+                <div class="clearfix visible-lg"></div>
+                <div class="row no-gutters">
                     
-                <div class = "overlay">
-                    <p class = "imageText">yeet</p>
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#overdriveModal"><img border="0" alt="OverDrive" src="media/PortfolioCovers/OverDrive.jpg"> <p><b>OverDrive</b></p> </a> </div>
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#DreamEscapeModal"><img border="0" alt="DreamEscape" src="media/PortfolioCovers/DreamEscape%20Cover.png"> <p><b>DreamEscape</b></p> </a> </div>
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#WalterModal"><img border="0" alt="Walter" src="media/PortfolioCovers/Walter%20Cover.png"> <p><b>Walter</b></p> </a> </div>
+                </div>
+                
+                <div class="row no-gutters">
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#RobotTomModal"><img border="0" alt="Robot Tom" src="media/PortfolioCovers/Robot%20Tom%20Cover.jpg"> <p><b>Robot Tom</b></p> </a> </div>
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#WeltherrschaftModal"><img border="0" alt="Weltherrshaft" src="media/PortfolioCovers/Weltherrshaft%20Cover.png"> <p><b>Weltherrshaft</b></p> </a> </div>
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#CabinSceneModal"><img border="0" alt="Cabin Scene" src="media/PortfolioCovers/Cabin%20Scene%20Cover.jpg"> <p><b>Cabin Scene</b></p> </a> </div>
+                </div>
+                
+                <div class="row no-gutters">
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#HouseTourModal"><img border="0" alt="House Tour" src="media/PortfolioCovers/House%20Tour%20Cover.jpg"> <p><b>House Tour</b></p> </a> </div>
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#AbandonedSubwayModal"><img border="0" alt="Abandoned Subway" src="media/PortfolioCovers/Abandoned%20Subway%20Cover.png"> <p><b>Abandoned Subway</b></p> </a> </div>
+                    <div class="col-lg"></div>
                 </div>
                 
             </div>
-            -->
             
+        </div>
+
+        
+        <div class="modal" id="overdriveModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                
+                  <iframe name="iframe1" src="ProjectHTML/overdrive.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="RobotTomModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/robotTom.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="WalterModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/walter.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="DreamEscapeModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/dreamescape.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="WeltherrschaftModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/weltherrschaft.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="HouseTourModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/houseTour.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="CabinScenModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/cabinScene.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal" id="AbandonedSubwayModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+                  <iframe name="iframe1" src="ProjectHTML/abandonedSubway.html"></iframe>
+                
+            </div>
+          </div>
         </div>
         
         <br><br><br>
