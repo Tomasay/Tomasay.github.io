@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+	<title>Humans vs Zombies</title>
+</head>
+<body>
+    <main>
+        
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color:#9b104c;"></i></button>
+        
+        <h1>Humans vs Zombies</h1>
+        
+        <p>This was a project for my class Interactive Media Development in the Fall of 2018. The assignment was to create a simulation of autonomous agents with steering behaviors. The scene contains humans that use wandering behavior, and when in range of a zombie switches to evade the zombie until out of range. The zombies in the scene pursue the the closest zombie and turns that human into another zombie if it catches it. If there are no humans, the zombies will wander around the scene. All of the agents in the scene avoid obstacles, which are the trees in the scene. The project was made in Unity, and all the scripts were written in C#.</p>
+        
+        <a href="https://drive.google.com/open?id=1-YjaNGcyTahiNiISi_bDnvh8K1GzzsRP">Download the build!</a>
+        
+        <br><br>
+        
+        <video width="320" height="240" controls>
+        <source src="../media/Humans%20vs%20Zombies/Humans%20vs%20Zombies%20Video.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>The player can spawn in new zombies or humans at a random position on the map by pressing 'z' or 'h'. The player can also cycle through the available camera views by pressing 'c', and toggle the debug lines with 'd'.</p>
+        
+        <img src="../media/Humans%20vs%20Zombies/Humans%20vs%20Zombies%20Follow.png" alt="zombie follow camera">
+        
+        <p>Both the humans and zombies implement separation, so that they don't intersect each other. I also used weights and conditionals to modify the movement speeds to balance the behaviors in the scene. In addition to writing all of the gameplay scripts, I imported assets from the Unity asset store to improve the overall look.</p>
+        
+        <img src="../media/Humans%20vs%20Zombies/Humans%20vs%20Zombies%203%20Quarters.png" alt="3/4 camera">
+        
+        <p>Part of the assignment was to include debug lines, which display the forward and right vectors of each agent, as well as their future position. There is also a line pointing from each zombie to it's closest target.</p>
+        
+        <img src="../media/Humans%20vs%20Zombies/Humans%20vs%20Zombies%203%20Top.png" alt="top down camera">
+        
+        
+        
+    </main>  
+</body>
+</html>

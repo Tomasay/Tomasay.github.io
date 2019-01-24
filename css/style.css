@@ -68,8 +68,8 @@ img {
     padding-right: 5%;
 }
 
-#projects img{
-    
+#projects p{
+    background-image: linear-gradient(transparent, black);
 }
 
 #aboutInfo, #projects{
@@ -133,6 +133,7 @@ h2{
     right: 0;
     left: 0;
     top: 85%;
+    bottom: 0%;
     margin: auto;
     color: ghostwhite;
     pointer-events: none;
@@ -167,5 +168,24 @@ iframe{
     
     #reel{
         padding-top: 40px;
+    }
+    
+    iframe{
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        height: 100%;
+    }
+    
+    main{
+        width: 100%
+    }
+    
+    header{
+        width: 100%;
+    }
+    
+    #page-hero{
+        right: 0%;
     }
 }

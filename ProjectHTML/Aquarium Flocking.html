@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+	<title>Aquarium Flocking</title>
+</head>
+<body>
+    <main>
+        
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color:#9b104c;"></i></button>
+        
+        <h1>Aquarium Flocking</h1>
+        
+        <p>This was a project for my class Interactive Media Development in the Fall of 2018. The assignment was to create a simulation of autonomous agents with flocking and path following behaviors. I used Unity's terrain tool and assets from Unity's asset store to build the environment. The fish in the scene implement flocking in three dimensions. They all seek the same random point in the scene, and when one of them reaches that point, they seek a newly generated point in the scene. The fish utilize separation, allignment, and cohesion to stay together as a dynamic flock without colliding with each other. They also use obstacle avoidance to avoid colliding with the rocks in the scene.</p>
+        
+        <a href="https://drive.google.com/open?id=1dHOfz82Ikk5HQmioTb5zp9u-KsBsWqxd">Download the build!</a>
+        
+        <br><br>
+        
+        <video width="320" height="240" controls>
+        <source src="../media/Aquarium%20Flocking/Aquarium%20Flocking%20Video.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>There is also a turtle in the scene that implements path following. It follows a looping path of preset coordinates marked by pink rocks in the scene</p>
+        
+        <img src="../media/Aquarium%20Flocking/Aquarium%20Turtle%20View.png" alt="turtle camera">
+        
+        <p>The player cycle through cameras that show an overhead of the scene, a camera that follows the average position of the flock, a camera that follows that turtle, as well as a camera that follows the front of the flock with a smooth camera script.</p>
+        
+        <img src="../media/Aquarium%20Flocking/Aquarium%20Flock%20Average%20View.png" alt="average camera">
+        
+        <p>The player can toggle debug lines that show the average position of the flock, as well as their average direction. There are also debug lines for the turtle as well as the path the turtle follows.</p>
+        
+        <img src="../media/Aquarium%20Flocking/Aquarium%20Top%20View.png" alt="top down camera">
+        
+        <img src="../media/Aquarium%20Flocking/Aquarium%20Full%20View.png" alt="full view camera">
+        
+    </main>  
+</body>
+</html>
