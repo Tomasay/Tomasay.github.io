@@ -142,6 +142,33 @@ h2{
     padding-right: 0%;
 }
 
+.col-md{
+    overflow: hidden;
+    margin: 1%;
+}
+
+.col-md p{
+    font-size: 20px;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 85%;
+    bottom: 0%;
+    margin: auto;
+    color: ghostwhite;
+    pointer-events: none;
+    transition: 0.5s ease;
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.col-md img {
+    max-width: 70%;
+    height: auto;
+}
+
+
 img:hover ~ p{
      opacity: 1;
 }
