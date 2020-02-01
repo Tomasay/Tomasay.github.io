@@ -4,15 +4,29 @@
 body{
     background-color: #2A637A;
     background-image: linear-gradient(#2A637A, #92c5da);
+    
+    /*background-image: linear-gradient(#242424, #242424);*/
+    
     align-content: center;
     margin-left: auto;
     margin-right: auto;
     font-family: 'Raleway', sans-serif;
 }
 
+/*body p, h2{
+    color: #c4c4c4;
+}
+
+body h2{
+    color: #c4c4c4;
+}*/
+
 main{
     background-color: #86CDEA;
     background-image: linear-gradient(#86CDEA, #d6edf8);
+    
+    /*background-image: linear-gradient(#303030, #303030);*/
+    
     width: 75%;
     padding-top: 2%;
     padding-bottom: 10%;
