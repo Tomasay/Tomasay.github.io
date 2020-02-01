@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+	<title>Character Sculpt</title>
+</head>
+<body>
+    <main>
+        
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color:#9b104c;"></i></button>
+        
+        <h1>Character Creation</h1>
+        
+        <p>I created this project for an elective course called 3D Asset Pipeline for Games. The goal was to complete the full pipeline of creating a 3D character and implementing it into a game engine. We ended up using ZBrush, Maya, Substance Painter, and Unreal Engine.</p>
+        
+        <p>The first step was to sculpt the character, which I created in ZBrush.</p>
+        
+        <div class="imageContainer">
+            <a href="../media/Anteater%20Sculpt/Sculpt1.png" target="_blank"><img src="../media/Anteater%20Sculpt/Sculpt1.png" alt="Sculpt Screenshot 1"></a>
+            
+            <a href="../media/Anteater%20Sculpt/Sculpt2.png" target="_blank"><img src="../media/Anteater%20Sculpt/Sculpt2.png" alt="Sculpt Screenshot 2"></a>
+        </div>
+        <p class="caption">Character sculpt in ZBrush</p>
+        
+        <br><br>
+        
+        <p>The class was givin the theme of "Cthulhu Mythos" and the goal was to create some sort of monster with a similar visual style. After some research, I found this drawing by Taso Gionis that I used for inspiration and reference</p>
+        
+        <a href="../media/Anteater%20Sculpt/reference.jpg" target="_blank"><img width="500" src="../media/Anteater%20Sculpt/reference.jpg" alt="Reference"></a>
+        
+        <br><br>
+        
+        <p>The next step was to export the sculpt into Maya to retopologize. Since the topology of the model in ZBrush was so dense and complex, it would have been too taxing to run in real time in a game engine, and difficult to rig and animate. The model went from being roughly a million faces in ZBrush, to under 15,000. After retopologizing, I created a basic rig for animating, and UV Unwrapped the model.</p>
+        
+        <div class="imageContainer">
+            <a href="../media/Anteater%20Sculpt/front%20wireframe.png" target="_blank"><img src="../media/Anteater%20Sculpt/front%20wireframe.png" alt="Wireframe Screenshot 1"></a>
+            
+            <a href="../media/Anteater%20Sculpt/head%20wireframe.PNG" target="_blank"><img src="../media/Anteater%20Sculpt/head%20wireframe.PNG" alt="Wireframe Screenshot 2"></a>
+        </div>
+        <p class="caption">Wireframe views of the model in Maya</p>
+        
+        <br><br>
+        
+        <p>Once the model was fully rigged, the next step was to paint all of the skin weights</p>
+        
+        <a href="../media/Anteater%20Sculpt/weight%20paint.png" target="_blank"><img src="../media/Anteater%20Sculpt/weight%20paint.png" alt="Weight Painting Screenshot"></a>
+        
+        <br><br>
+        
+        <p>After I was done rigging, skinning, and UV unwrapping, I imported the model into Substance Painter and created a material for the model.</p>
+        
+        <a href="../media/Anteater%20Sculpt/Material.jpg" target="_blank"><img src="../media/Anteater%20Sculpt/Material.jpg" alt="Substance Painter Screenshot 1"></a>
+        
+        <br><br>
+        
+        <p>Finally, I imported the model along with all of the textures to Unreal Engine. From there I created a material for the model, a blend state for all of the animations, and a character controller that the player could use to mode the model around in game. The blend state would transition from idle, walking, running, and attacking states.</p>
+        
+        <a href="../media/Anteater%20Sculpt/ue4%20character.png" target="_blank"><img src="../media/Anteater%20Sculpt/ue4%20character.png" alt="UE4 Screenshot"></a>
+        
+        <br><br>
+        
+    </main>  
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+	<title>Technical Art Project</title>
+</head>
+<body>
+    <main>
+        
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color:#9b104c;"></i></button>
+        
+        <h1>Technical Art Project</h1>
+        
+        <p>I created this project in a class caleld Technical Art Seminar. The project was to create a large scale scene in Unreal Engine, with some visual effects and interactability, with the goal of optimizing the scene to run efficiently.</p>
+        
+        <a href="https://overdrivegame.com" target="_blank">Learn more about the game here!</a>
+        
+        <br><br>
+        
+        <video width="320" height="240" controls>
+        <source src="../media/Overdrive/Gameplay.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <br>
+        
+        <p>I developed all of the art assets, including 3d models textures, and sprites. One of the biggest challenges this project posed was optimizing all of these assets to fit performance needs for mobile devices. This required limiting model complexity, texture resolution, and optimizing Unity's post processing effects. I wanted to get as much graphical performance as possible, while being able to run at 60fps on all supported mobile devices.</p>
+        
+        <br>
+        
+        <div class="container">
+            <div class="clearfix visible-lg"></div>
+
+            <div class="row no-gutters">
+
+                <div class="col-lg"> <a href="../media/Overdrive/home%20screen.png"><img border="0" alt="screenshot 1" src="../media/Overdrive/home%20screen.png" width="400px"></a></div>
+
+                <div class="col-lg"> <a href="../media/Overdrive/in%20game%20shop.png"><img border="0" alt="screenshot 2" src="../media/Overdrive/in%20game%20shop.png" width="400px"></a></div>
+            </div>
+
+            <div class="row no-gutters">
+
+                <div class="col-lg"> <a href="../media/Overdrive/in%20game.png"><img border="0" alt="screenshot 3" src="../media/Overdrive/in%20game.png" width="400px"></a></div>
+
+                <div class="col-lg"> <a href="../media/Overdrive/in%20game%20turbo.png"><img border="0" alt="screenshot 4" src="../media/Overdrive/in%20game%20turbo.png" width="400px"></a></div>
+            </div>
+        </div>
+        
+        <p>Another way I was able to fully optimize the game was by developing a custom shader for mobile. The shader utilizes basic textures for models, while limiting the amount of strain on mobile devices. Most importantly, the shader allows for texture interpolation, as shown below. This allows models to smoothly transition to an emitted state, which was essential to the core mechanic and aesthetic of the game.</p>
+        
+        <video class = "smallVideo" width="320" height="240" muted autoplay loop>
+        <source src="../media/Overdrive/Shader.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>One of the game's core scripts that I developed was an audio visualization script. This adds effect to the game by making the buildings bounce up and down, screen shake, and other visual effects that are rhythm to the music being played in game. I started by using Unity's API to receive an array of frequency data corresponding to the current audio source that is updated every frame. Using this data I was able to create a basic visualization structure:</p>
+        
+        <video class = "smallVideo" width="320" height="240" controls>
+        <source src="../media/Overdrive/AudioVisualization1.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>After sorting through the data and dividing the values into the 8 frequency bands, it becomes much easier to deal with and visualize. The values farthest to the right correspond to the deeper bass frequencies, while the values to the left are the higher pitched frequencies. Using this data I was able to manipulate other in-game data to react to the music such as textures, lights, and scales.</p>
+        
+        <video class = "smallVideo" width="320" height="240" controls>
+        <source src="../media/Overdrive/AudioVisualization2.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <p>One of the biggest aspects of the game is the option to customize the player's car. Using Substance Painter, I designed multiple skins that the player can purchase using the coins earned in game.</p>
+        
+        <video class = "smallVideo" width="320" height="240" muted autoplay loop>
+        <source src="../media/Overdrive/Skins.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+        
+        <br><br>
+        
+        <div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/61408e6aa8c54e1695087d0ab8696952/embed?autostart=1&amp;preload=1" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></div>
+        
+        <br>
+        
+    </main>  
+</body>
+</html>
