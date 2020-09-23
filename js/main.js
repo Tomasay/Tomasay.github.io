@@ -9,7 +9,7 @@ function getData(){
     
     let iframes = document.querySelectorAll("iframe");
     
-    console.log(iframes);
+    //console.log(iframes);
     
     for(i=0; i<iframes.length; i++){
         let closeButton = iframes[i].contentDocument.querySelector("button");

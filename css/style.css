@@ -3,7 +3,7 @@
 
 body{
     background-color: #2A637A;
-    background-image: linear-gradient(#2A637A, #92c5da);
+    background-image: linear-gradient(#0E1114, #1E2539);
     
     /*background-image: linear-gradient(#242424, #242424);*/
     
@@ -23,7 +23,7 @@ body h2{
 
 main{
     background-color: #86CDEA;
-    background-image: linear-gradient(#86CDEA, #d6edf8);
+    background-image: linear-gradient(#222930, #414963);
     
     /*background-image: linear-gradient(#303030, #303030);*/
     
@@ -34,7 +34,7 @@ main{
 }
 
 header{
-    background-color: #9b104c;
+    background-color: #1AD0E7;
     width: 75%;
     margin: auto;
 }
@@ -42,6 +42,31 @@ header{
 p{
     padding-left: 20%;
     padding-right: 20%;
+}
+
+.SoftwareIcon{
+    width: 48px;
+    height: 48px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #222930; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1AD0E7; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 #page-hero{
@@ -59,7 +84,7 @@ img {
     display: block;
     margin: 0 auto;
     border-radius: 50%;
-    border:2px solid #021a40;
+    border:2px solid white;
 }
 
 #aboutInfo{
@@ -80,9 +105,11 @@ img {
     text-align: center;
     padding-left: 5%;
     padding-right: 5%;
+    padding-bottom: 30%;
 }
 
 #projects p{
+    padding-bottom: 60%;
     background-image: linear-gradient(transparent, black);
 }
 
@@ -163,7 +190,7 @@ h2{
 
 .col-md p{
     font-size: 20px;
-    opacity: 0;
+    opacity: 1;
     position: absolute;
     right: 0;
     left: 0;
@@ -184,7 +211,8 @@ h2{
 
 
 img:hover ~ p{
-     opacity: 1;
+    opacity: 1;
+    transition: 0.5s ease;
 }
 
 .modal-dialog{
@@ -198,7 +226,7 @@ iframe{
     top: 12.5%;
     width: 75%;
     height: 75%;
-    border:2px solid #9b104c;
+    border:2px solid #1AD0E7;
 }
 
 @media only screen and (max-width: 768px) {
@@ -230,7 +258,12 @@ iframe{
         right: 0%;
     }
     
-    #OverDrive img{
+    #OverDrive{
         content: url("../media/PortfolioCovers/OverDrive.jpg");
+    }
+    
+    .SoftwareIcon{
+        width: 32px;
+        height: 32px;
     }
 }
