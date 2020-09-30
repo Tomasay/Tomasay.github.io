@@ -44,6 +44,14 @@ p{
     padding-right: 20%;
 }
 
+a:link{
+    color: #1AD0E7;
+}
+
+a:hover{
+    color: #138e9e;
+}
+
 .active{
     background-color: rgba(0, 0, 0, 0.2)
 }
