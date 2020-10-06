@@ -113,5 +113,18 @@ a:visited{
         padding-left: 5%;
         padding-right: 5%;
     }
+    
+    video{
+        width: 100%;
+    }
+    
+    .smallVideo{
+        width: 75%;
+    }
+    
+    img{
+        max-width: 95%;
+        height: auto;
+    }
   
 }

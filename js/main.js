@@ -15,8 +15,18 @@ function getData(){
         let closeButton = iframes[i].contentDocument.querySelector("button");
         closeButton.addEventListener("click", closeModule)
     }
+    
+    overrideColors();
 }
 
 function closeModule(){
     $('.modal').modal('hide');
+}
+
+function overrideColors(){
+    let navLink = document.getElementsByClassName("nav-link");
+    
+    for(i=0; i<navLink.length; i++){
+        navLink[i].style.color = "AliceBlue";
+    }
 }
