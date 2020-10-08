@@ -35,6 +35,11 @@ video{
     width: 35%;
 }
 
+.largeVideo {
+  max-width: 800px;
+  height: auto;
+}
+
 button{
     background-color: transparent;
     position: fixed;
