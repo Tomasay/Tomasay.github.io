@@ -16,6 +16,8 @@ function getData(){
         closeButton.addEventListener("click", closeModule)
     }
     
+    browserChanges();
+    
     overrideColors();
 }
 
@@ -28,5 +30,26 @@ function overrideColors(){
     
     for(i=0; i<navLink.length; i++){
         navLink[i].style.color = "AliceBlue";
+    }
+}
+
+function browserChanges(){
+    // Firefox 1.0+
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+    
+    // Safari 3.0+ "[object HTMLElementConstructor]" 
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+    
+    if(isFirefox){
+        let bois = document.querySelectorAll(".col-lg");
+        for(i=0; i<bois.length; i++){
+            bois[i].classList.add("firefox");
+        }
+    }
+    else if(isSafari){
+        let bois = document.querySelectorAll(".col-lg");
+        for(i=0; i<bois.length; i++){
+            bois[i].classList.add("safari");
+        }
     }
 }

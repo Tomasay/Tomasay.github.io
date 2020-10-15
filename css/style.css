@@ -280,12 +280,6 @@ iframe{
     }
 }
 
-/* Firefox only. 1+ */
-#twenty,  .col-lg p{
-    top: 55%;
-}
+.firefox p { top: 55%;}
 
-/* Safari only */
-html:lang(en)>body  .col-lg p{
-    top: 55%;
-}
+.safari p { top: 55%;}
