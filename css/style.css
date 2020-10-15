@@ -279,3 +279,13 @@ iframe{
         height: 32px;
     }
 }
+
+/* Firefox only. 1+ */
+#twenty,  .col-lg p{
+    top: 55%;
+}
+
+/* Safari only */
+html:lang(en)>body  .col-lg p{
+    top: 55%;
+}
