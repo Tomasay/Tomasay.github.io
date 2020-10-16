@@ -16,8 +16,6 @@ function getData(){
         closeButton.addEventListener("click", closeModule)
     }
     
-    browserChanges();
-    
     overrideColors();
 }
 
@@ -33,6 +31,7 @@ function overrideColors(){
     }
 }
 
+/*
 function browserChanges(){
     // Firefox 1.0+
     var isFirefox = typeof InstallTrigger !== 'undefined';
@@ -42,7 +41,7 @@ function browserChanges(){
     
     //Another shot at detecting safari
     if(!isSafari){
-        isSafari = navigator.userAgent.indexOf("Safari") != -1);
+        isSafari = (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1);
     }
     
     if(isFirefox){
@@ -58,3 +57,4 @@ function browserChanges(){
         }
     }
 }
+*/
