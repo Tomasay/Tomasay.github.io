@@ -32,11 +32,11 @@ video{
 }
 
 .smallVideo{
-    width: 35%;
+    width: 65%;
 }
 
 .largeVideo {
-  max-width: 800px;
+  max-width: 1100px;
   height: auto;
 }
 
@@ -70,7 +70,7 @@ a:visited{
 }
 
 .imageContainer{
-    max-width: 75%;
+    max-width: 90%;
     margin:auto;
 }
 
@@ -124,7 +124,7 @@ a:visited{
     }
     
     .smallVideo{
-        width: 75%;
+        width: 100%;
     }
     
     img{
