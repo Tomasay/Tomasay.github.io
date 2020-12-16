@@ -109,6 +109,11 @@ a:visited{
         height: 240px;
     }
     
+    /* width */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    
     p{
         width: 100%;
         font-size: 16px
