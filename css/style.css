@@ -274,6 +274,10 @@ iframe{
         content: url("../media/PortfolioCovers/OverDrive.jpg");
     }
     
+    #PartyCrashers{
+        content: url("../media/PortfolioCovers/PartyCrashers.jpg");
+    }
+    
     .SoftwareIcon{
         width: 32px;
         height: 32px;
