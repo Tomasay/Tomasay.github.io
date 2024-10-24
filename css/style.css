@@ -33,6 +33,14 @@ main{
     margin: auto;
 }
 
+.btn-custom{
+    background-color: #1AD0E7 !important;
+}
+
+.btn-custom-active{
+    background-color: #15A6B9 !important;
+}
+
 header{
     background-color: #1AD0E7;
     width: 75%;
@@ -113,14 +121,14 @@ img {
     
 }
 
-#projects{
+#projects, #experiments{
     text-align: center;
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 30%;
 }
 
-#projects p{
+#projects p, #experiments p{
     padding-bottom: 60%;
     background-image: linear-gradient(transparent, black);
 }
@@ -164,12 +172,12 @@ h2{
     padding-bottom: 5%;
 }
 
-#projects img{
+#projects img, #experiments img, #experiments video{
     cursor: pointer;
     transition: 0.3s;
 }
 
-#projects img:hover{
+#projects img:hover, #experiments img:hover, #experiments video:hover{
      transform: scale(1.3);
      transition: 0.3s;
 }
@@ -222,7 +230,7 @@ h2{
 }
 
 
-img:hover ~ p{
+img:hover ~ p, video:hover ~ p{
     opacity: 1;
     transition: 0.5s ease;
 }

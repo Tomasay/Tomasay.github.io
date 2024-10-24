@@ -13,7 +13,7 @@ function getData(){
     
     for(i=0; i<iframes.length; i++){
         let closeButton = iframes[i].contentDocument.querySelector("button");
-        closeButton.addEventListener("click", closeModule)
+        closeButton.addEventListener("click", closeModule);
     }
     
     overrideColors();
@@ -29,6 +29,36 @@ function overrideColors(){
     for(i=0; i<navLink.length; i++){
         navLink[i].style.color = "AliceBlue";
     }
+}
+
+function toggleProjects(){
+    if(document.getElementById("experimentsButton").classList.contains('btn-custom-active')){
+        document.getElementById("experimentsButton").classList.remove('btn-custom-active');
+        document.getElementById("experimentsButton").classList.add('btn-custom');
+    }
+    
+    if(document.getElementById("projectsButton").classList.contains('btn-custom')){
+        document.getElementById("projectsButton").classList.remove('btn-custom');
+        document.getElementById("projectsButton").classList.add('btn-custom-active');
+    }
+    
+    document.getElementById("projects").style.display = "block";
+    document.getElementById("experiments").style.display = "none";
+}
+
+function toggleExperiments(){
+    if(document.getElementById("experimentsButton").classList.contains('btn-custom')){
+        document.getElementById("experimentsButton").classList.remove('btn-custom');
+        document.getElementById("experimentsButton").classList.add('btn-custom-active');
+    }
+    
+    if(document.getElementById("projectsButton").classList.contains('btn-custom-active')){
+        document.getElementById("projectsButton").classList.remove('btn-custom-active');
+        document.getElementById("projectsButton").classList.add('btn-custom');
+    }
+    
+    document.getElementById("projects").style.display = "none";
+    document.getElementById("experiments").style.display = "block";
 }
 
 /*

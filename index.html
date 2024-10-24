@@ -81,9 +81,20 @@
                 Hi, I'm Thomas Ratliff. I am a Technical Artist who's passionate about collaborating with others to support the pipeline between art and games. I specialize in XR prototype development, optimization, 3D design and implementation, shaders and visual effects, as well as tools and gameplay programming.</p>
         </div>
         
-        
+        <div style="text-align: center;">
+         <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label id="projectsButton" class="btn btn-custom-active" style="width: 50%;">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked onclick="toggleProjects();"> <h4 class="text-light" style="padding-left: 20px; padding-right: 20px">Projects</h4>
+              </label>
+              <label id="experimentsButton" class="btn btn-custom" style="width: 50%; font-size: 10px">
+                <input type="radio" name="options" id="option2" autocomplete="off" onclick="toggleExperiments();"> <h4 class="text-light">Experiments</h4>
+              </label>
+            </div> 
+        </div>
+      
+        <br>
+      
         <div id="projects" >
-            <h2 class="text-light">Projects</h2>
             
             <div class="container">
                 <div class="clearfix visible-lg"></div>
@@ -146,7 +157,51 @@
             </div>
             
         </div>
-
+      
+      
+      
+      <div id="experiments" style="display: none">
+            
+            <div class="container">
+                <div class="clearfix visible-lg"></div>
+                
+                <div class="row no-gutters">
+                    
+                  <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1717564845816459551" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Lighting.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>MR Realtime GI Lighting</b><br>
+                        </p> </a>
+                    </div>
+                  
+                  <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1722285066133381430" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Smart%20Lamp.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Hand Tracking Lamp</b><br>
+                        </p> </a>
+                    </div>
+                  
+                    <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1829900874615046640" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Lidar.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Lidar Horror Game</b><br>
+                        </p> </a>
+                    </div>
+                    
+                </div>
+              
+              <div class="row no-gutters">
+                    
+                <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1714657863438590380" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Scene%20Reskin.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Scene Reskinning</b><br>
+                        </p> </a>
+                    </div>
+                
+                    <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1712596249415729488" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Party%20Crashers.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>MR Multiplayer</b><br>
+                        </p> </a>
+                    </div>
+                  
+                    <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1731026620557717751" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Portal.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Photo Portal</b><br>
+                        </p> </a>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+      
+      
         
         <div class="modal" id="PartyCrashersModal">
           <div class="modal-dialog">
