@@ -1,6 +1,31 @@
 :root{
 }
 
+canvas {
+  top: 0;
+  left: 0;
+}
+
+#overlay-text-header {
+    position: absolute;
+    top: 30%; /* Adjust vertical position */
+    left: 25%; /* Adjust horizontal position */
+    color: white; /* Text color */
+    font-size: 64px; /* Font size */
+    font-family: 'Raleway', sans-serif;
+    z-index: 10; /* Ensure it appears above the canvas */
+}
+
+#overlay-text-subheader {
+    position: absolute;
+    top: 36%;
+    left: 25%;
+    color: lightgray; /* Text color */
+    font-size: 36px; /* Font size */
+    font-family: 'Raleway', sans-serif;
+    z-index: 10; /* Ensure it appears above the canvas */
+}
+
 body{
     background-color: #2A637A;
     background-image: linear-gradient(#0E1114, #1E2539);
