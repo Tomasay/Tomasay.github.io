@@ -17,6 +17,75 @@ function getData(){
     }
     
     overrideColors();
+    
+    //Text effects
+    // Wrap every letter in a span
+    var textWrapper = document.querySelector('.ml11 .letters');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/(\S)/g, "<span class='letter'>$&</span>");
+    textWrapper.style.opacity = 1;
+    
+    var textWrapper2 = document.querySelector('.ml11-2 .letters-2');
+    textWrapper2.innerHTML = textWrapper2.textContent.replace(/(\S)/g, "<span class='letter-2'>$&</span>");
+    textWrapper2.style.opacity = 1;
+    
+
+    anime.timeline({loop: false})
+      .add({
+        targets: '.ml11 .line',
+        scaleY: [0,1],
+        opacity: [0.5,1],
+        easing: "easeOutExpo",
+        duration: 700
+      })
+      .add({
+        targets: '.ml11 .line',
+        translateX: [0, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
+        easing: "easeOutExpo",
+        duration: 700,
+        delay: 100
+      }).add({
+        targets: '.ml11 .letter',
+        opacity: [0,1],
+        easing: "easeOutExpo",
+        duration: 600,
+        offset: '-=775',
+        delay: (el, i) => 34 * (i+1)
+      }).add({
+        targets: '.line',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo"
+      });
+    
+    anime.timeline({loop: false})
+      .add({
+        targets: '.ml11-2 .line-2',
+        scaleY: [0,1],
+        opacity: [0.5,1],
+        easing: "easeOutExpo",
+        duration: 700,
+        delay: 2000
+      })
+      .add({
+        targets: '.ml11-2 .line-2',
+        translateX: [0, document.querySelector('.ml11-2 .letters-2').getBoundingClientRect().width + 10],
+        easing: "easeOutExpo",
+        duration: 700,
+        delay: 100
+      }).add({
+        targets: '.ml11-2 .letter-2',
+        opacity: [0,1],
+        easing: "easeOutExpo",
+        duration: 600,
+        offset: '-=775',
+        delay: (el, i) => 34 * (i+1)
+      }).add({
+        targets: '.line-2',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo",
+        delay: 1000
+      });
 }
 
 function closeModule(){
