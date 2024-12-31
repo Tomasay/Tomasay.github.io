@@ -10,10 +10,21 @@ import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 
+import { ParallaxBarrierEffect } from 'three/addons/effects/ParallaxBarrierEffect.js';
+
 // Setup
+
+let mouseX = 0;
+let mouseY = 0;
+
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+
+document.addEventListener( 'mousemove', onDocumentMouseMove );
 
 const scene = new THREE.Scene();
 //scene.background = new THREE.Color('rgb(36,43,51)');
+scene.background = new THREE.TextureLoader().load( "textures/bg.png" );
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -22,7 +33,7 @@ const renderer = new THREE.WebGLRenderer({
   alpha: true
 });
 
-const controls = new OrbitControls( camera, renderer.domElement );
+//const controls = new OrbitControls( camera, renderer.domElement );
 
 const loader = new GLTFLoader();
 
@@ -61,7 +72,7 @@ loader.load( 'model.gltf', function ( gltf ) {
 	scene.add( gltf.scene );
     
     // Rotate the model 90 degrees on the Y-axis
-    gltf.scene.rotation.y = 170 * (Math.PI / 180);
+    gltf.scene.rotation.y = 190 * (Math.PI / 180);
     
     // Check if the model has animations
   if (gltf.animations && gltf.animations.length > 0) {
@@ -104,10 +115,11 @@ composer.setPixelRatio(window.devicePixelRatio);
 composer.setSize(window.innerWidth, window.innerHeight);
 
 const modelPosition = new THREE.Vector3(-1, 0.5, 0); // Model's position
-controls.target.set(-1, 0.5, 0);
+//controls.target.set(-1, 0.5, 0);
 
 // Shift the camera to the left on the X-axis
-camera.position.set(-2, 1.5, 2); // Move the camera to the left (-2 on the X-axis)
+const originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
+camera.position.set(-1, 1.5, 2);
 
 // Make the camera look at the model
 camera.lookAt(modelPosition);
@@ -115,9 +127,7 @@ camera.updateProjectionMatrix();
 
 renderer.render(scene, camera);
 
-
 // Lights
-
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(0, 2, 0);
 pointLight.intensity = 1;
@@ -132,7 +142,12 @@ const clock = new THREE.Clock();
 function animate() {
   requestAnimationFrame(animate);
   
-  controls.update();
+  //controls.update();
+  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.1), 0.05);
+  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.1), 0.05);
+  
+  camera.lookAt(modelPosition);
+  camera.updateProjectionMatrix();
     
   // Get the time delta since the last frame
   const delta = clock.getDelta();
@@ -147,3 +162,20 @@ function animate() {
 }
 
 animate();
+
+function onDocumentMouseMove( event ) {
+    if((( event.clientX - windowHalfX ) / 100) > 0){
+      mouseX = ( event.clientX - windowHalfX ) / 100;
+      mouseY = ( event.clientY - windowHalfY ) / 100;
+    }
+  else{
+      mouseX = 0;
+      mouseY = 0;
+  }
+  
+    console.log("X: " + mouseX + " Y: " + mouseY);
+}
+
+function lerp(start, end, amount) {
+  return start + (end - start) * amount;
+}
