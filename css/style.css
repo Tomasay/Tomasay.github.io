@@ -9,8 +9,9 @@ canvas {
 #overlay-text-header {
     position: absolute;
     top: 30%; /* Adjust vertical position */
-    left: 15%; /* Adjust horizontal position */
-    color: white; /* Text color */
+    left: 12%; /* Adjust horizontal position */
+    /*color: white; /* Text color */
+    color: black; /* Text color */
     font-size: 72px; /* Font size */
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
@@ -18,17 +19,18 @@ canvas {
 
 #overlay-text-subheader {
     position: absolute;
-    top: 36%;
-    left: 15%;
-    color: lightgray; /* Text color */
+    top: 40%;
+    left: 12%;
+    /*color: lightgray; /* Text color */
+    color: gray; /* Text color */
     font-size: 48px; /* Font size */
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
 }
 
 body{
-    background-color: #2A637A;
-    background-image: linear-gradient(#0E1114, #1E2539);
+    /*background-color: #2A637A;
+    background-image: linear-gradient(#0E1114, #1E2539);*/
     
     /*background-image: linear-gradient(#242424, #242424);*/
     

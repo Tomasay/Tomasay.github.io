@@ -24,7 +24,7 @@ document.addEventListener( 'mousemove', onDocumentMouseMove );
 
 const scene = new THREE.Scene();
 //scene.background = new THREE.Color('rgb(36,43,51)');
-scene.background = new THREE.TextureLoader().load( "textures/bg.png" );
+//scene.background = new THREE.TextureLoader().load( "textures/bg.png" );
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -32,6 +32,9 @@ const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
   alpha: true
 });
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
 //const controls = new OrbitControls( camera, renderer.domElement );
 
@@ -53,8 +56,9 @@ characterOutlinePass.visibleEdgeColor.set('rgb(0, 0, 0)');
 characterOutlinePass.hiddenEdgeColor.set('#000000');
 characterOutlinePass.edgeThickness = 2;
 
-outlinePass.visibleEdgeColor.set('#000000');
-outlinePass.edgeThickness = 2;
+outlinePass.visibleEdgeColor.set('rgb(0, 0, 0)');
+outlinePass.hiddenEdgeColor.set('#000000');
+outlinePass.edgeThickness = 1;
 
 characterOutlinePass.edgeGlow = 0; // Enable or increase glow (if needed)
 outlinePass.edgeGlow = 0; // Enable or increase glow (if needed)
@@ -70,6 +74,16 @@ loader.load( 'model.gltf', function ( gltf ) {
 
     addOutlineObject(gltf.scene);
 	scene.add( gltf.scene );
+  
+    // Set the model's initial position off-screen (to the right)
+    gltf.scene.position.set(1, 0, 0); // Adjust the X position for the off-screen effect
+
+    // Animate the model to its final position
+    gsap.to(gltf.scene.position, {
+        x: 0, // Final X position
+        duration: 2, // Animation duration in seconds
+        ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
+    });
     
     // Rotate the model 90 degrees on the Y-axis
     gltf.scene.rotation.y = 190 * (Math.PI / 180);
@@ -80,12 +94,28 @@ loader.load( 'model.gltf', function ( gltf ) {
     const action = mixer.clipAction(gltf.animations[0]);
     action.play();
   }
+  
+  // Set up shadow casting for each mesh in the model
+    gltf.scene.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true; // Enable shadow casting
+            child.receiveShadow = false; // Prevent self-shadowing artifacts
+        }
+    });
 
 }, undefined, function ( error ) {
 
 	console.error( error );
 
 } );
+
+const floorGeometry = new THREE.PlaneGeometry(10, 10); // Adjust size as needed
+const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.05 }); // Transparent and shows shadows
+const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+floor.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
+floor.position.y = 0; // Position the floor under the model
+floor.receiveShadow = true; // Enable receiving shadows
+scene.add(floor);
 
 function addOutlineObject(object){
   let firstMesh = null;
@@ -95,7 +125,7 @@ function addOutlineObject(object){
     if (child.isMesh && !firstMesh) {
       firstMesh = child; // Assign the first mesh and stop further assignment
     }
-    else{
+    else if(child !== floor){
       objectsToOutline.push(child);
     }
   });
@@ -132,9 +162,39 @@ const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(0, 2, 0);
 pointLight.intensity = 1;
 
+/*
+const shadowPointLight = new THREE.PointLight(0xffffff);
+shadowPointLight.position.set(1, 4, 1);
+shadowPointLight.intensity = 1;
+shadowPointLight.castShadow = true; // default false
+shadowPointLight.shadow.mapSize.width = 1024; // Increase for better shadow quality
+shadowPointLight.shadow.mapSize.height = 1024;
+shadowPointLight.shadow.camera.near = 0.1; // Adjust for your scene
+shadowPointLight.shadow.camera.far = 50;
+*/
+
+const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+dirLight.position.set(7, 10, 5);
+dirLight.castShadow = true;
+
+// Increase the light size for softer shadows
+dirLight.shadow.camera.left = -10;
+dirLight.shadow.camera.right = 10;
+dirLight.shadow.camera.top = 10;
+dirLight.shadow.camera.bottom = -10;
+
+// Adjust the blur radius
+dirLight.shadow.radius = 5; 
+
+dirLight.shadow.mapSize.width = 1024;
+dirLight.shadow.mapSize.height = 1024;
+
+scene.add(dirLight);
+
+
 const ambientLight = new THREE.AmbientLight(0xffffff);
 ambientLight.intensity = 5;
-scene.add(pointLight, ambientLight);
+scene.add(pointLight, ambientLight, dirLight);
 
 // Animation Loop
 const clock = new THREE.Clock();
