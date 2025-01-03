@@ -33,4 +33,19 @@
 
 .letters, .letters-2 {
   opacity: 0;
+  white-space: pre;
+}
+
+a .letter-2 {
+  text-decoration: underline;
+}
+
+/* unvisited and visited link */
+a:link .letter-2, a:visited .letter-2{
+  color: dimgray;
+}
+
+/* mouse over and selected link */
+a:hover .letter-2, a:active .letter-2{
+  color: black;
 }

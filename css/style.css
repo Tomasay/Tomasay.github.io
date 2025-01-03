@@ -65,6 +65,17 @@ canvas {
     z-index: 10; /* Ensure it appears above the canvas */
 }
 
+#overlay-text-subheader-2 {
+    position: absolute;
+    top: 44%;
+    left: 12%;
+    /*color: lightgray; /* Text color */
+    color: gray; /* Text color */
+    font-size: 36px; /* Font size */
+    font-family: 'Raleway', sans-serif;
+    z-index: 10; /* Ensure it appears above the canvas */
+}
+
 body{
     /*background-color: #2A637A;
     background-image: linear-gradient(#0E1114, #1E2539);*/
@@ -95,7 +106,7 @@ main{
     
     /*background-image: linear-gradient(#303030, #303030);*/
     
-    /*width: 75%;*/
+    width: 85%;
     padding-top: 2%;
     padding-bottom: 10%;
     margin: auto;

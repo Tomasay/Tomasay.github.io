@@ -25,8 +25,29 @@ function getData(){
     textWrapper.style.opacity = 1;
     
     var textWrapper2 = document.querySelector('.ml11-2 .letters-2');
-    textWrapper2.innerHTML = textWrapper2.textContent.replace(/(\S)/g, "<span class='letter-2'>$&</span>");
+    //textWrapper2.innerHTML = textWrapper2.textContent.replace(/(\S)/g, "<span class='letter-2'>$&</span>");
+    wrapLettersWithLink(textWrapper2);
     textWrapper2.style.opacity = 1;
+    
+    function wrapLettersWithLink(element) {
+        let newHTML = '';
+        for (let i = 0; i < element.textContent.length; i++) {
+            //console.log(element.textContent[i]); 
+            if(i == 20){
+                //newHTML += "<a href='https://www.vive.com/us/' target='_blank'><u>" + element.textContent[i];
+                newHTML += "<a href='https://www.vive.com/us/' target='_blank'><u><span class='letter-2'>" + element.textContent[i] + "</span>";
+            }
+            else if(i == element.textContent.length - 1){
+                newHTML += "<span class='letter-2'>" + element.textContent[i] + "</span></u></a>";
+                //newHTML += element.textContent[i] + "</u></a>";
+            }
+            else{
+                newHTML += "<span class='letter-2'>" + element.textContent[i] + "</span>";
+            }
+        }
+        element.innerHTML = newHTML;
+    }
+
     
 
     anime.timeline({loop: false})
@@ -98,36 +119,6 @@ function overrideColors(){
     for(i=0; i<navLink.length; i++){
         navLink[i].style.color = "AliceBlue";
     }
-}
-
-function toggleProjects(){
-    if(document.getElementById("experimentsButton").classList.contains('btn-custom-active')){
-        document.getElementById("experimentsButton").classList.remove('btn-custom-active');
-        document.getElementById("experimentsButton").classList.add('btn-custom');
-    }
-    
-    if(document.getElementById("projectsButton").classList.contains('btn-custom')){
-        document.getElementById("projectsButton").classList.remove('btn-custom');
-        document.getElementById("projectsButton").classList.add('btn-custom-active');
-    }
-    
-    document.getElementById("projects").style.display = "block";
-    document.getElementById("experiments").style.display = "none";
-}
-
-function toggleExperiments(){
-    if(document.getElementById("experimentsButton").classList.contains('btn-custom')){
-        document.getElementById("experimentsButton").classList.remove('btn-custom');
-        document.getElementById("experimentsButton").classList.add('btn-custom-active');
-    }
-    
-    if(document.getElementById("projectsButton").classList.contains('btn-custom-active')){
-        document.getElementById("projectsButton").classList.remove('btn-custom-active');
-        document.getElementById("projectsButton").classList.add('btn-custom');
-    }
-    
-    document.getElementById("projects").style.display = "none";
-    document.getElementById("experiments").style.display = "block";
 }
 
 /*
