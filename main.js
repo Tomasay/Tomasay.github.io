@@ -91,8 +91,14 @@ loader.load( 'model.gltf', function ( gltf ) {
     // Check if the model has animations
   if (gltf.animations && gltf.animations.length > 0) {
     mixer = new THREE.AnimationMixer(gltf.scene);
+    
+    //Character anim
     const action = mixer.clipAction(gltf.animations[0]);
     action.play();
+    
+    //Coffee steam anim
+    const action2 = mixer.clipAction(gltf.animations[3]);
+    action2.play();
   }
   
   // Set up shadow casting for each mesh in the model
@@ -125,7 +131,7 @@ function addOutlineObject(object){
     if (child.isMesh && !firstMesh) {
       firstMesh = child; // Assign the first mesh and stop further assignment
     }
-    else if(child !== floor){
+    else if(child !== floor && child.name != 'Coffee_Steam'){
       objectsToOutline.push(child);
     }
   });
@@ -136,7 +142,7 @@ function addOutlineObject(object){
     characterOutlinePass.selectedObjects = characterObjectsToOutline;
   }
   outlinePass.selectedObjects = objectsToOutline;
-  
+  outlinePass.needsUpdate = true;
 }
 
 renderer.setPixelRatio(window.devicePixelRatio);
