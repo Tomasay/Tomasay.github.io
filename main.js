@@ -22,6 +22,40 @@ let windowHalfY = window.innerHeight / 2;
 
 document.addEventListener( 'mousemove', onDocumentMouseMove );
 
+const loaderElement = document.getElementById('loader');
+const progressBar = document.getElementById('loader-foreground');
+
+// Track loading state
+let assetsLoaded = false;
+let domContentLoaded = false;
+
+function updateProgress(percentage) {
+  let translateYValue = lerp(128, 0, percentage/100);
+  progressBar.style.transform = `translateY(${translateYValue}px)`;
+}
+
+function checkLoadingComplete() {
+  if (assetsLoaded && domContentLoaded) {
+    loaderElement.classList.add('hidden'); // Hide the loader
+    document.getElementsByTagName("main")[0].style.display = 'block';
+    animate(); // Start animation loop
+    
+    // Animate the model to its final position
+    gsap.to(loadedModel.scene.position, {
+        x: 0, // Final X position
+        duration: 2, // Animation duration in seconds
+        ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
+    });
+  }
+}
+
+// Listen for DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  domContentLoaded = true;
+  updateProgress(50);
+  checkLoadingComplete();
+});
+
 const scene = new THREE.Scene();
 //scene.background = new THREE.Color('rgb(36,43,51)');
 //scene.background = new THREE.TextureLoader().load( "textures/bg.png" );
@@ -70,26 +104,21 @@ let effectFXAA = new ShaderPass( FXAAShader );
 effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
 composer.addPass( effectFXAA );
 
+let loadedModel;
 loader.load( 'model.gltf', function ( gltf ) {
-
+    loadedModel = gltf;
+  
     addOutlineObject(gltf.scene);
 	scene.add( gltf.scene );
   
     // Set the model's initial position off-screen (to the right)
     gltf.scene.position.set(1, 0, 0); // Adjust the X position for the off-screen effect
 
-    // Animate the model to its final position
-    gsap.to(gltf.scene.position, {
-        x: 0, // Final X position
-        duration: 2, // Animation duration in seconds
-        ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
-    });
-    
     // Rotate the model 90 degrees on the Y-axis
     gltf.scene.rotation.y = 190 * (Math.PI / 180);
     
     // Check if the model has animations
-  if (gltf.animations && gltf.animations.length > 0) {
+    if (gltf.animations && gltf.animations.length > 0) {
     mixer = new THREE.AnimationMixer(gltf.scene);
     
     //Character anim
@@ -108,12 +137,16 @@ loader.load( 'model.gltf', function ( gltf ) {
             child.receiveShadow = false; // Prevent self-shadowing artifacts
         }
     });
+  
+    // Assume other setup is complete
+    assetsLoaded = true;
+    checkLoadingComplete();
 
-}, undefined, function ( error ) {
-
-	console.error( error );
-
-} );
+}, function (xhr) {
+    // Update progress based on loading percentage
+    const progress = (xhr.loaded / xhr.total) * 50; // Assume assets are the other half of loading
+    updateProgress(50 + progress);
+  });
 
 const floorGeometry = new THREE.PlaneGeometry(10, 10); // Adjust size as needed
 const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.05 }); // Transparent and shows shadows
@@ -226,8 +259,6 @@ function animate() {
   //renderer.render(scene, camera);
   composer.render(scene, camera);
 }
-
-animate();
 
 function onDocumentMouseMove( event ) {
     if((( event.clientX - windowHalfX ) / 100) > 0){
