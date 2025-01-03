@@ -203,8 +203,8 @@ function animate() {
   requestAnimationFrame(animate);
   
   //controls.update();
-  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.1), 0.05);
-  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.1), 0.05);
+  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
+  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
   
   camera.lookAt(modelPosition);
   camera.updateProjectionMatrix();

@@ -84,45 +84,6 @@
     
     <main>
       
-        <div id = "aboutInfo">
-            
-            <!--
-            <div id="reelContainer">
-                <video id="reel" autoplay>
-                    <source src="media/Overdrive/AudioVisualization1.mp4" type="video/mp4">
-                    whoops, your browser does not support videos :/
-                </video>
-            </div>
-            -->
-		
-            
-            <!--
-            <div class="embed-responsive embed-responsive-21by9">
-                <iframe class="embed-responsive-item" src="media/HighlightReel.mp4"></iframe>
-            </div>
-            -->
-          
-          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            
-            <br><br><br><br>
-            <img width="256px" class = "profile" src="media/Thomas%20Profile%20Pic.JPG" alt="Thomas Ratliff">
-            
-            <div id = "socialMediaIcons">
-
-                <a href="https://www.linkedin.com/in/thomas-ratliff-83599a154/" target="_blank"><img class = "icon" border="0" alt="Linkedin" src="media/Social%20Media%20Icons/Linkedin%20Icon%20Blue.png" width="32" height="32"></a>
-
-                <a href="https://twitter.com/devtom7" target="_blank"><img class = "icon" border="0" alt="X" src="media/Social%20Media%20Icons/X%20Icon%20Blue.png" width="32" height="32"></a>
-                
-                <a href="https://instagram.com/devtom7/" target="_blank"><img class = "icon" border="0" alt="Instagram" src="media/Social%20Media%20Icons/Instagram%20Icon%20Blue.png" width="32" height="32"></a>
-
-                <a href="https://sketchfab.com/thomasratliff5" target="_blank"><img class = "icon" border="0" alt="Sketchfab" src="media/Social%20Media%20Icons/Sketchfab%20Icon%20Blue.png" width="32" height="32"></a>
-
-            </div>
-            
-            <p class="text-light">
-                Hi, I'm Thomas Ratliff. I am a Technical Artist who's passionate about collaborating with others to support the pipeline between art and games. I specialize in XR prototype development, optimization, 3D design and implementation, shaders and visual effects, as well as tools and gameplay programming.</p>
-        </div>
-        
         <div style="text-align: center;">
          <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label id="projectsButton" class="btn btn-custom-active" style="width: 50%;">
@@ -138,27 +99,46 @@
       
         <div id="projects" >
             
-            <div class="container">
+            <div class="container-fluid pl-5 pr-5">
                 <div class="clearfix visible-lg"></div>
                 
                 <div class="row no-gutters">
-                    <div class="col-lg"> <a data-toggle="modal" data-target="#PartyCrashersModal"><img id="PartyCrashers" border="0" alt="Party Crashers" src="media/PortfolioCovers/PartyCrashersLarge.jpg"> <p><b>Party Crashers</b> <br> Local VR Party Game<br>
+                    <div class="col-lg" style="align-content: center;"> <a data-toggle="modal" data-target="#PartyCrashersModal"><img id="Neon" border="0" alt="Neon" src="media/PortfolioCovers/PartyCrashers.png"> <p><b>Party Crashers</b> <br> Local VR Party Game<br>
                         <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/Unity.png">
                         <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/Blender.png">
-                        </p> </a> </div>
-                </div>
-                
-                <div class="row no-gutters">
-                    <div class="col-lg"> <a data-toggle="modal" data-target="#LuminarModal"><img id="Luminar" border="0" alt="Luminar" src="media/PortfolioCovers/LuminarCoverLarge.jpg"> <p><b>Luminar</b> <br> MR Browser App<br>
+                        </p> </a>
+                    </div>
+                  
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#LuminarModal"><video width="100%" autoplay muted loop> <source src="media/Experiments/Lighting.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Luminar</b> <br> MR Browser App<br>
+                        <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/Unity.png">
+                        </p> </a>
+                    </div>
+                  
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#NeonModal"><img id="Neon" border="0" alt="Neon" src="media/PortfolioCovers/NeonCover.png"> <p><b>Neon</b> <br> MR Drawing App<br>
                         <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/Unity.png">
                         </p> </a> </div>
                 </div>
-                
+              
                 <div class="row no-gutters">
-                    <div class="col-lg"> <a data-toggle="modal" data-target="#NeonModal"><img id="Neon" border="0" alt="Neon" src="media/PortfolioCovers/NeonPortfolioCoverLarge.jpg"> <p><b>Neon</b> <br> MR Drawing App<br>
+                    <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1722285066133381430" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Smart%20Lamp.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Hand Tracking Lamp</b><br>
+                        </p> </a>
+                    </div>
+                  
+                    <div class="col-lg" style="align-content: center;"> <a href="https://x.com/devtom7/status/1829900874615046640" target="_blank"><video width="100%" autoplay muted loop> <source src="media/Experiments/Lidar.mp4" type="video/mp4"> Your browser does not support the video tag. </video> <p><b>Lidar Horror Game</b><br>
+                        </p> </a>
+                    </div>
+                  
+                    <div class="col-lg"> <a data-toggle="modal" data-target="#RemioModal"><img id="Remio" border="0" alt="Neon" src="media/PortfolioCovers/RemioCover.jpg"> <p><b>Remio</b> <br>Social VR<br>
                         <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/Unity.png">
+                        <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/Blender.png">
+                        <img class="SoftwareIcon" border="0" alt="" src="media/Software%20Icons/SubstancePainter.png">
                         </p> </a> </div>
-                </div>
+                    </div>
+              
+          
+          
+                
+                
                     
                 <div class="row no-gutters">
                     
@@ -195,13 +175,12 @@
                         </p> </a> </div>
                     
                 </div>
+              </div>
                 
             </div>
-            
-        </div>
       
       
-      
+      <!--
       <div id="experiments" style="display: none">
             
             <div class="container">
@@ -242,6 +221,7 @@
             </div>
             
         </div>
+      -->
       
       
         
@@ -250,6 +230,16 @@
             <div class="modal-content">
                 
                   <iframe name="iframe1" src="ProjectHTML/partyCrashers.html"></iframe>
+                
+            </div>
+          </div>
+        </div>
+      
+        <div class="modal" id="RemioModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                
+                  <iframe name="iframe1" src="ProjectHTML/remio.html"></iframe>
                 
             </div>
           </div>
@@ -462,6 +452,42 @@
         </div>
         -->
         
+      
+        <div id = "aboutInfo">
+            
+            <!--
+            <div id="reelContainer">
+                <video id="reel" autoplay>
+                    <source src="media/Overdrive/AudioVisualization1.mp4" type="video/mp4">
+                    whoops, your browser does not support videos :/
+                </video>
+            </div>
+            -->
+		
+            
+            <!--
+            <div class="embed-responsive embed-responsive-21by9">
+                <iframe class="embed-responsive-item" src="media/HighlightReel.mp4"></iframe>
+            </div>
+            -->
+            <img width="256px" class = "profile" src="media/Thomas%20Profile%20Pic.JPG" alt="Thomas Ratliff">
+            
+            <div id = "socialMediaIcons">
+
+                <a href="https://www.linkedin.com/in/thomas-ratliff-83599a154/" target="_blank"><img class = "icon" border="0" alt="Linkedin" src="media/Social%20Media%20Icons/Linkedin%20Icon%20Blue.png" width="32" height="32"></a>
+
+                <a href="https://twitter.com/devtom7" target="_blank"><img class = "icon" border="0" alt="X" src="media/Social%20Media%20Icons/X%20Icon%20Blue.png" width="32" height="32"></a>
+                
+                <a href="https://instagram.com/devtom7/" target="_blank"><img class = "icon" border="0" alt="Instagram" src="media/Social%20Media%20Icons/Instagram%20Icon%20Blue.png" width="32" height="32"></a>
+
+                <a href="https://sketchfab.com/thomasratliff5" target="_blank"><img class = "icon" border="0" alt="Sketchfab" src="media/Social%20Media%20Icons/Sketchfab%20Icon%20Blue.png" width="32" height="32"></a>
+
+            </div>
+            
+            <p class="text-light">
+                Hi, I'm Thomas Ratliff. I am a Technical Artist who's passionate about collaborating with others to support the pipeline between art and games. I specialize in XR prototype development, optimization, 3D design and implementation, shaders and visual effects, as well as tools and gameplay programming.</p>
+        </div>
+      
         
         <br><br><br>
         

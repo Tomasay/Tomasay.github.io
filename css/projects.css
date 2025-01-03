@@ -10,7 +10,7 @@ p{
     margin: auto;
     padding-top: 20px;
     padding-bottom: 20px;
-    text-align: center;
+    text-align: left
 }
 
 main{
@@ -21,6 +21,10 @@ main{
 h1{
     color: white;
     font-size: 48px;
+    text-decoration: underline;
+}
+
+h2{
     text-decoration: underline;
 }
 

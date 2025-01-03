@@ -19,7 +19,7 @@ canvas {
 
 #overlay-text-subheader {
     position: absolute;
-    top: 40%;
+    top: 38%;
     left: 12%;
     /*color: lightgray; /* Text color */
     color: gray; /* Text color */
@@ -33,6 +33,8 @@ body{
     background-image: linear-gradient(#0E1114, #1E2539);*/
     
     /*background-image: linear-gradient(#242424, #242424);*/
+    
+    background-image: linear-gradient(to right, white , lightgray);
     
     align-content: center;
     margin-left: auto;
@@ -49,12 +51,14 @@ body h2{
 }*/
 
 main{
+    /*
     background-color: #86CDEA;
     background-image: linear-gradient(#222930, #414963);
+    */
     
     /*background-image: linear-gradient(#303030, #303030);*/
     
-    width: 75%;
+    /*width: 75%;*/
     padding-top: 2%;
     padding-bottom: 10%;
     margin: auto;
@@ -96,25 +100,27 @@ a:hover{
     height: 48px;
 }
 
-/* width */
+/*
+width
 ::-webkit-scrollbar {
   width: 20px;
 }
 
-/* Track */
+Track
 ::-webkit-scrollbar-track {
   background: #222930; 
 }
  
-/* Handle */
+Handle
 ::-webkit-scrollbar-thumb {
   background: #1AD0E7; 
 }
 
-/* Handle on hover */
+Handle on hover
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+*/
 
 #page-hero{
     position: fixed;
@@ -145,7 +151,6 @@ img {
 #reelContainer{
     overflow: hidden;
     max-height: 300px;
-    
 }
 
 #projects, #experiments{
@@ -199,12 +204,12 @@ h2{
     padding-bottom: 5%;
 }
 
-#projects img, #experiments img, #experiments video{
+#projects img, #experiments img, #experiments video, #projects video{
     cursor: pointer;
     transition: 0.3s;
 }
 
-#projects img:hover, #experiments img:hover, #experiments video:hover{
+#projects img:hover, #experiments img:hover, #experiments video:hover, #projects video:hover{
      transform: scale(1.3);
      transition: 0.3s;
 }
@@ -269,10 +274,10 @@ img:hover ~ p, video:hover ~ p{
 
 iframe{
     position: fixed;
-    left: 12.5%;
-    top: 12.5%;
-    width: 75%;
-    height: 75%;
+    left: 5%;
+    top: 5%;
+    width: 90%;
+    height: 90%;
     border:2px solid #1AD0E7;
 }
 
