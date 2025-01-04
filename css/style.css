@@ -1,6 +1,21 @@
 :root{
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+p{
+    font-family: 'Raleway', sans-serif;
+    font-size: 24px;
+}
+
+h2{
+    font-family: 'Raleway', sans-serif;
+    font-size: 36px;
+}
+
 .loader {
   position: absolute;
   top: 50%;
@@ -61,17 +76,6 @@ canvas {
     /*color: lightgray; /* Text color */
     color: gray; /* Text color */
     font-size: 48px; /* Font size */
-    font-family: 'Raleway', sans-serif;
-    z-index: 10; /* Ensure it appears above the canvas */
-}
-
-#overlay-text-subheader-2 {
-    position: absolute;
-    top: 44%;
-    left: 12%;
-    /*color: lightgray; /* Text color */
-    color: gray; /* Text color */
-    font-size: 36px; /* Font size */
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
 }
@@ -188,7 +192,7 @@ img {
     border:2px solid white;
 }
 
-#aboutInfo{
+#aboutInfo h1, #socialMediaIcons{
     text-align: center;
 }
 
@@ -234,6 +238,7 @@ h2{
 .icon{
     padding: 3px;
     transition: .5s;
+    vertical-align: middle;
 }
 
 .icon:hover{

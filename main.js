@@ -178,6 +178,17 @@ function addOutlineObject(object){
   outlinePass.needsUpdate = true;
 }
 
+function resizeRendererToDisplaySize(renderer) {
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setPixelRatio(window.devicePixelRatio);
+  composer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = (window.innerWidth / window.innerHeight);
+}
+
+window.addEventListener('resize', () => resizeRendererToDisplaySize(renderer));
+resizeRendererToDisplaySize(renderer);
+
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 composer.setPixelRatio(window.devicePixelRatio);
@@ -270,7 +281,7 @@ function onDocumentMouseMove( event ) {
       mouseY = 0;
   }
   
-    console.log("X: " + mouseX + " Y: " + mouseY);
+    //console.log("X: " + mouseX + " Y: " + mouseY);
 }
 
 function lerp(start, end, amount) {
