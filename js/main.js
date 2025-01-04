@@ -1,6 +1,33 @@
 window.onload = getData;
 
 function getData(){
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+    console.log("Registering scroll");
+
+    // Animate the fade-in effect
+    gsap.utils.toArray(".fade-in").forEach((element) => {
+      gsap.fromTo(
+        element,
+        {
+          opacity: 0, // Start fully transparent
+          y: 50,      // Start 50px below the final position
+        },
+        {
+          opacity: 1, // Fade to fully visible
+          y: 0,       // Move to its original position
+          duration: 1, // Animation duration in seconds
+          ease: "power1.out", // Smooth easing for the movement
+          scrollTrigger: {
+            trigger: element,  // Trigger animation based on each individual element
+            start: "top 90%",  // Start when the element's top is 90% from the top of the viewport
+            end: "bottom 60%", // End when the element's bottom is 60% from the top of the viewport
+            toggleActions: "play none none reverse", // Play when entering, reverse when leaving
+          },
+        }
+      );
+    });
+    
     //Smooth scrolling with links
     $('a[href*=\\#]').on('click', function(event){     
         event.preventDefault();

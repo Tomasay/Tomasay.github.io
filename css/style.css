@@ -16,6 +16,10 @@ h2{
     font-size: 36px;
 }
 
+.fade-in {
+    opacity: 0; /* Start fully transparent */
+}
+
 .loader {
   position: absolute;
   top: 50%;
@@ -71,7 +75,7 @@ canvas {
 
 #overlay-text-subheader {
     position: absolute;
-    top: 38%;
+    top: 39%;
     left: 12%;
     /*color: lightgray; /* Text color */
     color: gray; /* Text color */
