@@ -144,7 +144,7 @@ function overrideColors(){
     let navLink = document.getElementsByClassName("nav-link");
     
     for(i=0; i<navLink.length; i++){
-        navLink[i].style.color = "AliceBlue";
+        //navLink[i].style.color = "AliceBlue";
     }
 }
 

@@ -129,9 +129,23 @@ main{
 }
 
 header{
-    background-color: #1AD0E7;
-    width: 75%;
+    background-image: linear-gradient(to right, white , lightgray);
+    width: 100%;
     margin: auto;
+}
+
+.navbar{
+    opacity: 0;
+}
+
+.navbar-brand {
+    margin-left: -15%; /* Adjust the value to fine-tune the brand's position */
+}
+
+.nav-right {
+    margin-left: auto; /* Push the navigation links to the right */
+    display: flex; /* Ensure proper alignment of flex items */
+    justify-content: flex-end; /* Ensure links are aligned to the end */
 }
 
 p{
@@ -180,7 +194,7 @@ Handle on hover
 
 #page-hero{
     position: fixed;
-    right: 12.5%;
+    /*right: 12.5%;*/
     z-index: 1000;
 }
 

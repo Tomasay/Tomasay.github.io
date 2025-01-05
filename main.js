@@ -40,6 +40,16 @@ function checkLoadingComplete() {
     document.getElementsByTagName("main")[0].style.display = 'block';
     animate(); // Start animation loop
     
+    //Fade navbar in
+    const navbar = document.querySelector(".navbar");
+    navbar.style.opacity = 0;
+    navbar.style.transition = "opacity 1s ease-in-out";
+
+    // Trigger fade-in effect
+    setTimeout(() => {
+        navbar.style.opacity = 1;
+    }, 100); // Small delay to ensure the transition is noticeable
+    
     // Animate the model to its final position
     gsap.to(loadedModel.scene.position, {
         x: 0, // Final X position
