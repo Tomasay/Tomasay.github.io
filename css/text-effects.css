@@ -38,14 +38,21 @@
 
 a .letter-2 {
   text-decoration: underline;
+  transition: color 0.5s ease;
 }
 
 /* unvisited and visited link */
-a:link .letter-2, a:visited .letter-2{
+body.light-mode a:link .letter-2, body.light-mode a:visited .letter-2{
   color: dimgray;
+}
+body.dark-mode a:link .letter-2, body.dark-mode a:visited .letter-2{
+  color: lightgray;
 }
 
 /* mouse over and selected link */
-a:hover .letter-2, a:active .letter-2{
+body.light-mode a:hover .letter-2, body.light-mode a:active .letter-2{
   color: black;
+}
+body.dark-mode a:hover .letter-2, body.dark-mode a:active .letter-2{
+  color: white;
 }

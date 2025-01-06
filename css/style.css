@@ -105,10 +105,12 @@ body.dark-mode #overlay-text-subheader {
     z-index: -1; /* Ensure it's behind everything */
 }
 
-/* Ensure header stays visible */
 header {
     position: relative;
     z-index: 1; /* Place above gradient layer */
+    
+    width: 100%;
+    margin: auto;
 }
 
 body{
@@ -138,7 +140,7 @@ header::after{
 }
 
 #gradient-layer::after, header::after {
-    background-image: linear-gradient(to right, dimgray , lightgray);
+    background-image: linear-gradient(to right, #2e2e2e , #4d4d4d);
     opacity: 0; /* Hidden in light mode */
 }
 
@@ -147,7 +149,7 @@ body.dark-mode #gradient-layer::before, body.dark-mode header::before {
 }
 
 body.dark-mode #gradient-layer::after, body.dark-mode header::after {
-    background-image: linear-gradient(to right, dimgray , gray);
+    background-image: linear-gradient(to right, #2e2e2e , #4d4d4d);
     opacity: 1; /* Show dark mode */
 }
 
@@ -166,12 +168,6 @@ main{
     background-color: #15A6B9 !important;
 }
 
-header{
-    width: 100%;
-    margin: auto;
-    transition: opacity 0.5s ease;
-}
-
 .navbar{
     opacity: 0;
 }
@@ -185,6 +181,14 @@ header{
     margin-left: auto; /* Push the navigation links to the right */
     display: flex; /* Ensure proper alignment of flex items */
     justify-content: flex-end; /* Ensure links are aligned to the end */
+}
+
+body.light-mode .nav-item.nav-link {
+    color: gray;
+}
+
+body.dark-mode .nav-item.nav-link {
+    color: lightgray;
 }
 
 p{
@@ -253,6 +257,18 @@ img {
     text-align: center;
 }
 
+p{
+    transition: color 0.5s ease;
+}
+
+body.light-mode p{
+    color: dimgray; /* Text color */
+}
+
+body.dark-mode p{
+    color: lightgray; /* Text color */
+}
+
 #reel{
     width: 100%;
 }
@@ -280,6 +296,15 @@ img {
 
 h1{
     font-size: 40px;
+    transition: color 0.5s ease;
+}
+
+body.light-mode h1{
+    color: black; /* Text color */
+}
+
+body.dark-mode h1{
+    color: white; /* Text color */
 }
 
 h2{
@@ -290,6 +315,15 @@ h2{
 
 #socialMediaIcons{
     padding: 10px;
+    transition: filter 0.5s ease;
+}
+
+body.light-mode #socialMediaIcons{
+    filter: invert(100%);
+}
+
+body.dark-mode #socialMediaIcons{
+    filter: invert(0%);
 }
 
 .icon{
