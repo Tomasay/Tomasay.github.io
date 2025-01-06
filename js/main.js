@@ -3,14 +3,23 @@ window.onload = getData;
 function getData(){
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("change", () => {
-        console.log('theme changed ' + themeToggle.checked);
-        if (themeToggle.checked) {
-            document.body.classList.remove("light-mode");
-            document.body.classList.add("dark-mode");
-        } else {
-            document.body.classList.remove("dark-mode");
-            document.body.classList.add("light-mode");
-        }
+        
+        const mode = themeToggle.checked ? "dark-mode" : "light-mode";
+        const oppositeMode = themeToggle.checked ? "light-mode" : "dark-mode";
+        
+        document.body.classList.remove(oppositeMode);
+        document.body.classList.add(mode);
+        
+        // Toggle in all iframes
+        document.querySelectorAll("iframe").forEach(iframe => {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframeDoc.body.classList.remove(oppositeMode);
+                iframeDoc.body.classList.add(mode);
+            } catch (e) {
+                console.error("Unable to access iframe content:", e);
+            }
+        });
     });
     
     // Register ScrollTrigger plugin

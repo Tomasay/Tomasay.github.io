@@ -261,11 +261,11 @@ p{
     transition: color 0.5s ease;
 }
 
-body.light-mode p{
+body.light-mode #aboutInfo p{
     color: dimgray; /* Text color */
 }
 
-body.dark-mode p{
+body.dark-mode #aboutInfo p{
     color: lightgray; /* Text color */
 }
 
@@ -422,7 +422,7 @@ iframe{
     top: 5%;
     width: 90%;
     height: 90%;
-    border:2px solid #1AD0E7;
+    border:2px solid black;
 }
 
 @media only screen and (max-width: 768px) {
