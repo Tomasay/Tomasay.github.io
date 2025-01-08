@@ -63,7 +63,8 @@ canvas {
     position: absolute;
     top: 30%; /* Adjust vertical position */
     left: 15%; /* Adjust horizontal position */
-    font-size: 72px; /* Font size */
+    /*font-size: 72px; /* Font size */
+    font-size: 5.5vh;
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
     transition: color 0.5s ease;
@@ -81,7 +82,8 @@ body.dark-mode #overlay-text-header, body.dark-mode .navbar-brand{
     position: absolute;
     top: 39%;
     left: 15%;
-    font-size: 48px; /* Font size */
+    /*font-size: 48px; /* Font size */
+    font-size: 3.6vh;
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
     transition: color 0.5s ease;
@@ -168,23 +170,40 @@ main{
     background-color: #15A6B9 !important;
 }
 
-.navbar{
+/* Ensure the navbar uses flexbox for layout */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Push items to the left and right */
+    align-items: center; /* Vertically align items */
+    position: relative; /* Required for positioning the brand and nav-right */
+    min-height: 60px; /* Set a minimum height to ensure the navbar is tall enough */
     opacity: 0;
-    /*margin-left: 10%;*/
 }
 
+/* Adjust the navbar-brand */
 .navbar-brand {
-    /*margin-left: -50%; /* Adjust the value to fine-tune the brand's position */
     position: absolute;
-    left: 15%; /* Adjust horizontal position */
+    left: 15%; /* 15% from the left */
     transition: color 0.5s ease;
+    top: 50%; /* Vertically center the brand */
+    transform: translateY(-50%); /* Adjust to perfectly center it */
 }
 
+/* Adjust nav-right positioning */
 .nav-right {
-    margin-left: auto; /* Push the navigation links to the right */
-    margin-right: -33%;
-    display: flex; /* Ensure proper alignment of flex items */
-    justify-content: flex-end; /* Ensure links are aligned to the end */
+    position: absolute;
+    right: 15%; /* 15% from the right */
+    display: flex;
+    justify-content: flex-end;
+    top: 50%; /* Align to the center vertically */
+    transform: translateY(-50%); /* Vertically center the nav items */
+    align-items: center; /* Vertically center the links */
+    height: 100%; /* Ensure it occupies the full height of the navbar */
+}
+
+/* Ensure the links are properly spaced */
+.nav-item {
+    margin-left: 20px; /* Adjust spacing between items */
 }
 
 body.light-mode .nav-item.nav-link {
