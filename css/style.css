@@ -62,7 +62,7 @@ canvas {
 #overlay-text-header {
     position: absolute;
     top: 30%; /* Adjust vertical position */
-    left: 12%; /* Adjust horizontal position */
+    left: 15%; /* Adjust horizontal position */
     font-size: 72px; /* Font size */
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
@@ -80,7 +80,7 @@ body.dark-mode #overlay-text-header, body.dark-mode .navbar-brand{
 #overlay-text-subheader {
     position: absolute;
     top: 39%;
-    left: 12%;
+    left: 15%;
     font-size: 48px; /* Font size */
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
@@ -170,15 +170,19 @@ main{
 
 .navbar{
     opacity: 0;
+    /*margin-left: 10%;*/
 }
 
 .navbar-brand {
-    margin-left: -15%; /* Adjust the value to fine-tune the brand's position */
+    /*margin-left: -50%; /* Adjust the value to fine-tune the brand's position */
+    position: absolute;
+    left: 15%; /* Adjust horizontal position */
     transition: color 0.5s ease;
 }
 
 .nav-right {
     margin-left: auto; /* Push the navigation links to the right */
+    margin-right: -33%;
     display: flex; /* Ensure proper alignment of flex items */
     justify-content: flex-end; /* Ensure links are aligned to the end */
 }
@@ -464,14 +468,19 @@ iframe{
 /* From Uiverse.io by satyamchaudharydev */ 
 /* The switch - the box around the slider */
 .switch {
-  display: block;
+   position: fixed; /* Keeps it fixed while scrolling */
+    top: 10px; /* Distance from the top */
+    right: 10px; /* Distance from the right */
+    z-index: 9999; /* Ensures it stays on top of other elements */
+    display: inline-block;
+    opacity: 0;
+    
   --width-of-switch: 3.5em;
   --height-of-switch: 2em;
   /* size of sliding icon -- sun and moon */
   --size-of-icon: 1.4em;
   /* it is like a inline-padding of switch */
   --slider-offset: 0.3em;
-  position: relative;
   width: var(--width-of-switch);
   height: var(--height-of-switch);
 }

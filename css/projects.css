@@ -79,6 +79,18 @@ body.dark-mode button{
     filter: invert(0%);
 }
 
+.metaStore{
+    transition: filter 0.5s ease;
+}
+
+body.light-mode .metaStore{
+    filter: invert(100%);
+}
+
+body.dark-mode .metaStore{
+    filter: invert(0%);
+}
+
 img{
     max-width: 75%;
 }

@@ -6,7 +6,6 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 
@@ -50,6 +49,15 @@ function checkLoadingComplete() {
         navbar.style.opacity = 1;
     }, 100); // Small delay to ensure the transition is noticeable
     
+    const lightDarkSwitch = document.querySelector(".switch");
+    lightDarkSwitch.style.opacity = 0;
+    lightDarkSwitch.style.transition = "opacity 1s ease-in-out";
+
+    // Trigger fade-in effect
+    setTimeout(() => {
+        lightDarkSwitch.style.opacity = 1;
+    }, 100); // Small delay to ensure the transition is noticeable
+    
     // Animate the model to its final position
     gsap.to(loadedModel.scene.position, {
         x: 0, // Final X position
@@ -86,29 +94,10 @@ const loader = new GLTFLoader();
 
 let mixer;
 
-let characterObjectsToOutline = [];
-let objectsToOutline = [];
 let composer = new EffectComposer( renderer );
 
 const renderPass = new RenderPass( scene, camera );
 composer.addPass( renderPass );
-
-let characterOutlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-let outlinePass = new OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-
-characterOutlinePass.visibleEdgeColor.set('rgb(0, 0, 0)');
-characterOutlinePass.hiddenEdgeColor.set('#000000');
-characterOutlinePass.edgeThickness = 2;
-
-outlinePass.visibleEdgeColor.set('rgb(0, 0, 0)');
-outlinePass.hiddenEdgeColor.set('#000000');
-outlinePass.edgeThickness = 1;
-
-characterOutlinePass.edgeGlow = 0; // Enable or increase glow (if needed)
-outlinePass.edgeGlow = 0; // Enable or increase glow (if needed)
-
-composer.addPass( characterOutlinePass );
-composer.addPass( outlinePass );
 
 let effectFXAA = new ShaderPass( FXAAShader );
 effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
@@ -118,7 +107,6 @@ let loadedModel;
 loader.load( 'model.gltf', function ( gltf ) {
     loadedModel = gltf;
   
-    addOutlineObject(gltf.scene);
 	scene.add( gltf.scene );
   
     // Set the model's initial position off-screen (to the right)
@@ -165,28 +153,6 @@ floor.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
 floor.position.y = 0; // Position the floor under the model
 floor.receiveShadow = true; // Enable receiving shadows
 scene.add(floor);
-
-function addOutlineObject(object){
-  let firstMesh = null;
-
-  // Traverse the object hierarchy to find the first mesh
-  object.traverse((child) => {
-    if (child.isMesh && !firstMesh) {
-      firstMesh = child; // Assign the first mesh and stop further assignment
-    }
-    else if(child !== floor && child.name != 'Coffee_Steam'){
-      objectsToOutline.push(child);
-    }
-  });
-
-  // If a mesh is found, add it to the outline objects array
-  if (firstMesh) {
-    characterObjectsToOutline.push(firstMesh);
-    characterOutlinePass.selectedObjects = characterObjectsToOutline;
-  }
-  outlinePass.selectedObjects = objectsToOutline;
-  outlinePass.needsUpdate = true;
-}
 
 function resizeRendererToDisplaySize(renderer) {
   renderer.setPixelRatio(window.devicePixelRatio);
