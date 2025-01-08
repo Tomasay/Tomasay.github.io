@@ -20,6 +20,20 @@ let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 
 document.addEventListener( 'mousemove', onDocumentMouseMove );
+let monitorScreenLightMode;
+
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("change", () => {
+
+    console.log("mesh: " + monitorScreenLightMode);
+    console.log("material: " + monitorScreenLightMode.material);
+  
+    gsap.to(monitorScreenLightMode.material, {
+      duration: 0.5, // Duration in seconds
+      opacity: themeToggle.checked ? 0 : 1,  // Target opacity
+      ease: "power1.inOut"
+    });
+});
 
 const loaderElement = document.getElementById('loader');
 const progressBar = document.getElementById('loader-foreground');
@@ -82,9 +96,12 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
-  alpha: true
+  alpha: true,
+  antialias: true
 });
 
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.5;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
@@ -99,9 +116,11 @@ let composer = new EffectComposer( renderer );
 const renderPass = new RenderPass( scene, camera );
 composer.addPass( renderPass );
 
+/*
 let effectFXAA = new ShaderPass( FXAAShader );
 effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
 composer.addPass( effectFXAA );
+*/
 
 let loadedModel;
 loader.load( 'model.gltf', function ( gltf ) {
@@ -133,6 +152,10 @@ loader.load( 'model.gltf', function ( gltf ) {
         if (child.isMesh) {
             child.castShadow = true; // Enable shadow casting
             child.receiveShadow = false; // Prevent self-shadowing artifacts
+          //console.log("mesh: " + child.name);
+          if(child.name == "Monitor_Screen_Light_Mode"){
+            monitorScreenLightMode = child;
+          }
         }
     });
   
@@ -243,8 +266,8 @@ function animate() {
     mixer.update(delta); // Update based on time delta, here it's 0.01 for simplicity
   }
 
-  //renderer.render(scene, camera);
-  composer.render(scene, camera);
+  renderer.render(scene, camera);
+  //composer.render(scene, camera);
 }
 
 function onDocumentMouseMove( event ) {
