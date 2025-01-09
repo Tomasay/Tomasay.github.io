@@ -60,7 +60,7 @@ function getData(){
     
     //console.log(iframes);
     
-    for(i=0; i<iframes.length; i++){
+    for(let i = 0; i < iframes.length; i++){
         let closeButton = iframes[i].contentDocument.querySelector("button");
         closeButton.addEventListener("click", closeModule);
     }
