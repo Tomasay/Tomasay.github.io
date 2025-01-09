@@ -1,12 +1,11 @@
-import * as THREE from './node_modules/three/build/three.module.js';
-import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-
-import { EffectComposer } from './node_modules/three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from './node_modules/three/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from './node_modules/three/examples/jsm/postprocessing/ShaderPass.js';
-import { OutputPass } from './node_modules/three/examples/jsm/postprocessing/OutputPass.js';
-import { FXAAShader } from './node_modules/three/examples/jsm/shaders/FXAAShader.js';
-import { ParallaxBarrierEffect } from './node_modules/three/examples/jsm/effects/ParallaxBarrierEffect.js';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+import { ParallaxBarrierEffect } from 'three/addons/effects/ParallaxBarrierEffect.js';
 
 
 let current = 0;
