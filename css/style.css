@@ -214,6 +214,18 @@ body.dark-mode .nav-item.nav-link {
     color: lightgray;
 }
 
+.navbar-toggler-icon{
+    transition: filter 0.5s ease;
+}
+
+body.light-mode .navbar-toggler-icon{
+    filter: invert(100%);
+}
+
+body.dark-mode .navbar-toggler-icon{
+    filter: invert(0%);
+}
+
 p{
     padding-left: 20%;
     padding-right: 20%;
@@ -480,6 +492,40 @@ iframe{
     .SoftwareIcon{
         width: 32px;
         height: 32px;
+    }
+    
+    #aboutInfo p{
+        font-size: 22px;
+    }
+    
+    #overlay-text-header {
+        top: 20%; /* Adjust vertical position */
+        left: 10%; /* Adjust horizontal position */
+        font-size: 5vh;
+    }
+
+    #overlay-text-subheader {
+        top: 30%;
+        left: 10%;
+        font-size: 3vh;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    
+    .navbar-brand {
+        opacity: 0;
+    }
+    
+    .nav-right {
+        position: static;
+        right: 0%; /* 15% from the right */
+        display: inline;
+        justify-content: flex-start;
+        top: 0%; /* Align to the center vertically */
+        transform: translateY(0%); /* Vertically center the nav items */
+        align-items: normal; /* Vertically center the links */
+        height: 100%; /* Ensure it occupies the full height of the navbar */
     }
 }
 

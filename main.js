@@ -93,6 +93,8 @@ const scene = new THREE.Scene();
 //scene.background = new THREE.TextureLoader().load( "textures/bg.png" );
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+let originalCameraPos;
+let lookAtPos;
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
@@ -183,6 +185,22 @@ function resizeRendererToDisplaySize(renderer) {
   composer.setPixelRatio(window.devicePixelRatio);
   composer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = (window.innerWidth / window.innerHeight);
+  
+  checkForMobile();
+}
+
+function checkForMobile(){
+  if(window.innerWidth <= 768){
+    originalCameraPos = new THREE.Vector3(-1, 1.25, 3);
+    lookAtPos = new THREE.Vector3(0, 1.5, 0);
+  }
+  else{
+    originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
+    lookAtPos = new THREE.Vector3(-1, 0.5, 0);
+  }
+  
+  camera.lookAt(lookAtPos);
+  camera.updateProjectionMatrix();
 }
 
 window.addEventListener('resize', () => resizeRendererToDisplaySize(renderer));
@@ -193,15 +211,20 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 composer.setPixelRatio(window.devicePixelRatio);
 composer.setSize(window.innerWidth, window.innerHeight);
 
-const modelPosition = new THREE.Vector3(-1, 0.5, 0); // Model's position
-//controls.target.set(-1, 0.5, 0);
 
-// Shift the camera to the left on the X-axis
-const originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
-camera.position.set(-1, 1.5, 2);
+if(window.innerWidth <= 768){
+    lookAtPos = new THREE.Vector3(0, 1.5, 0);
+    originalCameraPos = new THREE.Vector3(-1, 1.25, 3);
+    camera.position.set(-1, 1.25, 3);
+  }
+  else{
+    lookAtPos = new THREE.Vector3(-1, 0.5, 0);
+    originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
+    camera.position.set(-1.25, 1.25, 2);
+  }
 
 // Make the camera look at the model
-camera.lookAt(modelPosition);
+camera.lookAt(lookAtPos);
 camera.updateProjectionMatrix();
 
 renderer.render(scene, camera);
@@ -254,8 +277,9 @@ function animate() {
   //controls.update();
   camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
   camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
+  camera.position.z = originalCameraPos.getComponent(2);
   
-  camera.lookAt(modelPosition);
+  camera.lookAt(lookAtPos);
   camera.updateProjectionMatrix();
     
   // Get the time delta since the last frame
