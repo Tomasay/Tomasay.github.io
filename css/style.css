@@ -57,6 +57,7 @@ h2{
 canvas {
   top: 0;
   left: 0;
+  z-index: -999;
 }
 
 #overlay-text-header {
@@ -472,7 +473,7 @@ iframe{
     
     iframe{
         left: 0%;
-        top: 5%;
+        top: 6%;
         width: 100%;
         height: 90%;
     }
