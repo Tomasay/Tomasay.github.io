@@ -11,7 +11,40 @@ import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 
 import { ParallaxBarrierEffect } from 'three/addons/effects/ParallaxBarrierEffect.js';
 
-// Setup
+
+let current = 0;
+let interval = 1; // Start with a quicker interval
+
+const pageFullyLoadedEvent = new Event("pageFullyLoaded");
+
+const fakeProgressBar = () => {
+  // Check if we have reached or surpassed 100
+  if (current >= 100) {
+    loadingComplete();
+    clearInterval(timer);
+  } else {
+    // Increase the number and slow down the interval
+    current++;
+
+    // Dynamically adjust the interval to slow down as it approaches 100
+    if (assetsLoaded && domContentLoaded){
+      interval = 0.1;
+    }
+    else{
+      interval = Math.max(1, (100 - current)); // Slows down as current approaches 100
+    }
+    clearInterval(timer);
+    timer = setInterval(fakeProgressBar, interval);
+    
+    updateProgress(current);
+  }
+};
+
+// Start the logging
+let timer = setInterval(fakeProgressBar, interval);
+
+
+
 
 let mouseX = 0;
 let mouseY = 0;
@@ -24,10 +57,6 @@ let monitorScreenLightMode;
 
 const themeToggle = document.getElementById("themeToggle");
 themeToggle.addEventListener("change", () => {
-
-    console.log("mesh: " + monitorScreenLightMode);
-    console.log("material: " + monitorScreenLightMode.material);
-  
     gsap.to(monitorScreenLightMode.material, {
       duration: 0.5, // Duration in seconds
       opacity: themeToggle.checked ? 0 : 1,  // Target opacity
@@ -47,8 +76,9 @@ function updateProgress(percentage) {
   progressBar.style.transform = `translateY(${translateYValue}px)`;
 }
 
-function checkLoadingComplete() {
-  if (assetsLoaded && domContentLoaded) {
+function loadingComplete() {
+    window.dispatchEvent(pageFullyLoadedEvent);
+  
     loaderElement.classList.add('hidden'); // Hide the loader
     document.getElementsByTagName("main")[0].style.display = 'block';
     animate(); // Start animation loop
@@ -78,14 +108,13 @@ function checkLoadingComplete() {
         duration: 2, // Animation duration in seconds
         ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
     });
-  }
 }
 
 // Listen for DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   domContentLoaded = true;
-  updateProgress(50);
-  checkLoadingComplete();
+  //updateProgress(50);
+  //checkLoadingComplete();
 });
 
 const scene = new THREE.Scene();
@@ -163,12 +192,12 @@ loader.load( 'model.gltf', function ( gltf ) {
   
     // Assume other setup is complete
     assetsLoaded = true;
-    checkLoadingComplete();
+    //checkLoadingComplete();
 
 }, function (xhr) {
     // Update progress based on loading percentage
     const progress = (xhr.loaded / xhr.total) * 50; // Assume assets are the other half of loading
-    updateProgress(50 + progress);
+    //updateProgress(50 + progress);
   });
 
 const floorGeometry = new THREE.PlaneGeometry(10, 10); // Adjust size as needed
