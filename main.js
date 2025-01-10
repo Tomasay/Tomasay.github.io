@@ -98,6 +98,16 @@ function loadingComplete() {
     setTimeout(() => {
         lightDarkSwitch.style.opacity = 1;
     }, 100); // Small delay to ensure the transition is noticeable
+  
+    //Fade arow in
+    const arrow = document.querySelector(".arrow");
+    arrow.style.opacity = 0;
+    arrow.style.transition = "opacity 1s ease-in-out";
+
+    // Trigger fade-in effect
+    setTimeout(() => {
+        arrow.style.opacity = 1;
+    }, 100); // Small delay to ensure the transition is noticeable
     
     // Animate the model to its final position
     gsap.to(loadedModel.scene.position, {
