@@ -147,7 +147,7 @@ function loadingComplete() {
               isListeningToDeviceOrientation = true;
             }
 
-            //console.log(`x: ${tiltX.toFixed(2)}, y: ${tiltY.toFixed(2)}`);
+            console.log(`x: ${tiltX.toFixed(2)}, y: ${tiltY.toFixed(2)}`);
         });
     }
 }
