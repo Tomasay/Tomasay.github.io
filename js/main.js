@@ -27,6 +27,7 @@ function getData(){
         });
     });
     
+    
     // Animate the fade-in effect
     gsap.utils.toArray(".fade-in").forEach((element) => {
       gsap.fromTo(
@@ -50,6 +51,7 @@ function getData(){
       );
     });
     
+    ScrollTrigger.refresh();
     ScrollTrigger.create({
       onUpdate: (self) => {
         const scrollPercentage = (self.progress * 100);
@@ -74,6 +76,8 @@ function getData(){
     }
     
     overrideColors();
+    
+    ScrollTrigger.refresh();
 }
 
 function closeModule(){
@@ -89,6 +93,7 @@ function overrideColors(){
 }
     
 function animateText(){
+        ScrollTrigger.refresh();
         //Text effects
         // Wrap every letter in a span
         var textWrapper = document.querySelector('.ml11 .letters');
