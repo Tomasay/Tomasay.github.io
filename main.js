@@ -72,6 +72,10 @@ function updateProgress(percentage) {
   progressBar.style.transform = `translateY(${translateYValue}px)`;
 }
 
+let tiltX = 0;
+let tiltY = 0;
+let isListeningToDeviceOrientation = false;
+
 function loadingComplete() {
     window.dispatchEvent(pageFullyLoadedEvent);
   
@@ -104,6 +108,48 @@ function loadingComplete() {
         duration: 2, // Animation duration in seconds
         ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
     });
+  
+    // Check if DeviceOrientationEvent is available
+  console.log("('DeviceOrientationEvent' in window): " + ('DeviceOrientationEvent' in window));
+    if (window.DeviceOrientationEvent) {
+        // For iOS: Request permission
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        startListeningToDeviceOrientation();
+                    } else {
+                        console.log('Permission denied');
+                    }
+                })
+                .catch(console.error);
+        } else {
+            // For Android or older iOS
+            startListeningToDeviceOrientation();
+        }
+    } else {
+        console.log('DeviceOrientationEvent is not supported on this device.');
+    }
+
+    // Function to start listening to device orientation
+    function startListeningToDeviceOrientation() {
+        window.addEventListener('deviceorientation', event => {
+            const gamma = event.gamma; // Left-right tilt (-90 to 90)
+            const beta = event.beta;   // Forward-backward tilt (-180 to 180)
+
+            // Map gamma (-90 to 90) to x (-1 to 1)
+            tiltX = gamma / 90;
+
+            // Map beta (-180 to 180) to y (-1 to 1)
+            tiltY = -beta / 180; // Negate to make upward tilt positive
+          
+            if(tiltX != 0 && tiltY != 0){
+              isListeningToDeviceOrientation = true;
+            }
+
+            //console.log(`x: ${tiltX.toFixed(2)}, y: ${tiltY.toFixed(2)}`);
+        });
+    }
 }
 
 // Listen for DOMContentLoaded
@@ -298,8 +344,16 @@ function animate() {
   requestAnimationFrame(animate);
   
   //controls.update();
-  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
-  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
+  
+  if(isListeningToDeviceOrientation){
+    camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (tiltX * 0.1), 0.05);
+    camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (tiltY * 0.1), 0.05);
+  }
+  else{
+    camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
+    camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
+  }
+  
   camera.position.z = originalCameraPos.getComponent(2);
   
   camera.lookAt(lookAtPos);
@@ -321,6 +375,7 @@ function onDocumentMouseMove( event ) {
     if((( event.clientX - windowHalfX ) / 100) > 0){
       mouseX = ( event.clientX - windowHalfX ) / 100;
       mouseY = ( event.clientY - windowHalfY ) / 100;
+      //console.log("X: " + mouseX + " Y: " + mouseY);
     }
   else{
       mouseX = 0;

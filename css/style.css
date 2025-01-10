@@ -4,6 +4,10 @@ html, body {
     -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on Safari */
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 p{
     font-family: 'Raleway', sans-serif;
     font-size: 24px;
