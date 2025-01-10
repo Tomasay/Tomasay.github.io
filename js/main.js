@@ -51,7 +51,6 @@ function getData(){
       );
     });
     
-    ScrollTrigger.refresh();
     ScrollTrigger.create({
       onUpdate: (self) => {
         const scrollPercentage = (self.progress * 100);
@@ -59,6 +58,8 @@ function getData(){
         document.getElementById("arrow").style.opacity = 1 - Math.max(scrollPercentage / 20, 0);
       }
     });
+    
+    setInterval(ScrollTrigger.refresh, 1000);
     
     //Smooth scrolling with links
     $('a[href*=\\#]').on('click', function(event){     
