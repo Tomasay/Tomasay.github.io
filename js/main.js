@@ -2,6 +2,41 @@ window.onload = getData;
 window.addEventListener('pageFullyLoaded', animateText);
 
 function getData(){
+    //Gyroscope
+    // Check if DeviceOrientationEvent is available
+    if (window.DeviceOrientationEvent) {
+        // For iOS: Request permission
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        startListeningToDeviceOrientation();
+                    } else {
+                        console.log('Permission denied');
+                    }
+                })
+                .catch(console.error);
+        } else {
+            // For Android or older iOS
+            startListeningToDeviceOrientation();
+        }
+    } else {
+        console.log('DeviceOrientationEvent is not supported on this device.');
+    }
+
+    // Function to start listening to device orientation
+    function startListeningToDeviceOrientation() {
+        window.addEventListener('deviceorientation', event => {
+            const alpha = event.alpha; // Rotation around z-axis (0-360 degrees)
+            const beta = event.beta;  // Rotation around x-axis (-180 to 180 degrees)
+            const gamma = event.gamma; // Rotation around y-axis (-90 to 90 degrees)
+
+            console.log(`Alpha: ${alpha}, Beta: ${beta}, Gamma: ${gamma}`);
+        });
+    }
+    
+    
+    //Theme toggle
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("change", () => {
         
