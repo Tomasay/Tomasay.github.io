@@ -346,8 +346,8 @@ function animate() {
   //controls.update();
   
   if(isListeningToDeviceOrientation){
-    camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (tiltX * 0.1), 0.05);
-    camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (tiltY * 0.1), 0.05);
+    camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (tiltX * 0.5), 0.05);
+    camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (tiltY * 0.5), 0.05);
   }
   else{
     camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
