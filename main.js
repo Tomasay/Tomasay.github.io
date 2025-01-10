@@ -39,9 +39,6 @@ const fakeProgressBar = () => {
 // Start the logging
 let timer = setInterval(fakeProgressBar, interval);
 
-
-
-
 let mouseX = 0;
 let mouseY = 0;
 
@@ -109,6 +106,7 @@ function loadingComplete() {
         ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
     });
   
+  /*
     // Check if DeviceOrientationEvent is available
   console.log("('DeviceOrientationEvent' in window): " + ('DeviceOrientationEvent' in window));
     if (window.DeviceOrientationEvent) {
@@ -150,6 +148,7 @@ function loadingComplete() {
             console.log(`x: ${tiltX.toFixed(2)}, y: ${tiltY.toFixed(2)}`);
         });
     }
+    */
 }
 
 // Listen for DOMContentLoaded
@@ -345,6 +344,7 @@ function animate() {
   
   //controls.update();
   
+  /*
   if(isListeningToDeviceOrientation){
     camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (tiltX * 5), 0.05);
     camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (tiltY * 5), 0.05);
@@ -353,6 +353,10 @@ function animate() {
     camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
     camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
   }
+  */
+  
+  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
+  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
   
   camera.position.z = originalCameraPos.getComponent(2);
   
