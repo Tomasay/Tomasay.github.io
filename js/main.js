@@ -51,12 +51,12 @@ function getData(){
       );
     });
     
+    ScrollTrigger.refresh();
     ScrollTrigger.create({
-      onUpdate: () => {
-        requestAnimationFrame(() => {
-          const scrollPercentage = (self.progress * 100);
-          document.getElementById("arrow").style.opacity = 1 - Math.max(scrollPercentage / 20, 0);
-        });
+      onUpdate: (self) => {
+        const scrollPercentage = (self.progress * 100);
+        //console.log(`Scroll Percentage: ${scrollPercentage}%`);
+        document.getElementById("arrow").style.opacity = 1 - Math.max(scrollPercentage / 20, 0);
       }
     });
     
@@ -76,6 +76,8 @@ function getData(){
     }
     
     overrideColors();
+    
+    ScrollTrigger.refresh();
 }
 
 function closeModule(){
@@ -91,6 +93,7 @@ function overrideColors(){
 }
     
 function animateText(){
+        ScrollTrigger.refresh();
         //Text effects
         // Wrap every letter in a span
         var textWrapper = document.querySelector('.ml11 .letters');
