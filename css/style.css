@@ -8,6 +8,23 @@ body.modal-open {
     overflow: hidden;
 }
 
+.arrow {
+  color: gray;
+  z-index: 2;
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  margin-left: -20px;
+  width: 40px;
+  height: 40px; /*change with size of arrow to make sit on bottom */
+}
+
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+
 p{
     font-family: 'Raleway', sans-serif;
     font-size: 24px;
@@ -599,4 +616,53 @@ input:checked + .slider:before {
   background: #303136;
   /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
   box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+}
+
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
 }

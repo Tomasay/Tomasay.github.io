@@ -2,6 +2,7 @@ window.onload = getData;
 window.addEventListener('pageFullyLoaded', animateText);
 
 function getData(){
+    
     //Theme toggle
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("change", () => {
@@ -26,7 +27,14 @@ function getData(){
     
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
-    console.log("Registering scroll");
+    
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        const scrollPercentage = (self.progress * 100);
+        console.log(`Scroll Percentage: ${scrollPercentage}%`);
+        document.getElementById("arrow").style.opacity = 1 - Math.max(scrollPercentage / 20, 0);
+      }
+    });
 
     // Animate the fade-in effect
     gsap.utils.toArray(".fade-in").forEach((element) => {
