@@ -268,9 +268,9 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 function checkForMobile(){
-  if(window.innerWidth <= 768){
+  if(/*window.innerWidth <= 768*/ window.innerHeight > window.innerWidth){
     originalCameraPos = new THREE.Vector3(-1, 1.25, 3);
-    lookAtPos = new THREE.Vector3(0, 1.5, 0);
+    lookAtPos = new THREE.Vector3(0, 1.25, 0);
   }
   else{
     originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
@@ -290,8 +290,8 @@ composer.setPixelRatio(window.devicePixelRatio);
 composer.setSize(window.innerWidth, window.innerHeight);
 
 
-if(window.innerWidth <= 768){
-    lookAtPos = new THREE.Vector3(0, 1.5, 0);
+if(/*window.innerWidth <= 768*/ window.innerHeight > window.innerWidth){
+    lookAtPos = new THREE.Vector3(0, 1.25, 0);
     originalCameraPos = new THREE.Vector3(-1, 1.25, 3);
     camera.position.set(-1, 1.25, 3);
   }

@@ -88,7 +88,7 @@ canvas {
     top: 30%; /* Adjust vertical position */
     left: 15%; /* Adjust horizontal position */
     /*font-size: 72px; /* Font size */
-    font-size: 5.5vh;
+    font-size: 3.5vw;
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
     transition: color 0.5s ease;
@@ -107,7 +107,7 @@ body.dark-mode #overlay-text-header, body.dark-mode .navbar-brand{
     top: 39%;
     left: 15%;
     /*font-size: 48px; /* Font size */
-    font-size: 3.6vh;
+    font-size: 2vw;
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
     transition: color 0.5s ease;
@@ -484,6 +484,24 @@ iframe{
     border:2px solid black;
 }
 
+@media screen and (orientation:portrait) {
+    #overlay-text-header,
+    #overlay-text-subheader {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    #overlay-text-header {
+        top: 20%;
+        font-size: 5vh;
+    }
+
+    #overlay-text-subheader {
+        top: 30%;
+        font-size: 3vh;
+    }
+}
+
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .col-lg p{
@@ -520,18 +538,6 @@ iframe{
     
     #aboutInfo p{
         font-size: 22px;
-    }
-    
-    #overlay-text-header {
-        top: 20%; /* Adjust vertical position */
-        left: 10%; /* Adjust horizontal position */
-        font-size: 5vh;
-    }
-
-    #overlay-text-subheader {
-        top: 30%;
-        left: 10%;
-        font-size: 3vh;
     }
 }
 
