@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 window.addEventListener('DOMContentLoaded', getData);
-window.addEventListener('pageFullyLoaded', animateText);
+window.addEventListener('pageFullyLoaded', pageFullyLoaded);
 
 function getData(){
     
@@ -27,6 +27,10 @@ function getData(){
         });
     });
     
+    overrideColors();
+}
+
+function pageFullyLoaded(){
     
     // Animate the fade-in effect
     gsap.utils.toArray(".fade-in").forEach((element) => {
@@ -76,9 +80,7 @@ function getData(){
         closeButton.addEventListener("click", closeModule);
     }
     
-    overrideColors();
-    
-    ScrollTrigger.refresh();
+    animateText();
 }
 
 function closeModule(){
