@@ -46,6 +46,11 @@ let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 
 document.addEventListener( 'mousemove', onDocumentMouseMove );
+document.addEventListener('mouseleave', function() {
+  mouseX = 0;
+  mouseY = 0;
+});
+
 let monitorScreenLightMode;
 
 const themeToggle = document.getElementById("themeToggle");
@@ -270,11 +275,11 @@ function resizeRendererToDisplaySize(renderer) {
 function checkForMobile(){
   if(/*window.innerWidth <= 768*/ window.innerHeight > window.innerWidth){
     originalCameraPos = new THREE.Vector3(-1, 1.25, 3);
-    lookAtPos = new THREE.Vector3(0, 1.25, 0);
+    lookAtPos = new THREE.Vector3(-0.25, 1.25, 0);
   }
   else{
-    originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
-    lookAtPos = new THREE.Vector3(-1, 0.5, 0);
+    originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2.25);
+    lookAtPos = new THREE.Vector3(-1.25, 0.5, 0);
   }
   
   camera.lookAt(lookAtPos);
@@ -291,14 +296,14 @@ composer.setSize(window.innerWidth, window.innerHeight);
 
 
 if(/*window.innerWidth <= 768*/ window.innerHeight > window.innerWidth){
-    lookAtPos = new THREE.Vector3(0, 1.25, 0);
+    lookAtPos = new THREE.Vector3(-0.25, 1.25, 0);
     originalCameraPos = new THREE.Vector3(-1, 1.25, 3);
     camera.position.set(-1, 1.25, 3);
   }
   else{
-    lookAtPos = new THREE.Vector3(-1, 0.5, 0);
-    originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2);
-    camera.position.set(-1.25, 1.25, 2);
+    lookAtPos = new THREE.Vector3(-1.25, 0.5, 0);
+    originalCameraPos = new THREE.Vector3(-1.25, 1.25, 2.25);
+    camera.position.set(-1.25, 1.25, 2.25);
   }
 
 // Make the camera look at the model
@@ -365,8 +370,8 @@ function animate() {
   }
   */
   
-  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
-  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
+  camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.025), 0.05);
+  camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.025), 0.05);
   
   camera.position.z = originalCameraPos.getComponent(2);
   
@@ -386,6 +391,7 @@ function animate() {
 }
 
 function onDocumentMouseMove( event ) {
+  /*
     if((( event.clientX - windowHalfX ) / 100) > 0){
       mouseX = ( event.clientX - windowHalfX ) / 100;
       mouseY = ( event.clientY - windowHalfY ) / 100;
@@ -395,6 +401,10 @@ function onDocumentMouseMove( event ) {
       mouseX = 0;
       mouseY = 0;
   }
+  */
+  
+    mouseX = ( event.clientX - windowHalfX ) / 100;
+    mouseY = ( event.clientY - windowHalfY ) / 100;
   
     //console.log("X: " + mouseX + " Y: " + mouseY);
 }
