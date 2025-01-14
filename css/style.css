@@ -88,7 +88,7 @@ canvas {
     top: 30%; /* Adjust vertical position */
     left: 15%; /* Adjust horizontal position */
     /*font-size: 72px; /* Font size */
-    font-size: 3.5vw;
+    font-size: min(3.5vw, 100px);
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
     transition: color 0.5s ease;
@@ -108,6 +108,7 @@ body.dark-mode #overlay-text-header, body.dark-mode .navbar-brand{
     left: 15%;
     /*font-size: 48px; /* Font size */
     font-size: 2vw;
+    font-size: min(2vw, 64px);
     font-family: 'Raleway', sans-serif;
     z-index: 10; /* Ensure it appears above the canvas */
     transition: color 0.5s ease;
