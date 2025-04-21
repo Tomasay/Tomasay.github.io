@@ -111,10 +111,10 @@ function animateText(){
         function wrapLettersWithLink(element) {
             let newHTML = '';
             for (let i = 0; i < element.textContent.length; i++) {
-                //console.log(element.textContent[i]); 
+                //console.log(element.textContent[i]);
                 if(i == 20){
                     //newHTML += "<a href='https://www.vive.com/us/' target='_blank'><u>" + element.textContent[i];
-                    newHTML += "<a href='https://www.vive.com/us/' target='_blank'><u><span class='letter-2'>" + element.textContent[i] + "</span>";
+                    newHTML += "<a href='https://www.meta.com/' target='_blank'><u><span class='letter-2'>" + "<i class='fa-brands fa-meta'></i>" + element.textContent[i] + "</span>";
                 }
                 else if(i == element.textContent.length - 1){
                     newHTML += "<span class='letter-2'>" + element.textContent[i] + "</span></u></a>";

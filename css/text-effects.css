@@ -37,22 +37,31 @@
 }
 
 a .letter-2 {
-  text-decoration: underline;
   transition: color 0.5s ease;
+}
+
+.fa-meta {
+  transition: color 0.5s ease;
+  font-size: 42px;
 }
 
 /* unvisited and visited link */
 body.light-mode a:link .letter-2, body.light-mode a:visited .letter-2{
   color: dimgray;
+  color:#0081FB;
 }
 body.dark-mode a:link .letter-2, body.dark-mode a:visited .letter-2{
   color: lightgray;
+  color:#0081FB;
 }
 
 /* mouse over and selected link */
 body.light-mode a:hover .letter-2, body.light-mode a:active .letter-2{
   color: black;
+  color:#004689;
+  
 }
 body.dark-mode a:hover .letter-2, body.dark-mode a:active .letter-2{
   color: white;
+  color:#004689;
 }
