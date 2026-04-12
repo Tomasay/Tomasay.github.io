@@ -28,6 +28,27 @@ function getData(){
     });
     
     overrideColors();
+
+    // Stop media playback when a modal is closed.
+    // Must use jQuery's .on() because Bootstrap 4 fires modal events through
+    // jQuery's event system, which jQuery 1.x does not propagate to native addEventListener.
+    $('.modal').on('hidden.bs.modal', function() {
+        const outerIframe = this.querySelector('iframe');
+        if (!outerIframe) return;
+        try {
+            const iframeDoc = outerIframe.contentDocument || outerIframe.contentWindow.document;
+            // Pause any direct <video> elements
+            iframeDoc.querySelectorAll('video').forEach(v => v.pause());
+            // Reset embedded iframes (e.g. Google Drive) by reassigning src, which stops playback
+            iframeDoc.querySelectorAll('iframe').forEach(innerIframe => {
+                const src = innerIframe.src;
+                innerIframe.src = '';
+                innerIframe.src = src;
+            });
+        } catch (e) {
+            console.error('Could not stop media in modal:', e);
+        }
+    });
 }
 
 function pageFullyLoaded(){
@@ -104,13 +125,15 @@ function animateText(){
         textWrapper.style.opacity = 1;
 
         var textWrapper2 = document.querySelector('.ml11-2 .letters-2');
+        var totalChars2 = textWrapper2.textContent.length;
         textWrapper2.innerHTML = textWrapper2.textContent.replace(/(\S)/g, "<span class='letter-2'>$&</span>");
         //wrapLettersWithLink(textWrapper2);
         textWrapper2.style.opacity = 1;
-    
+
         var textWrapper3 = document.querySelector('.ml11-3 .letters-3');
         wrapLettersWithLink(textWrapper3);
         textWrapper3.style.opacity = 1;
+        var numLetters3 = textWrapper3.querySelectorAll('.letter-3').length;
 
         function wrapLettersWithLink(element) {
             let newHTML = '';
@@ -171,14 +194,14 @@ function animateText(){
             targets: '.ml11-2 .line-2',
             translateX: [0, document.querySelector('.ml11-2 .letters-2').getBoundingClientRect().width + 10],
             easing: "easeOutExpo",
-            duration: 700,
+            duration: 34 * totalChars2,
             delay: 100
           }).add({
             targets: '.ml11-2 .letter-2',
             opacity: [0,1],
             easing: "easeOutExpo",
             duration: 600,
-            offset: '-=775',
+            offset: '-=' + (34 * totalChars2 + 75),
             delay: (el, i) => 34 * (i+1)
           }).add({
             targets: '.line-2',
@@ -188,35 +211,37 @@ function animateText(){
             delay: 1000
           });
     
-        anime.timeline({loop: false})
-          .add({
-            targets: '.ml11-3 .line-3',
-            scaleY: [0,1],
-            opacity: [0.5,1],
-            easing: "easeOutExpo",
-            duration: 700,
-            delay: 4000
-          })
-          .add({
-            targets: '.ml11-3 .line-3',
-            translateX: [0, document.querySelector('.ml11-3 .letters-3').getBoundingClientRect().width + 10],
-            easing: "easeOutExpo",
-            duration: 700,
-            delay: 100
-          }).add({
-            targets: '.ml11-3 .letter-3',
-            opacity: [0,1],
-            easing: "easeOutExpo",
-            duration: 600,
-            offset: '-=775',
-            delay: (el, i) => 34 * (i+1)
-          }).add({
-            targets: '.line-3',
-            opacity: 0,
-            duration: 1000,
-            easing: "easeOutExpo",
-            delay: 1000
-          });
+        document.fonts.ready.then(() => {
+          anime.timeline({loop: false})
+            .add({
+              targets: '.ml11-3 .line-3',
+              scaleY: [0,1],
+              opacity: [0.5,1],
+              easing: "easeOutExpo",
+              duration: 700,
+              delay: 4000
+            })
+            .add({
+              targets: '.ml11-3 .line-3',
+              translateX: [0, document.querySelector('.ml11-3 .letters-3').getBoundingClientRect().width + 10],
+              easing: "easeOutExpo",
+              duration: 34 * numLetters3,
+              delay: 100
+            }).add({
+              targets: '.ml11-3 .letter-3',
+              opacity: [0,1],
+              easing: "easeOutExpo",
+              duration: 600,
+              offset: '-=' + (34 * numLetters3 + 75),
+              delay: (el, i) => 34 * (i+1)
+            }).add({
+              targets: '.line-3',
+              opacity: 0,
+              duration: 1000,
+              easing: "easeOutExpo",
+              delay: 1000
+            });
+        });
 }
 
 /*
