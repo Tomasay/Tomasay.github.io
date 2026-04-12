@@ -84,8 +84,6 @@ function pageFullyLoaded(){
       }
     });
     
-    setInterval(ScrollTrigger.refresh, 1000);
-    
     //Smooth scrolling with links
     $('a[href*=\\#]').on('click', function(event){     
         event.preventDefault();
