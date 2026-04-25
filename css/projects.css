@@ -152,6 +152,26 @@ a:visited{
     padding: 10px;
 }
 
+.social-embeds-row {
+    max-width: 100%;
+    margin: 20px auto;
+}
+
+.social-embed-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.social-embeds-row .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.social-embeds-row .col-md-4 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .icon{
     padding: 10px;
     transition: .5s;
