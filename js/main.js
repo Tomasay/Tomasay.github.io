@@ -122,29 +122,21 @@ function animateText(){
         textWrapper.innerHTML = textWrapper.textContent.replace(/(\S)/g, "<span class='letter'>$&</span>");
         textWrapper.style.opacity = 1;
 
-        var textWrapper2 = document.querySelector('.ml11-2 .letters-2');
-        var totalChars2 = textWrapper2.textContent.length;
-        textWrapper2.innerHTML = textWrapper2.textContent.replace(/(\S)/g, "<span class='letter-2'>$&</span>");
-        //wrapLettersWithLink(textWrapper2);
-        textWrapper2.style.opacity = 1;
-
         var textWrapper3 = document.querySelector('.ml11-3 .letters-3');
         wrapLettersWithLink(textWrapper3);
         textWrapper3.style.opacity = 1;
         var numLetters3 = textWrapper3.querySelectorAll('.letter-3').length;
 
         function wrapLettersWithLink(element) {
+            const text = element.textContent;
             let newHTML = '';
-            for (let i = 0; i < element.textContent.length; i++) {
-                if(i == 16){
-                    newHTML += "<a href='https://www.meta.com/' target='_blank'><u><span class='letter-3'>" + "<i class='fa-brands fa-meta'></i>" + element.textContent[i] + "</span>";
-                }
-                else if(i == element.textContent.length - 1){
-                    newHTML += "<span class='letter-3'>" + element.textContent[i] + "</span></u></a>";
-                    //newHTML += element.textContent[i] + "</u></a>";
-                }
-                else{
-                    newHTML += "<span class='letter-3'>" + element.textContent[i] + "</span>";
+            for (let i = 0; i < text.length; i++) {
+                if (i === 20) {
+                    newHTML += "<a href='https://www.meta.com/' target='_blank'><u><span class='letter-3'><i class='fa-brands fa-meta'></i>" + text[i] + "</span>";
+                } else if (i === 24) {
+                    newHTML += "<span class='letter-3'>" + text[i] + "</span></u></a>";
+                } else {
+                    newHTML += "<span class='letter-3'>" + text[i] + "</span>";
                 }
             }
             element.innerHTML = newHTML;
@@ -179,36 +171,6 @@ function animateText(){
             easing: "easeOutExpo"
           });
 
-        anime.timeline({loop: false})
-          .add({
-            targets: '.ml11-2 .line-2',
-            scaleY: [0,1],
-            opacity: [0.5,1],
-            easing: "easeOutExpo",
-            duration: 700,
-            delay: 2000
-          })
-          .add({
-            targets: '.ml11-2 .line-2',
-            translateX: [0, document.querySelector('.ml11-2 .letters-2').getBoundingClientRect().width + 10],
-            easing: "easeOutExpo",
-            duration: 34 * totalChars2,
-            delay: 100
-          }).add({
-            targets: '.ml11-2 .letter-2',
-            opacity: [0,1],
-            easing: "easeOutExpo",
-            duration: 600,
-            offset: '-=' + (34 * totalChars2 + 75),
-            delay: (el, i) => 34 * (i+1)
-          }).add({
-            targets: '.line-2',
-            opacity: 0,
-            duration: 1000,
-            easing: "easeOutExpo",
-            delay: 1000
-          });
-    
         document.fonts.ready.then(() => {
           anime.timeline({loop: false})
             .add({
@@ -217,13 +179,13 @@ function animateText(){
               opacity: [0.5,1],
               easing: "easeOutExpo",
               duration: 700,
-              delay: 4000
+              delay: 2000
             })
             .add({
               targets: '.ml11-3 .line-3',
               translateX: [0, document.querySelector('.ml11-3 .letters-3').getBoundingClientRect().width + 10],
               easing: "easeOutExpo",
-              duration: 34 * numLetters3,
+              duration: 36 * numLetters3,
               delay: 100
             }).add({
               targets: '.ml11-3 .letter-3',
@@ -231,7 +193,7 @@ function animateText(){
               easing: "easeOutExpo",
               duration: 600,
               offset: '-=' + (34 * numLetters3 + 75),
-              delay: (el, i) => 34 * (i+1)
+              delay: (el, i) => 16 * (i+1)
             }).add({
               targets: '.line-3',
               opacity: 0,

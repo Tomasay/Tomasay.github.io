@@ -103,7 +103,7 @@ body.dark-mode #overlay-text-header, body.dark-mode .navbar-brand{
     color: white; /* Text color */
 }
 
-#overlay-text-subheader,  #overlay-text-subheader2{
+#overlay-text-subheader {
     position: absolute;
     top: 39%;
     left: 15%;
@@ -113,19 +113,11 @@ body.dark-mode #overlay-text-header, body.dark-mode .navbar-brand{
     transition: color 0.5s ease;
 }
 
-#overlay-text-subheader {
-    top: 39%;
-}
-
-#overlay-text-subheader2 {
-    top: 44%;
-}
-
-body.light-mode #overlay-text-subheader, body.light-mode #overlay-text-subheader2 {
+body.light-mode #overlay-text-subheader {
     color: gray; /* Text color */
 }
 
-body.dark-mode #overlay-text-subheader, body.dark-mode #overlay-text-subheader2 {
+body.dark-mode #overlay-text-subheader {
     color: lightgray; /* Text color */
 }
 
@@ -499,12 +491,11 @@ iframe{
 
 @media screen and (orientation:portrait) {
     #overlay-text-header,
-    #overlay-text-subheader,
-    #overlay-text-subheader2{
+    #overlay-text-subheader {
         left: 50%;
         transform: translateX(-50%);
     }
-    
+
     #overlay-text-header {
         top: 20%;
         font-size: 5vh;
@@ -512,11 +503,6 @@ iframe{
 
     #overlay-text-subheader {
         top: 30%;
-        font-size: 2.5vh;
-    }
-    
-    #overlay-text-subheader2 {
-        top: 34%;
         font-size: 2.5vh;
     }
     
