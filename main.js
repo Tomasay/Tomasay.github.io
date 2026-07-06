@@ -83,7 +83,8 @@ function loadingComplete() {
   
     loaderElement.classList.add('hidden'); // Hide the loader
     document.getElementsByTagName("main")[0].style.display = 'block';
-    animate(); // Start animation loop
+    hasLoaded = true;
+    startAnimation(); // Start animation loop
     
     //Fade navbar in
     const navbar = document.querySelector(".navbar");
@@ -181,6 +182,10 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 let originalCameraPos;
 let lookAtPos;
 
+// Cap the device pixel ratio so high-DPI phones/retina screens don't render
+// the shadowed, antialiased scene at 2-3x resolution (the main mobile drain).
+const MAX_PIXEL_RATIO = 1.5;
+
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
   alpha: true,
@@ -263,9 +268,9 @@ floor.receiveShadow = true; // Enable receiving shadows
 scene.add(floor);
 
 function resizeRendererToDisplaySize(renderer) {
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  composer.setPixelRatio(window.devicePixelRatio);
+  composer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
   composer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = (window.innerWidth / window.innerHeight);
   
@@ -289,9 +294,9 @@ function checkForMobile(){
 window.addEventListener('resize', () => resizeRendererToDisplaySize(renderer));
 resizeRendererToDisplaySize(renderer);
 
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
 renderer.setSize(window.innerWidth, window.innerHeight);
-composer.setPixelRatio(window.devicePixelRatio);
+composer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
 composer.setSize(window.innerWidth, window.innerHeight);
 
 
@@ -341,8 +346,8 @@ dirLight.shadow.camera.bottom = -10;
 // Adjust the blur radius
 dirLight.shadow.radius = 5; 
 
-dirLight.shadow.mapSize.width = 1024;
-dirLight.shadow.mapSize.height = 1024;
+dirLight.shadow.mapSize.width = 512;
+dirLight.shadow.mapSize.height = 512;
 
 scene.add(dirLight);
 
@@ -354,30 +359,41 @@ scene.add(pointLight, ambientLight, dirLight);
 // Animation Loop
 const clock = new THREE.Clock();
 
-function animate() {
+// Only run the render loop while the hero canvas is actually on-screen and the
+// tab is visible. A continuous 60fps loop rendering a shadowed 3D model is the
+// single biggest ongoing CPU/GPU cost, so we pause it the moment it isn't seen.
+let animationRunning = false;
+let canvasVisible = true;
+let pageVisible = true;
+let hasLoaded = false;
+
+function shouldAnimate() {
+  return hasLoaded && canvasVisible && pageVisible;
+}
+
+function startAnimation() {
+  if (animationRunning || !shouldAnimate()) return;
+  animationRunning = true;
+  clock.getDelta(); // discard time elapsed while paused so animations don't jump
   requestAnimationFrame(animate);
-  
-  //controls.update();
-  
-  /*
-  if(isListeningToDeviceOrientation){
-    camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (tiltX * 5), 0.05);
-    camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (tiltY * 5), 0.05);
+}
+
+function animate() {
+  if (!shouldAnimate()) {
+    animationRunning = false;
+    return;
   }
-  else{
-    camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.05), 0.05);
-    camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.05), 0.05);
-  }
-  */
-  
+  requestAnimationFrame(animate);
+
   camera.position.x = lerp(camera.position.x, originalCameraPos.getComponent(0) + (mouseX  * 0.025), 0.05);
   camera.position.y = lerp(camera.position.y, originalCameraPos.getComponent(1) + (mouseY  * 0.025), 0.05);
-  
+
   camera.position.z = originalCameraPos.getComponent(2);
-  
+
+  // Moving the camera only changes the view; the projection matrix depends on
+  // fov/aspect/near/far, which are only updated on resize (see checkForMobile).
   camera.lookAt(lookAtPos);
-  camera.updateProjectionMatrix();
-    
+
   // Get the time delta since the last frame
   const delta = clock.getDelta();
 
@@ -388,6 +404,23 @@ function animate() {
 
   renderer.render(scene, camera);
   //composer.render(scene, camera);
+}
+
+// Pause the loop when the tab is backgrounded, resume when it returns.
+document.addEventListener('visibilitychange', () => {
+  pageVisible = !document.hidden;
+  if (pageVisible) startAnimation();
+});
+
+// Pause the loop once the hero canvas scrolls out of view, resume when it
+// scrolls back in.
+const heroCanvas = document.querySelector('#bg');
+if ('IntersectionObserver' in window && heroCanvas) {
+  const canvasObserver = new IntersectionObserver((entries) => {
+    canvasVisible = entries[0].isIntersecting;
+    if (canvasVisible) startAnimation();
+  }, { threshold: 0 });
+  canvasObserver.observe(heroCanvas);
 }
 
 function onDocumentMouseMove( event ) {
