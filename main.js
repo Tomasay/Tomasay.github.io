@@ -8,36 +8,40 @@ import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { ParallaxBarrierEffect } from 'three/addons/effects/ParallaxBarrierEffect.js';
 
 
-let current = 0;
-let interval = 1; // Start with a quicker interval
-
 const pageFullyLoadedEvent = new Event("pageFullyLoaded");
 
-const fakeProgressBar = () => {
-  // Check if we have reached or surpassed 100
-  if (current >= 100) {
-    loadingComplete();
-    clearInterval(timer);
-  } else {
-    // Increase the number and slow down the interval
-    current++;
+// The bar always plays for at least this long, so it fills in one smooth
+// sweep even when everything is already cached
+const MIN_LOAD_DURATION = 1600; // ms
+const loadStartTime = performance.now();
+let current = 0; // Displayed progress, 0-100
+let lastFrameTime = loadStartTime;
 
-    // Dynamically adjust the interval to slow down as it approaches 100
-    if (assetsLoaded && domContentLoaded){
-      interval = 0.1;
-    }
-    else{
-      interval = Math.max(1, (100 - current)); // Slows down as current approaches 100
-    }
-    clearInterval(timer);
-    timer = setInterval(fakeProgressBar, interval);
-    
+const progressFrame = (now) => {
+  // Clamp delta so a long stalled frame doesn't snap the bar forward
+  const deltaSeconds = Math.min((now - lastFrameTime) / 1000, 0.1);
+  lastFrameTime = now;
+
+  const elapsed = now - loadStartTime;
+  let target = Math.min(elapsed / MIN_LOAD_DURATION, 1) * 100;
+  if (!(assetsLoaded && domContentLoaded)) {
+    // Still waiting on assets: creep toward 90% instead of finishing
+    target = Math.min(target, 90 * (1 - Math.exp(-elapsed / 3000)));
+  }
+
+  // Frame-rate independent ease toward the target
+  current += (target - current) * (1 - Math.exp(-8 * deltaSeconds));
+
+  if (current >= 99.5) {
+    updateProgress(100);
+    // Let the bar visibly finish filling before revealing the page
+    setTimeout(loadingComplete, 400);
+  } else {
     updateProgress(current);
+    requestAnimationFrame(progressFrame);
   }
 };
-
-// Start the logging
-let timer = setInterval(fakeProgressBar, interval);
+requestAnimationFrame(progressFrame);
 
 let mouseX = 0;
 let mouseY = 0;
@@ -64,6 +68,25 @@ themeToggle.addEventListener("change", () => {
 
 const loaderElement = document.getElementById('loader');
 const progressBar = document.getElementById('loader-foreground');
+const loaderText = document.getElementById('loader-text');
+
+// Fun status lines cycled under the loader while the page loads
+const loaderMessages = [
+  'Compiling shaders...',
+  'Baking lightmaps...',
+  'Brewing espresso...',
+  'Triangulating polygons...',
+  'Warming up the GPU...'
+];
+let loaderMessageIndex = 0;
+const loaderTextTimer = setInterval(() => {
+  loaderMessageIndex = (loaderMessageIndex + 1) % loaderMessages.length;
+  loaderText.style.opacity = 0;
+  setTimeout(() => {
+    loaderText.textContent = loaderMessages[loaderMessageIndex];
+    loaderText.style.opacity = 1;
+  }, 250);
+}, 1600);
 
 // Track loading state
 let assetsLoaded = false;
@@ -82,6 +105,8 @@ function loadingComplete() {
     window.dispatchEvent(pageFullyLoadedEvent);
   
     loaderElement.classList.add('hidden'); // Hide the loader
+    clearInterval(loaderTextTimer);
+    loaderText.classList.add('hidden');
     document.getElementsByTagName("main")[0].style.display = 'block';
     hasLoaded = true;
     startAnimation(); // Start animation loop

@@ -70,6 +70,27 @@ h2{
   bottom: 0;
   background: #1AD0E7;
   transform: translateY(128px);
+  /* Compositor-driven, so the fill keeps gliding even while the main
+     thread is blocked loading assets and compiling shaders */
+  transition: transform 0.35s linear;
+}
+
+.loader-text {
+  position: absolute;
+  top: calc(50% + 88px);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #222b32;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+body.dark-mode .loader-text {
+  color: #f4f4f5;
 }
 
 .hidden {
