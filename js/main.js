@@ -97,8 +97,9 @@ function pageFullyLoaded(){
         $('html,body').animate({scrollTop:$(this.hash).offset().top - 55}, 1000);
     });
     
-    // Pause the project-grid videos while they're off-screen so they don't
-    // compete for the small pool of mobile hardware video decoders.
+    // The project-grid videos don't autoplay (14 simultaneous decoders at
+    // page load evict the WebGL context on mobile). Instead, play each one
+    // only while it's on-screen.
     if ('IntersectionObserver' in window) {
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -110,7 +111,7 @@ function pageFullyLoaded(){
                 }
             });
         }, { rootMargin: '200px' });
-        document.querySelectorAll('main video[autoplay]').forEach((v) => videoObserver.observe(v));
+        document.querySelectorAll('main video').forEach((v) => videoObserver.observe(v));
     }
 
     animateText();

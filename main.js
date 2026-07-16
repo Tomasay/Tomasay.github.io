@@ -212,30 +212,57 @@ let lookAtPos;
 // the shadowed, antialiased scene at 2-3x resolution (the main mobile drain).
 const MAX_PIXEL_RATIO = 1.5;
 
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector('#bg'),
-  alpha: true,
-  antialias: true
-});
+function createRenderer(canvasElement) {
+  const r = new THREE.WebGLRenderer({
+    canvas: canvasElement,
+    alpha: true,
+    antialias: true
+  });
+  r.toneMapping = THREE.ACESFilmicToneMapping;
+  r.toneMappingExposure = 0.5;
+  r.shadowMap.enabled = true;
+  r.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.5;
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+  // If the GPU evicts our WebGL context (mobile browsers do this under
+  // memory pressure), preventing the default lets the browser restore it,
+  // and the restore event kicks the render loop back on. If no restore
+  // comes, rebuild the renderer on a fresh canvas instead of leaving the
+  // scene blank forever.
+  canvasElement.addEventListener('webglcontextlost', (event) => {
+    event.preventDefault();
+    setTimeout(() => {
+      if (renderer.domElement === canvasElement && r.getContext().isContextLost()) {
+        rebuildRenderer();
+      }
+    }, 8000);
+  });
+  canvasElement.addEventListener('webglcontextrestored', () => {
+    startAnimation();
+  });
+  return r;
+}
+
+let renderer = createRenderer(document.querySelector('#bg'));
+
+function rebuildRenderer() {
+  const oldCanvas = renderer.domElement;
+  renderer.dispose();
+  // A canvas whose context was permanently lost can't get a new one; a
+  // fresh element (same id/attributes) can. Three re-uploads the scene on
+  // the next render.
+  const newCanvas = oldCanvas.cloneNode(false);
+  oldCanvas.replaceWith(newCanvas);
+  renderer = createRenderer(newCanvas);
+  lastCanvasWidth = 0; // force the resize path to reconfigure the new renderer
+  lastCanvasHeight = 0;
+  resizeRendererToDisplaySize(renderer);
+  observeHeroCanvas();
+  startAnimation();
+}
 
 const loader = new GLTFLoader();
 
 let mixer;
-
-// If the GPU evicts our WebGL context (mobile browsers do this under memory
-// pressure), preventing the default lets the browser restore it, and the
-// restore event kicks the render loop back on.
-renderer.domElement.addEventListener('webglcontextlost', (event) => {
-  event.preventDefault();
-});
-renderer.domElement.addEventListener('webglcontextrestored', () => {
-  startAnimation();
-});
 
 let loadedModel;
 loader.load( 'model.gltf', function ( gltf ) {
@@ -447,15 +474,19 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // Pause the loop once the hero canvas scrolls out of view, resume when it
-// scrolls back in.
-const heroCanvas = document.querySelector('#bg');
-if ('IntersectionObserver' in window && heroCanvas) {
-  const canvasObserver = new IntersectionObserver((entries) => {
+// scrolls back in. Re-run after a renderer rebuild so the observer tracks
+// the replacement canvas element.
+let canvasObserver = null;
+function observeHeroCanvas() {
+  if (!('IntersectionObserver' in window)) return;
+  if (canvasObserver) canvasObserver.disconnect();
+  canvasObserver = new IntersectionObserver((entries) => {
     canvasVisible = entries[0].isIntersecting;
     if (canvasVisible) startAnimation();
   }, { threshold: 0 });
-  canvasObserver.observe(heroCanvas);
+  canvasObserver.observe(renderer.domElement);
 }
+observeHeroCanvas();
 
 function onDocumentMouseMove( event ) {
   /*
