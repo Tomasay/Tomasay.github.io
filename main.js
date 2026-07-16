@@ -378,7 +378,13 @@ function resizeRendererToDisplaySize(renderer) {
   lastCanvasWidth = width;
   lastCanvasHeight = height;
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
+  // With antialiasing gone (levels 1-2) the render must get sharper, not
+  // softer: jaggies plus upscale blur read as broken. The degraded levels
+  // shed shadows/AA, which more than pays for the extra resolution.
+  const pixelRatioCap = glDegradeLevel >= 2 ? window.devicePixelRatio
+                      : glDegradeLevel >= 1 ? 2
+                      : MAX_PIXEL_RATIO;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, pixelRatioCap));
   renderer.setSize(width, height, false); // false: CSS keeps control of the display size
   camera.aspect = width / height;
 
