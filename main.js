@@ -212,12 +212,16 @@ let lookAtPos;
 // the shadowed, antialiased scene at 2-3x resolution (the main mobile drain).
 const MAX_PIXEL_RATIO = 1.5;
 
-// Some mobile GPU drivers crash ("context lost") on the full-quality scene.
-// Each loss bumps this level — persisted so future visits start at settings
-// the device has proven it can handle:
+// Some mobile GPU drivers crash ("context lost") on the full-quality scene,
+// and Chrome then blocks WebGL for the whole domain — so losses are costly.
+// Android starts one level safer; each actual loss bumps the level further
+// and persists it so future visits start at settings the device handles:
 // 0 = antialias + soft shadows, 1 = no AA + basic shadows, 2 = no AA, no shadows, 1x
-let glDegradeLevel = 0;
-try { glDegradeLevel = Math.min(+localStorage.getItem('glDegradeLevel') || 0, 2); } catch (e) {}
+const DEFAULT_GL_LEVEL = /Android/i.test(navigator.userAgent) ? 1 : 0;
+let glDegradeLevel = DEFAULT_GL_LEVEL;
+try {
+  glDegradeLevel = Math.max(DEFAULT_GL_LEVEL, Math.min(+localStorage.getItem('glDegradeLevel') || 0, 2));
+} catch (e) {}
 
 function createRenderer(canvasElement) {
   const r = new THREE.WebGLRenderer({
