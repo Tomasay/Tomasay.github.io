@@ -7,6 +7,9 @@ const pageFullyLoadedEvent = new Event("pageFullyLoaded");
 // The bar always plays for at least this long, so it fills in one smooth
 // sweep even when everything is already cached
 const MIN_LOAD_DURATION = 1600; // ms
+// If loading never finishes (model fetch fails, WebGL refuses to start),
+// reveal the site anyway instead of leaving the loader up forever.
+const LOADER_FAILSAFE_MS = 15000;
 const loadStartTime = performance.now();
 let current = 0; // Displayed progress, 0-100
 let lastFrameTime = loadStartTime;
@@ -18,7 +21,7 @@ const progressFrame = (now) => {
 
   const elapsed = now - loadStartTime;
   let target = Math.min(elapsed / MIN_LOAD_DURATION, 1) * 100;
-  if (!(assetsLoaded && domContentLoaded)) {
+  if (!(assetsLoaded && domContentLoaded) && elapsed < LOADER_FAILSAFE_MS) {
     // Still waiting on assets: creep toward 90% instead of finishing
     target = Math.min(target, 90 * (1 - Math.exp(-elapsed / 3000)));
   }
@@ -74,6 +77,7 @@ const loaderMessages = [
 ];
 let loaderMessageIndex = 0;
 const loaderTextTimer = setInterval(() => {
+  if (!loaderText) return; // stale cached HTML may not have the element
   loaderMessageIndex = (loaderMessageIndex + 1) % loaderMessages.length;
   loaderText.style.opacity = 0;
   setTimeout(() => {
@@ -100,7 +104,7 @@ function loadingComplete() {
   
     loaderElement.classList.add('hidden'); // Hide the loader
     clearInterval(loaderTextTimer);
-    loaderText.classList.add('hidden');
+    if (loaderText) loaderText.classList.add('hidden');
     document.getElementsByTagName("main")[0].style.display = 'block';
     hasLoaded = true;
     startAnimation(); // Start animation loop
@@ -134,12 +138,15 @@ function loadingComplete() {
         arrow.style.opacity = 1;
     }, 100); // Small delay to ensure the transition is noticeable
     
-    // Animate the model to its final position
-    gsap.to(loadedModel.scene.position, {
-        x: 0, // Final X position
-        duration: 2, // Animation duration in seconds
-        ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
-    });
+    // Animate the model to its final position (skip if the failsafe fired
+    // before the model finished loading)
+    if (loadedModel) {
+      gsap.to(loadedModel.scene.position, {
+          x: 0, // Final X position
+          duration: 2, // Animation duration in seconds
+          ease: "elastic.out(1, 0.3)", // Elastic easing for recoil effect
+      });
+    }
   
   /*
     // Check if DeviceOrientationEvent is available
@@ -275,6 +282,10 @@ loader.load( 'model.gltf', function ( gltf ) {
     // Update progress based on loading percentage
     const progress = (xhr.loaded / xhr.total) * 50; // Assume assets are the other half of loading
     //updateProgress(50 + progress);
+  }, function (error) {
+    // Reveal the site without the 3D scene rather than spinning forever
+    console.error('Failed to load model:', error);
+    assetsLoaded = true;
   });
 
 const floorGeometry = new THREE.PlaneGeometry(10, 10); // Adjust size as needed
