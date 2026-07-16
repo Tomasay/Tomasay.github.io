@@ -231,7 +231,7 @@ function createRenderer(canvasElement) {
   canvasElement.addEventListener('webglcontextlost', (event) => {
     event.preventDefault();
     setTimeout(() => {
-      if (renderer.domElement === canvasElement && r.getContext().isContextLost()) {
+      if (renderer && renderer.domElement === canvasElement && r.getContext().isContextLost()) {
         rebuildRenderer();
       }
     }, 8000);
@@ -242,7 +242,35 @@ function createRenderer(canvasElement) {
   return r;
 }
 
-let renderer = createRenderer(document.querySelector('#bg'));
+let renderer = null;
+let rendererAttempts = 0;
+
+function initRenderer(canvasElement, isRetry) {
+  try {
+    renderer = createRenderer(canvasElement);
+  } catch (e) {
+    // After repeated context losses Chrome refuses WebGL for the whole
+    // domain ("context loss and was blocked") until the browser restarts.
+    // Keep the site fully usable without the 3D scene and retry in case
+    // the block lifts.
+    console.error('WebGL unavailable, continuing without 3D:', e);
+    renderer = null;
+    if (++rendererAttempts < 6) {
+      setTimeout(() => initRenderer(document.querySelector('#bg'), true), 20000);
+    }
+    return;
+  }
+  rendererAttempts = 0;
+  if (isRetry) {
+    lastCanvasWidth = 0; // force the resize path to reconfigure the new renderer
+    lastCanvasHeight = 0;
+    resizeRendererToDisplaySize(renderer);
+    observeHeroCanvas();
+    startAnimation();
+  }
+}
+
+initRenderer(document.querySelector('#bg'), false);
 
 function rebuildRenderer() {
   const oldCanvas = renderer.domElement;
@@ -252,12 +280,8 @@ function rebuildRenderer() {
   // the next render.
   const newCanvas = oldCanvas.cloneNode(false);
   oldCanvas.replaceWith(newCanvas);
-  renderer = createRenderer(newCanvas);
-  lastCanvasWidth = 0; // force the resize path to reconfigure the new renderer
-  lastCanvasHeight = 0;
-  resizeRendererToDisplaySize(renderer);
-  observeHeroCanvas();
-  startAnimation();
+  renderer = null;
+  initRenderer(newCanvas, true);
 }
 
 const loader = new GLTFLoader();
@@ -331,6 +355,7 @@ let lastCanvasWidth = 0;
 let lastCanvasHeight = 0;
 
 function resizeRendererToDisplaySize(renderer) {
+  if (!renderer) return; // WebGL unavailable: nothing to size
   const width = renderer.domElement.clientWidth;
   const height = renderer.domElement.clientHeight;
   if (width === lastCanvasWidth && height === lastCanvasHeight) return;
@@ -377,7 +402,7 @@ if(/*window.innerWidth <= 768*/ window.innerHeight > window.innerWidth){
 camera.lookAt(lookAtPos);
 camera.updateProjectionMatrix();
 
-renderer.render(scene, camera);
+if (renderer) renderer.render(scene, camera);
 
 // Lights
 const pointLight = new THREE.PointLight(0xffffff);
@@ -430,7 +455,7 @@ let pageVisible = true;
 let hasLoaded = false;
 
 function shouldAnimate() {
-  return hasLoaded && canvasVisible && pageVisible;
+  return !!renderer && hasLoaded && canvasVisible && pageVisible;
 }
 
 function startAnimation() {
@@ -478,7 +503,7 @@ document.addEventListener('visibilitychange', () => {
 // the replacement canvas element.
 let canvasObserver = null;
 function observeHeroCanvas() {
-  if (!('IntersectionObserver' in window)) return;
+  if (!renderer || !('IntersectionObserver' in window)) return;
   if (canvasObserver) canvasObserver.disconnect();
   canvasObserver = new IntersectionObserver((entries) => {
     canvasVisible = entries[0].isIntersecting;
