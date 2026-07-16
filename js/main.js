@@ -29,25 +29,32 @@ function getData(){
     
     overrideColors();
 
-    // Stop media playback when a modal is closed.
+    // Lazy-load the project pages: each is full of autoplay videos, so they
+    // only load when their modal opens and unload again on close. Loading
+    // them all at page open exhausts mobile video decoders / GPU memory
+    // (black videos, lost WebGL context).
     // Must use jQuery's .on() because Bootstrap 4 fires modal events through
     // jQuery's event system, which jQuery 1.x does not propagate to native addEventListener.
+    $('.modal').on('show.bs.modal', function() {
+        const iframe = this.querySelector('iframe[data-src]');
+        if (!iframe) return;
+        iframe.addEventListener('load', () => {
+            try {
+                const closeButton = iframe.contentDocument.querySelector('button');
+                if (closeButton) closeButton.addEventListener('click', closeModule);
+            } catch (e) {
+                console.error('Could not wire modal close button:', e);
+            }
+        }, { once: true });
+        iframe.src = iframe.dataset.src;
+    });
+
+    // Unloading the iframe stops all media inside it (videos, Google Drive
+    // embeds) and releases its decoders and memory.
     $('.modal').on('hidden.bs.modal', function() {
-        const outerIframe = this.querySelector('iframe');
-        if (!outerIframe) return;
-        try {
-            const iframeDoc = outerIframe.contentDocument || outerIframe.contentWindow.document;
-            // Pause any direct <video> elements
-            iframeDoc.querySelectorAll('video').forEach(v => v.pause());
-            // Reset embedded iframes (e.g. Google Drive) by reassigning src, which stops playback
-            iframeDoc.querySelectorAll('iframe').forEach(innerIframe => {
-                const src = innerIframe.src;
-                innerIframe.src = '';
-                innerIframe.src = src;
-            });
-        } catch (e) {
-            console.error('Could not stop media in modal:', e);
-        }
+        const iframe = this.querySelector('iframe[data-src]');
+        if (!iframe) return;
+        iframe.src = 'about:blank';
     });
 }
 
@@ -90,15 +97,22 @@ function pageFullyLoaded(){
         $('html,body').animate({scrollTop:$(this.hash).offset().top - 55}, 1000);
     });
     
-    let iframes = document.querySelectorAll("iframe");
-    
-    //console.log(iframes);
-    
-    for(let i = 0; i < iframes.length; i++){
-        let closeButton = iframes[i].contentDocument.querySelector("button");
-        closeButton.addEventListener("click", closeModule);
+    // Pause the project-grid videos while they're off-screen so they don't
+    // compete for the small pool of mobile hardware video decoders.
+    if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }, { rootMargin: '200px' });
+        document.querySelectorAll('main video[autoplay]').forEach((v) => videoObserver.observe(v));
     }
-    
+
     animateText();
 }
 

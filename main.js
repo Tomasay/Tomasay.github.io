@@ -1,11 +1,5 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
-import { ParallaxBarrierEffect } from 'three/addons/effects/ParallaxBarrierEffect.js';
 
 
 const pageFullyLoadedEvent = new Event("pageFullyLoaded");
@@ -226,16 +220,15 @@ const loader = new GLTFLoader();
 
 let mixer;
 
-let composer = new EffectComposer( renderer );
-
-const renderPass = new RenderPass( scene, camera );
-composer.addPass( renderPass );
-
-/*
-let effectFXAA = new ShaderPass( FXAAShader );
-effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
-composer.addPass( effectFXAA );
-*/
+// If the GPU evicts our WebGL context (mobile browsers do this under memory
+// pressure), preventing the default lets the browser restore it, and the
+// restore event kicks the render loop back on.
+renderer.domElement.addEventListener('webglcontextlost', (event) => {
+  event.preventDefault();
+});
+renderer.domElement.addEventListener('webglcontextrestored', () => {
+  startAnimation();
+});
 
 let loadedModel;
 loader.load( 'model.gltf', function ( gltf ) {
@@ -292,13 +285,24 @@ floor.position.y = 0; // Position the floor under the model
 floor.receiveShadow = true; // Enable receiving shadows
 scene.add(floor);
 
+// The canvas is position: fixed and sized by CSS (100lvh), so mobile URL-bar
+// show/hide doesn't change its dimensions. The guard makes those resize
+// events free: without it, every setSize clears the canvas and reshuffles
+// layout mid-scroll, which reads as flicker.
+let lastCanvasWidth = 0;
+let lastCanvasHeight = 0;
+
 function resizeRendererToDisplaySize(renderer) {
+  const width = renderer.domElement.clientWidth;
+  const height = renderer.domElement.clientHeight;
+  if (width === lastCanvasWidth && height === lastCanvasHeight) return;
+  lastCanvasWidth = width;
+  lastCanvasHeight = height;
+
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  composer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
-  composer.setSize(window.innerWidth, window.innerHeight);
-  camera.aspect = (window.innerWidth / window.innerHeight);
-  
+  renderer.setSize(width, height, false); // false: CSS keeps control of the display size
+  camera.aspect = width / height;
+
   checkForMobile();
 }
 
@@ -318,11 +322,6 @@ function checkForMobile(){
 
 window.addEventListener('resize', () => resizeRendererToDisplaySize(renderer));
 resizeRendererToDisplaySize(renderer);
-
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
-renderer.setSize(window.innerWidth, window.innerHeight);
-composer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
-composer.setSize(window.innerWidth, window.innerHeight);
 
 
 if(/*window.innerWidth <= 768*/ window.innerHeight > window.innerWidth){
@@ -428,7 +427,6 @@ function animate() {
   }
 
   renderer.render(scene, camera);
-  //composer.render(scene, camera);
 }
 
 // Pause the loop when the tab is backgrounded, resume when it returns.
