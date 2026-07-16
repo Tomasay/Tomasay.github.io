@@ -215,8 +215,9 @@ const MAX_PIXEL_RATIO = 1.5;
 // Some mobile GPU drivers crash ("context lost") on the full-quality scene,
 // and Chrome then blocks WebGL for the whole domain — so losses are costly.
 // Android starts one level safer; each actual loss bumps the level further
-// and persists it so future visits start at settings the device handles:
-// 0 = antialias + soft shadows, 1 = no AA + basic shadows, 2 = no AA, no shadows, 1x
+// and persists it so future visits start at settings the device handles.
+// Resolution is never degraded — a pixelated model reads as broken:
+// 0 = antialias + soft shadows, 1 = no AA + basic shadows, 2 = no AA, no shadows
 const DEFAULT_GL_LEVEL = /Android/i.test(navigator.userAgent) ? 1 : 0;
 let glDegradeLevel = DEFAULT_GL_LEVEL;
 try {
@@ -377,7 +378,7 @@ function resizeRendererToDisplaySize(renderer) {
   lastCanvasWidth = width;
   lastCanvasHeight = height;
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, glDegradeLevel >= 2 ? 1 : MAX_PIXEL_RATIO));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
   renderer.setSize(width, height, false); // false: CSS keeps control of the display size
   camera.aspect = width / height;
 
