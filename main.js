@@ -212,16 +212,23 @@ let lookAtPos;
 // the shadowed, antialiased scene at 2-3x resolution (the main mobile drain).
 const MAX_PIXEL_RATIO = 1.5;
 
+// Some mobile GPU drivers crash ("context lost") on the full-quality scene.
+// Each loss bumps this level — persisted so future visits start at settings
+// the device has proven it can handle:
+// 0 = antialias + soft shadows, 1 = no AA + basic shadows, 2 = no AA, no shadows, 1x
+let glDegradeLevel = 0;
+try { glDegradeLevel = Math.min(+localStorage.getItem('glDegradeLevel') || 0, 2); } catch (e) {}
+
 function createRenderer(canvasElement) {
   const r = new THREE.WebGLRenderer({
     canvas: canvasElement,
     alpha: true,
-    antialias: true
+    antialias: glDegradeLevel < 1
   });
   r.toneMapping = THREE.ACESFilmicToneMapping;
   r.toneMappingExposure = 0.5;
-  r.shadowMap.enabled = true;
-  r.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+  r.shadowMap.enabled = glDegradeLevel < 2;
+  r.shadowMap.type = glDegradeLevel < 1 ? THREE.PCFSoftShadowMap : THREE.PCFShadowMap;
 
   // If the GPU evicts our WebGL context (mobile browsers do this under
   // memory pressure), preventing the default lets the browser restore it,
@@ -230,6 +237,10 @@ function createRenderer(canvasElement) {
   // scene blank forever.
   canvasElement.addEventListener('webglcontextlost', (event) => {
     event.preventDefault();
+    // The driver rejected this quality level: remember to run safer, both
+    // for the rebuild below and for every future visit on this device.
+    glDegradeLevel = Math.min(glDegradeLevel + 1, 2);
+    try { localStorage.setItem('glDegradeLevel', glDegradeLevel); } catch (e) {}
     setTimeout(() => {
       if (renderer && renderer.domElement === canvasElement && r.getContext().isContextLost()) {
         rebuildRenderer();
@@ -362,7 +373,7 @@ function resizeRendererToDisplaySize(renderer) {
   lastCanvasWidth = width;
   lastCanvasHeight = height;
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, glDegradeLevel >= 2 ? 1 : MAX_PIXEL_RATIO));
   renderer.setSize(width, height, false); // false: CSS keeps control of the display size
   camera.aspect = width / height;
 
