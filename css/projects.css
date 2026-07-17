@@ -143,6 +143,29 @@ a:visited{
     margin:auto;
 }
 
+/* Single row of images, all scaled to a matching height.
+   Each link's flex-grow is set inline to that image's aspect ratio. */
+.photoStrip{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.photoStrip a{
+    flex-basis: 0;
+    min-width: 0;
+    line-height: 0;
+}
+
+.photoStrip img{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
 .col-lg{
     margin-top: 2%;
     margin-bottom: 2%;
@@ -239,7 +262,22 @@ a:visited{
         max-width: 95%;
         height: auto;
     }
-    
+
+    /* Four across is unreadable on a phone; stack them instead.
+       Natural widths keep the smaller sources from upscaling. */
+    .photoStrip{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .photoStrip a{
+        flex: none;
+    }
+
+    .photoStrip img{
+        width: auto;
+    }
+
     .appStore{
         width: 100px;
     }

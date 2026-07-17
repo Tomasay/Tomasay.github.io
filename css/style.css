@@ -457,6 +457,7 @@ body.dark-mode #socialMediaIcons{
     bottom: 0%;
     margin: auto;
     color: ghostwhite;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
     pointer-events: none;
     transition: 0.5s ease;
     padding-left: 0%;
@@ -478,6 +479,7 @@ body.dark-mode #socialMediaIcons{
     bottom: 0%;
     margin: auto;
     color: ghostwhite;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
     pointer-events: none;
     transition: 0.5s ease;
     padding-left: 0%;

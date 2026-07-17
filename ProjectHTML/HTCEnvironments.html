@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Viverse Home Environments</title>
+</head>
+<body class="light-mode">
+    <main>
+
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color: white;"></i></button>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+                <p><b>Role</b> <br>Technical Artist</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Timeline</b> <br>Jan 2023 - Apr 2025</p>
+            </div>
+            <div class="col">
+                <p><b>Tools</b> <br>Unity, Blender</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Website</b> <br><a href="https://www.vive.com/us/" target="_blank">vive.com</a></p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <h2>Overview</h2>
+
+        <p>At HTC Creative Labs I was the technical artist on Viverse home environments, the space users land in when they put on the headset and return to between apps. Working alongside the team's 3D artist and designers, I owned the bridge between visual intent and what the hardware could actually deliver: lighting, shaders, VFX, and runtime performance.</p>
+
+        <p>Below is work from the two home environments I shipped, along with the social interactions I prototyped for them.</p>
+
+        <br><br>
+
+        <h2>Viverse Home Environment - XR Elite</h2> <br>
+
+        <p>The XR Elite home had to hold a high visual bar on a standalone headset with a fixed frame budget. My role was taking the environment from art-approved to shippable without giving up the look the team had designed.</p>
+
+        <p>I reduced tri-count on incoming 3D models, consolidated materials into texture atlases to keep memory down, and set up static batching, LODs, and occlusion culling across the scene to cut draw calls. Where a visual target and the budget conflicted, I worked with the 3D artist to find the version that read the same in-headset at a fraction of the cost.</p> <br>
+
+        <video width="320" height="240" controls autoplay muted loop>
+        <source src="../media/HTC Vive/viverse-v1-1920.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video> <br> <br> <br>
+
+        <h3>UX Shaders</h3>
+
+        <p>I authored the environment's UX shaders, including the dynamic hands used for hand tracking. The hands render translucent white so they never occlude what the user is reaching for, with vertex colors driving a brightening falloff toward the fingertips. During interactions like pinching or pressing a button, the fingertips tint blue, confirming the input registered without needing a separate UI element.</p> <br>
+
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-6 text-center">
+              <a href="../media/HTC Vive/hands white.webp">
+                <img class="img-fluid" alt="Dynamic hand shader rendering translucent white over the app library panel" src="../media/HTC Vive/hands white.webp">
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6 text-center">
+              <a href="../media/HTC Vive/hands blue.webp">
+                <img class="img-fluid" alt="Fingertips tinting blue to confirm a pinch interaction" src="../media/HTC Vive/hands blue.webp">
+              </a>
+            </div>
+          </div>
+        </div> <br> <br> <br>
+
+        <h2>Viverse Home Environment - Vive Focus Vision</h2> <br>
+
+        <p>The Focus Vision home shipped as part of the headset's OS, making it the first thing a user sees on startup. With more performance headroom than the XR Elite, the goal shifted from cutting cost to raising the visual ceiling.</p>
+
+        <p>Alongside the team's 3D artist, I drove lighting, shaders, VFX, and performance for the space, raising the runtime visual quality of the environment users see every time they put the headset on while keeping it inside its frame budget as the scene grew.</p> <br>
+
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-6 text-center">
+              <a href="../media/HTC Vive/Home.jpg">
+                <img class="img-fluid" alt="Viverse home environment interior with gallery wall and lounge seating" src="../media/HTC Vive/Home.jpg">
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6 text-center">
+              <a href="../media/HTC Vive/Home 2.jpg">
+                <img class="img-fluid" alt="Wide view of the Viverse home lounge and upper level" src="../media/HTC Vive/Home 2.jpg">
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6 text-center">
+              <a href="../media/HTC Vive/Home 3.jpg">
+                <img class="img-fluid" alt="Basketball hoop and lounge area in the Viverse home environment" src="../media/HTC Vive/Home 3.jpg">
+              </a>
+            </div>
+          </div>
+        </div> <br> <br> <br>
+
+        <h3>Home Interactions</h3>
+
+        <p>I prototyped networked social interactions to give users something to do together in the home rather than just pass through it: physics-based basketball, a snow globe that swaps the skybox environment for everyone in the space, a group meditation area, and a shared space for watching movies and listening to music. Each was built to sync across users, so the home reads as a place to meet rather than a lobby.</p>
+
+        <div class="photoStrip">
+          <a href="../media/HTC Vive/basketball.webp" style="flex-grow: 2.105">
+            <img alt="Basketball hoop interaction in the home environment" src="../media/HTC Vive/basketball.webp">
+          </a>
+          <a href="../media/HTC Vive/globe.webp" style="flex-grow: 0.825">
+            <img alt="Snow globe theme selector in the home environment" src="../media/HTC Vive/globe.webp">
+          </a>
+          <a href="../media/HTC Vive/meditate.webp" style="flex-grow: 1.878">
+            <img alt="Meditation candles interaction in the home environment" src="../media/HTC Vive/meditate.webp">
+          </a>
+        </div> <br> <br> <br>
+
+    </main>
+</body>
+</html>
