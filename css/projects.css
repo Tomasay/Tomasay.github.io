@@ -4,6 +4,13 @@ body{
     transition: color 0.5s ease, background-color 0.5s ease;
 }
 
+/* The parent page overwrites this page's hardcoded theme when it opens in a
+   modal. That is a correction, not a user-visible change, so it must not run
+   the cross-fades above and below. */
+body.theme-instant, body.theme-instant *{
+    transition: none !important;
+}
+
 body.light-mode{
     background-color: whitesmoke;
     color: dimgray;

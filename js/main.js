@@ -8,19 +8,13 @@ function getData(){
     //Theme toggle
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("change", () => {
-        
-        const mode = themeToggle.checked ? "dark-mode" : "light-mode";
-        const oppositeMode = themeToggle.checked ? "light-mode" : "dark-mode";
-        
-        document.body.classList.remove(oppositeMode);
-        document.body.classList.add(mode);
-        
+
+        applyTheme(document.body);
+
         // Toggle in all iframes
         document.querySelectorAll("iframe").forEach(iframe => {
             try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                iframeDoc.body.classList.remove(oppositeMode);
-                iframeDoc.body.classList.add(mode);
+                applyTheme((iframe.contentDocument || iframe.contentWindow.document).body);
             } catch (e) {
                 console.error("Unable to access iframe content:", e);
             }
@@ -40,6 +34,10 @@ function getData(){
         if (!iframe) return;
         iframe.addEventListener('load', () => {
             try {
+                // Backstop in case the poll below missed the parsing window.
+                iframe.contentDocument.themeSynced = true;
+                applyTheme(iframe.contentDocument.body, true);
+
                 const closeButton = iframe.contentDocument.querySelector('button');
                 if (closeButton) closeButton.addEventListener('click', closeModule);
             } catch (e) {
@@ -47,6 +45,7 @@ function getData(){
             }
         }, { once: true });
         iframe.src = iframe.dataset.src;
+        syncThemeWhileLoading(iframe);
     });
 
     // Unloading the iframe stops all media inside it (videos, Google Drive
@@ -56,6 +55,53 @@ function getData(){
         if (!iframe) return;
         iframe.src = 'about:blank';
     });
+}
+
+// Applies the toggle's current theme to a body element, whether it belongs to
+// this page or to a project page inside a modal iframe. Pass instant to skip
+// the theme cross-fade, for when the theme is being corrected rather than changed.
+function applyTheme(body, instant){
+    const dark = document.getElementById("themeToggle").checked;
+
+    if (instant) body.classList.add("theme-instant");
+    body.classList.remove(dark ? "light-mode" : "dark-mode");
+    body.classList.add(dark ? "dark-mode" : "light-mode");
+    if (instant) {
+        void body.offsetHeight; // commit the new colors before transitions come back
+        body.classList.remove("theme-instant");
+    }
+}
+
+// Project pages hardcode their theme in markup, so an iframe opened after the
+// toggle loads in the wrong one. Waiting for its load event lets the page paint
+// light first and then visibly change over, so instead poll for the new
+// document's body and set the theme the moment it exists — before first paint.
+function syncThemeWhileLoading(iframe){
+    // Whatever the poll misses, the load handler still catches, so it is also
+    // the point at which polling has nothing left to wait for.
+    let polling = true;
+    iframe.addEventListener('load', () => { polling = false; }, { once: true });
+
+    (function poll(){
+        if (!polling) return;
+
+        let doc = null;
+        try {
+            doc = iframe.contentDocument;
+        } catch (e) {
+            return; // Cross-origin, so its theme is not ours to set.
+        }
+
+        // Until the navigation commits, this is still the blank placeholder
+        // document, or the page left over from the last time this modal opened.
+        if (doc && doc.body && doc.URL !== 'about:blank' && !doc.themeSynced) {
+            doc.themeSynced = true;
+            applyTheme(doc.body, true);
+            return;
+        }
+
+        requestAnimationFrame(poll);
+    })();
 }
 
 function pageFullyLoaded(){
