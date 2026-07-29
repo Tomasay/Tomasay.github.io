@@ -137,7 +137,13 @@ function loadingComplete() {
     setTimeout(() => {
         arrow.style.opacity = 1;
     }, 100); // Small delay to ensure the transition is noticeable
-    
+
+    // Drop the transition once the arrow is in, so the scroll-driven fade
+    // tracks the scroll position instead of trailing a second behind it.
+    arrow.addEventListener("transitionend", () => {
+        arrow.style.transition = "";
+    }, { once: true });
+
     // Animate the model to its final position (skip if the failsafe fired
     // before the model finished loading)
     if (loadedModel) {

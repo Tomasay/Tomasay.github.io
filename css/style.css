@@ -18,6 +18,13 @@ body.modal-open {
   width: 40px;
   height: 40px; /*change with size of arrow to make sit on bottom */
   opacity: 0;
+  cursor: pointer;
+}
+
+/* It links to Selected Work, so the site's a:link / a:hover colors would
+   otherwise paint the caret cyan instead of gray. */
+.arrow:link, .arrow:visited, .arrow:hover, .arrow:focus {
+  color: gray;
 }
 
 .bounce {

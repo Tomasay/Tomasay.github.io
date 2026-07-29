@@ -129,11 +129,20 @@ function pageFullyLoaded(){
       );
     });
     
+    // Fade the hero arrow out over the first half viewport of scrolling.
+    // The range has to be given explicitly: this runs before main.js reveals
+    // <main>, so the document is still exactly one viewport tall, and a
+    // ScrollTrigger left to infer its range from the page height gets a zero
+    // length one (end: -0.001) that pins progress at 0 forever.
     ScrollTrigger.create({
+      start: 0,
+      end: () => window.innerHeight / 2,
       onUpdate: (self) => {
-        const scrollPercentage = (self.progress * 100);
-        //console.log(`Scroll Percentage: ${scrollPercentage}%`);
-        document.getElementById("arrow").style.opacity = 1 - Math.max(scrollPercentage / 20, 0);
+        const arrow = document.getElementById("arrow");
+        arrow.style.opacity = 1 - self.progress;
+        // Faded out it is still a fixed box sitting over the project grid, and
+        // now that it is a link it would swallow clicks and hold a tab stop.
+        arrow.style.visibility = self.progress >= 1 ? "hidden" : "visible";
       }
     });
     
