@@ -67,7 +67,10 @@
                     <div class="navbar-nav nav-right">
                         <a class="nav-item nav-link" href="#projects">Work</a>
                         <a class="nav-item nav-link" href="#aboutInfo" id="current">About</a>
-                        <a class="nav-item nav-link" href="ThomasRatliffResume.pdf">Resume</a>
+                        <!-- Cache buster: bump ?v= whenever the PDF is replaced (also in resume.html).
+                             Mobile PDF viewers hold on to the old file otherwise, and GitHub Pages
+                             won't let us set Cache-Control. -->
+                        <a class="nav-item nav-link" href="ThomasRatliffResume.pdf?v=20260728">Resume</a>
                     </div>
                 </section>
             </div>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+  Stable, shareable resume link: https://dev-tom.com/resume
+
+  This page exists so the URL handed out on applications never has to change while
+  still always resolving to the newest PDF. Mobile browsers hand PDFs off to a
+  separate viewer (iOS QuickLook, Chrome's PDF viewer, in-app webviews) whose cache
+  survives "clear browsing data", so a fixed PDF URL can serve a months-old file.
+  GitHub Pages doesn't allow custom Cache-Control headers, so the version lives in
+  the URL instead.
+
+  When ThomasRatliffResume.pdf is replaced, bump ?v= in three places: the refresh
+  tag and the link below, and the nav link in index.html.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta name="robots" content="noindex, follow">
+    <title>Thomas Ratliff — Resume</title>
+    <meta http-equiv="refresh" content="0; url=ThomasRatliffResume.pdf?v=20260728">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-weight: 300;
+            text-align: center;
+            background: #fff;
+            color: #222;
+        }
+        a {
+            color: inherit;
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #111;
+                color: #eee;
+            }
+        }
+    </style>
+</head>
+<body>
+    <p>Opening resume&hellip; <a id="resume-link" href="ThomasRatliffResume.pdf?v=20260728">Download it directly</a> if nothing happens.</p>
+
+    <script>
+        // Redirect immediately, reusing the link above so the version lives in one
+        // place here. replace() keeps this page out of the back stack, so "back"
+        // returns to wherever the link was clicked instead of bouncing through again.
+        location.replace(document.getElementById("resume-link").href);
+    </script>
+</body>
+</html>
