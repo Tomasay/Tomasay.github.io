@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Meta Ray-Ban Display Prototypes</title>
+</head>
+<body class="light-mode">
+    <main>
+
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color: white;"></i></button>
+
+        <div class="container">
+          <div class="row">
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Role</b> <br>Prototyper</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Timeline</b> <br>July 2026</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Tools</b> <br>Claude Code</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Hardware</b> <br>Meta Ray-Ban Display, Pixel Watch 2</p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <h2>Overview</h2>
+
+        <p>Three working prototypes built on Meta Ray-Ban Display in a week. This was self-directed experimentation rather than a specific product project. I got a pair of the glasses to play with and wanted to find out first-hand what they're good at and where the friction is, so each prototype pressure-tests a different part of the platform: a different build track, a different input surface, and a different question about what glasses are actually for.</p>
+
+        <p>Nothing here is a mockup. Everything in the videos below is running on-device. The goal wasn't polish, it was to move fast, put real interactions on the glasses, and turn each build into concrete learnings about glanceable, hands-free UX.</p> <br>
+
+        <video class="largeVideo" controls autoplay muted loop>
+        <source src="../media/MRBD%20Protos/3%20in%20one.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video>
+
+        <br><br>
+
+        <h2>Fitness Coach</h2> <br>
+
+        <p>A rep counter built on DAT Display Access, running across the glasses and a Pixel Watch 2. You pick an exercise on the glasses and reps count themselves from wrist motion, with linear acceleration and gyroscope angular velocity streamed off the watch over the Wear Data Layer. The glasses stay the coaching surface: one large rep count, a haptic pulse on the watch per rep, and a spoken "slow down" cue when tempo runs hot. Every rep counted in the video is real sensor data.</p>
+
+        <p>The first version put a live tempo graph and text on the glasses for precision. Mid-set that turned out to be something to read rather than something to use, so I cut it down to a single glanceable number. The post-set recap card (reps, tempo, comparison to your last set) auto-dismisses after 8 seconds so you aren't fighting UI while resting.</p>
+
+        <p>The obvious limit is that it only tracks the arm wearing the watch, which is fine for bilateral movements like bicep curls but not unilateral ones. For exercises where the arm doesn't travel, like squats, the glasses' own IMU is the more promising signal. Next steps: EMG from the wristband for cleaner detection, stored workout history, and a live camera and pose-detection feed.</p> <br>
+
+        <video class="portraitVideo" controls autoplay muted loop>
+        <source src="../media/MRBD%20Protos/Fitness%20Coach.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video> <br> <br> <br>
+
+        <h2>Pool Assistant</h2> <br>
+
+        <p>A shot coach built on DAT Display Access using the glasses camera and a vision model. Select solids or stripes, tap to capture the table from your point of view, and the app returns an overlay of the best next shot plus a spoken explanation over TTS. What you see is the app analyzing a real table from the camera feed. The only thing sped up in the video is the ~15 second model inference.</p>
+
+        <p>This one doubled as an AI reality check. Gemini 2.5 Pro runs about 15 seconds per shot and isn't consistently accurate, frequently drawing ball and pocket targets off the table entirely. Claude Fable was the most accurate model I tested but took 2-3 minutes per shot, far too slow to feel interactive. Next steps: a faster and more accurate vision model, personalization over time (shots to clear, shot types you miss, game-over-game trends), and a live feed that auto-detects the table between turns so the whole thing gets closer to genuinely hands-free.</p> <br>
+
+        <video class="portraitVideo" controls autoplay muted loop>
+        <source src="../media/MRBD%20Protos/Pool%20Assistant.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video> <br> <br> <br>
+
+        <h2>Simon Swipes</h2> <br>
+
+        <p>A memory game built on the Web App track, playable at <a href="https://mrbd-simon-swipe.vercel.app/" target="_blank">mrbd-simon-swipe.vercel.app</a>. It's Simon Says using directional swipe gestures instead of colors: watch a sequence of arrows, repeat it, one longer each round.</p>
+
+        <p>The Web App track stands up fastest but can't reach capabilities like the camera, which made this a useful boundary to map when choosing between build tracks. As a design object the game is a stress test for input precision. A single misdetected gesture on round 10 ends the run, which makes gesture reliability visceral in a way a utility app never would. Next steps: friend leaderboards and shared high scores.</p> <br>
+
+        <video class="portraitVideo" controls autoplay muted loop>
+        <source src="../media/MRBD%20Protos/Simon%20Swipes.mp4" type="video/mp4">
+        whoops, your browser does not support videos :/
+        </video> <br> <br> <br>
+
+        <h2>Takeaways</h2>
+
+        <p>The same lessons kept surfacing across all three builds:</p>
+
+        <p><b>Glanceable coaching beats dashboards.</b> One large number, a haptic pulse, and the occasional voice cue on tempo was enough to keep me accountable mid-set without breaking focus. Users don't need a screen full of data, they need one piece of it at exactly the right moment, and it should disappear the instant it stops being useful.</p>
+
+        <p><b>Camera as context, AI as advisor.</b> Pointing your gaze at a problem and getting an answer spoken back is powerful, and the split matters: the AI suggests, the user decides. It augments the real-world activity you're already doing rather than pulling you into a screen. As models get faster, this becomes "what plant is this?", "is this outlet 120V or 240V?", "what's the best move here?"</p>
+
+        <p><b>Gesture input has to be bulletproof.</b> Simon Swipes made reliability impossible to ignore. People will eventually lean on gestures for real tasks like dismissing notifications, confirming actions, and navigating menus, so the bar is high.</p>
+
+        <p><b>Glasses, watch, and Neural Band are one system.</b> The most natural interactions came when the devices coordinated rather than competed, and when interaction was triggered by context (motion, a camera frame, a gesture) instead of menu navigation. Let each device do what it's best at and get UI out of the way the moment it isn't needed.</p>
+
+        <p>The hardware supports these patterns today. The bottlenecks, model latency and gesture recognition reliability, are solvable and actively improving.</p> <br> <br> <br>
+
+    </main>
+</body>
+</html>

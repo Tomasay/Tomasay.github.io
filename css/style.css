@@ -447,6 +447,21 @@ body.dark-mode #socialMediaIcons{
     margin: 1%;
 }
 
+/* Selected Work is a single wrapping grid so previews always sit three to a
+   row. 31.33% + the 1% side margins fills the row exactly; a trailing partial
+   row centers itself. Below the lg breakpoint Bootstrap drops the flex sizing
+   and the previews stack full width. */
+@media (min-width: 992px) {
+    .project-grid{
+        justify-content: center;
+    }
+
+    .project-grid > .col-lg{
+        flex: 0 0 31.33%;
+        max-width: 31.33%;
+    }
+}
+
 .col-lg p{
     font-size: 20px;
     opacity: 0;

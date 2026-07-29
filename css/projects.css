@@ -80,6 +80,15 @@ video{
     width: 65%;
 }
 
+/* Screen recordings off the glasses are portrait, so the 75% default above
+   runs them far taller than the viewport. Cap the height and let the width
+   follow the source's aspect ratio. */
+.portraitVideo{
+    width: auto;
+    max-width: 100%;
+    max-height: 600px;
+}
+
 .largeVideo {
   max-width: 1100px;
   height: auto;
