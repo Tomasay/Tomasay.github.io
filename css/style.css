@@ -449,9 +449,31 @@ body.dark-mode #socialMediaIcons{
      transition: 0.3s;
 }
 
+/* The cover media has to be block-level. Left inline it sits on the text
+   baseline, and the descender gap under it makes .col-lg a few pixels taller
+   than the cover. The hover zoom is clipped by .col-lg on the other three
+   sides, so that strip was the one place it could visibly spill out. */
+#projects .col-lg > a, #experiments .col-lg > a{
+    display: block;
+}
+
+#projects .col-lg > a > img, #projects .col-lg > a > video,
+#experiments .col-lg > a > img, #experiments .col-lg > a > video{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .col-lg{
     overflow: hidden;
     margin: 1%;
+}
+
+/* Rounding lives on .col-lg rather than the cover itself: it is the element
+   doing the overflow clipping, so the corners hold their shape while the cover
+   zooms past them on hover. On the cover the radius would scale with it. */
+#projects .col-lg, #experiments .col-lg{
+    border-radius: 25px;
 }
 
 /* Selected Work is a single wrapping grid so previews always sit three to a
