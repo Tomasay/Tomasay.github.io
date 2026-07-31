@@ -372,6 +372,27 @@
         </div>
         
     </main>
-    
+
+    <!--
+      Last-resort reveal. <main> starts hidden and only main.js unhides it, but
+      main.js is a module whose three/GLTFLoader/meshopt imports come from a CDN
+      via the importmap above. If any of those fail to resolve — CDN down, or an
+      in-app browser with no importmap support — the module body never runs, so
+      its own 15s failsafe never runs either and the loader sits there forever.
+      This script has no imports, so nothing can stop it. 20s keeps it clear of
+      main.js's failsafe: it only fires when main.js genuinely never started.
+    -->
+    <script>
+      setTimeout(function () {
+        var m = document.getElementsByTagName('main')[0];
+        if (!m || m.style.display !== 'none') return; // main.js got there first
+        m.style.display = 'block';
+        var loader = document.getElementById('loader');
+        if (loader) loader.classList.add('hidden');
+        var loaderText = document.getElementById('loader-text');
+        if (loaderText) loaderText.classList.add('hidden');
+      }, 20000);
+    </script>
+
 </body>
 </html>

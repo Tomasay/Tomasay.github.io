@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
 
 const pageFullyLoadedEvent = new Event("pageFullyLoaded");
@@ -307,11 +308,15 @@ function rebuildRenderer() {
 }
 
 const loader = new GLTFLoader();
+// model.glb is meshopt-compressed (EXT_meshopt_compression, listed as required).
+// Without the decoder registered GLTFLoader throws rather than falling back,
+// so this has to be set before the load below.
+loader.setMeshoptDecoder(MeshoptDecoder);
 
 let mixer;
 
 let loadedModel;
-loader.load( 'model.gltf', function ( gltf ) {
+loader.load( 'model.glb', function ( gltf ) {
     loadedModel = gltf;
   
 	scene.add( gltf.scene );
@@ -325,14 +330,18 @@ loader.load( 'model.gltf', function ( gltf ) {
     // Check if the model has animations
     if (gltf.animations && gltf.animations.length > 0) {
     mixer = new THREE.AnimationMixer(gltf.scene);
-    
-    //Character anim
-    const action = mixer.clipAction(gltf.animations[0]);
-    action.play();
-    
-    //Coffee steam anim
-    const action2 = mixer.clipAction(gltf.animations[3]);
-    action2.play();
+
+    // Look clips up by name, not index: Blender's exporter doesn't promise a
+    // stable order, and the .glb re-export already swapped two of the four
+    // relative to the old .gltf. Index is kept only as a fallback.
+    const playClip = (name, fallbackIndex) => {
+      const clip = THREE.AnimationClip.findByName(gltf.animations, name)
+                || gltf.animations[fallbackIndex];
+      if (clip) mixer.clipAction(clip).play();
+    };
+
+    playClip('ArmatureAction', 0); //Character anim
+    playClip('KeyAction', 3);      //Coffee steam anim
   }
   
   // Set up shadow casting for each mesh in the model
@@ -362,7 +371,7 @@ loader.load( 'model.gltf', function ( gltf ) {
   });
 
 const floorGeometry = new THREE.PlaneGeometry(10, 10); // Adjust size as needed
-const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.05 }); // Transparent and shows shadows
+const floorMaterial = new THREE.ShadowMaterial({ opacity: 0.1 }); // Transparent and shows shadows
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
 floor.position.y = 0; // Position the floor under the model
