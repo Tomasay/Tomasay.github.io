@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../css/projects.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Soundchek</title>
+</head>
+<body class="light-mode">
+    <main>
+
+        <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color: white;"></i></button>
+
+        <br>
+
+        <img border="0" alt="Soundchek" style="width: 75%; border-radius: 12px;" src="../media/Soundchek/Soundchek%20Banner.jpg">
+
+        <br><br><br>
+
+        <div class="container">
+          <div class="row">
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Role</b> <br>Developer (1 of 4)</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Timeline</b> <br>2026 - now</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Stack</b> <br>React Native, Expo, TypeScript, Supabase, Node</p>
+            </div>
+            <div class="col" style="white-space:nowrap;">
+                <p><b>Website</b> <br><a href="https://soundchek.app" target="_blank">soundchek.app</a></p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <h2>Overview</h2>
+
+        <p>Soundchek is a social app for live music. Everything around going to a show is scattered: you find out about it on a ticketing app, a venue calendar, or someone's Instagram story, and afterwards the night disappears into your camera roll and a group chat. Soundchek closes that loop in one place. Discover shows worth going to, log and rate the ones you went to, share the memory, and get better recommendations because of it. Concerts, DJ sets, and festivals all live in the same journal.</p>
+
+        <p>I'm one of four developers on the team. I started the repo in May 2026 and built the original event pipeline, and since then I've shipped across the whole product: the live-event catalog the app is built on, authentication, the social layer, sharing, and app navigation. We're in beta prep now, so the screenshots below are the app as it stands rather than a finished launch build. I'll update this page at beta and again at public launch.</p>
+
+        <br>
+
+        <div class="photoStrip" style="max-width: 860px;">
+          <a href="../media/Soundchek/Promo%20Discover.jpg" style="flex-grow: 0.462">
+            <img alt="Find your next live show" src="../media/Soundchek/Promo%20Discover.jpg">
+          </a>
+          <a href="../media/Soundchek/Promo%20Weekend%20Edit.jpg" style="flex-grow: 0.462">
+            <img alt="The Weekend Edit, a curated shortlist of the weekend's shows" src="../media/Soundchek/Promo%20Weekend%20Edit.jpg">
+          </a>
+          <a href="../media/Soundchek/Promo%20Search.jpg" style="flex-grow: 0.462">
+            <img alt="Natural language search for shows" src="../media/Soundchek/Promo%20Search.jpg">
+          </a>
+        </div>
+
+        <br><br>
+
+        <h2>The catalog is the hard part</h2>
+
+        <p>There is no single API for live music. Ticketmaster only sells what Ticketmaster sells, and the rooms that matter most for club nights self-ticket through DICE, TicketWeb, See Tickets, Eventbrite, or their own calendar page, which makes them invisible to it. setlist.fm has deep history but under-covers DJ sets. Resident Advisor covers club nights and nothing else. Every one of those sources fills a gap none of the others do, so the catalog is stitched together from all of them and normalized into one schema.</p>
+
+        <p>I built and extended a lot of that ingestion. An Eventbrite region scan reads public discovery across San Francisco, Oakland, San Jose, and Santa Rosa, name-matches it against tracked venues, then opens each matched event's detail page to pull the support acts the artist widget leaves out. A reader for the Cow Palace's WordPress events calendar covers a venue Ticketmaster lists only partially, mis-segments DJ acts on, and splits across two venue IDs. A fix to the TicketWeb venue matcher stopped off-list venues binding themselves to popular rooms. Festival ingestion handles editions like Outside Lands, Portola, and BottleRock, where the lineup is a published announcement until real set times exist and the day-by-day split only lands later. Coverage went from a handful of SF rooms to over 200 Bay Area venues.</p>
+
+        <p>Most of the work isn't scraping though, it's identity. Events are keyed by venue and date, so the same show arriving from five different sources has to collapse into one row while keeping every ticketing link it came with. Artists split into duplicate rows over a spelling difference and have to be folded back together. Comedy, karaoke, and open mic nights are on every music room's calendar and get filtered at ingest, then re-purged by a nightly sweep for whatever slipped past. The catalog also needs art, so posters are captured at ingest and venue images resolve through Google Photos, then the venue's own og:image, then Wikimedia Commons.</p>
+
+        <br>
+
+        <h2>Keeping it honest</h2>
+
+        <p>The whole thing syncs itself once a day on GitHub Actions and posts the result to Slack: what was added, and which sources went quiet. A source that silently stops returning data is worse than one that errors, so the digest flags dead sources explicitly rather than reporting a cheerful zero.</p>
+
+        <p>The best signal, though, comes from users. I built a report system where anyone can flag a missing or incorrect show from inside the app. The report lands in Slack, gets triaged against its own source link so a fix can't be invented, and turns into a concrete change: an event override, a manually created event, or a new venue alias. The scanner then learns the pattern that caused the miss, so the same class of gap stops recurring instead of being patched one show at a time.</p>
+
+        <p>The nightly job needs looking after too. Its average runtime crept from 16 minutes in June to 25 in July to 33 in August, against a 50-minute cap, and the steps that get cancelled at the cap are the prune, dedupe, and poster passes that run last. It was also burning about half the account's included Actions minutes for the month. The cause was the two artist enrichment backfills: both drain a backlog of artists already in the database rather than reading the day's scrape, so their cost scales with the artist table while adding nothing to catalog freshness. Moving them onto their own twice-weekly schedule brought the nightly job back down and keeps pace with how fast new artists actually arrive.</p>
+
+        <br>
+
+        <h2>Inside the app</h2>
+
+        <div class="photoStrip">
+          <a href="../media/Soundchek/Home%20Feed.jpg" style="flex-grow: 0.462">
+            <img alt="Home feed with the Weekend Edit and upcoming shows" src="../media/Soundchek/Home%20Feed.jpg">
+          </a>
+          <a href="../media/Soundchek/Weekend%20Edit.jpg" style="flex-grow: 0.462">
+            <img alt="The Weekend Edit" src="../media/Soundchek/Weekend%20Edit.jpg">
+          </a>
+          <a href="../media/Soundchek/Discover.jpg" style="flex-grow: 0.462">
+            <img alt="Discover tab with recommendations and upcoming shows" src="../media/Soundchek/Discover.jpg">
+          </a>
+          <a href="../media/Soundchek/Calendar.jpg" style="flex-grow: 0.462">
+            <img alt="Calendar view of shows by day" src="../media/Soundchek/Calendar.jpg">
+          </a>
+        </div>
+
+        <p>On the client my work has mostly been the parts around the edges of discovery: getting people in, letting them talk to each other, and getting a night back out of the app once it's been logged.</p>
+
+        <p><b>Auth.</b> I replaced email and password sign-in with phone OTP through Twilio Verify, then added native Google sign-in via a Supabase ID-token exchange and worked on Sign in with Apple alongside a teammate. Along the way I tracked down a push token that was leaking between accounts on a shared device, which meant notifications for one person could land on another's phone.</p>
+
+        <p><b>The social layer.</b> A messages tab with event invites (and the Postgres row-level-security recursion that made the first version of it fail), a review feed with likes and comments, double-tap to like, multi-photo and video logs with a swipeable feed carousel, Letterboxd-style lists posted as their own entries, a "shows together" section on friend profiles, and push notifications for invites, tags, RSVPs, and post-show "did you go?" reminders.</p>
+
+        <p><b>Sharing.</b> Festival lineup share cards, full-resolution poster export on Android, and universal links so a shared profile or event opens the app instead of dumping you in a browser.</p>
+
+        <p><b>Navigation and identity.</b> The tab bar became a floating pill with a glass treatment that holds up on both platforms, search folded into the Discover tab, and the calendar got a full-day view. I also did the rebrand to Soundchek, including the animated wordmark on startup, the equalizer loading spinner, and the ticket-stub animation that plays when you log a set.</p>
+
+        <br>
+
+        <div class="photoStrip" style="max-width: 860px;">
+          <a href="../media/Soundchek/Smart%20Search.jpg" style="flex-grow: 0.462">
+            <img alt="Smart search parsing a natural language query" src="../media/Soundchek/Smart%20Search.jpg">
+          </a>
+          <a href="../media/Soundchek/Search%20Prompts.jpg" style="flex-grow: 0.462">
+            <img alt="Suggested search prompts" src="../media/Soundchek/Search%20Prompts.jpg">
+          </a>
+          <a href="../media/Soundchek/Journal.jpg" style="flex-grow: 0.462">
+            <img alt="Profile with logged shows, ratings, and favorite venues" src="../media/Soundchek/Journal.jpg">
+          </a>
+        </div>
+
+        <br><br>
+
+        <h2>How we build it</h2>
+
+        <p>Four developers, and agents doing a real share of the work. Codex and Claude Code are wired into the repo through Slack and GitHub, so work can be kicked off from a conversation and pull requests get reviewed and tested automatically before a human looks at them. GitHub Issues stay the source of truth for scope and decisions, which is what keeps context useful across sessions and across four people.</p>
+
+        <p>The part that matters is where the line sits. Agents are good at implementing a design that has already been argued through, and good at the review pass that catches what you stopped seeing three hours ago. They are not the ones deciding what to build, which constraint to design around, or when something is ready to ship. The clearest example was Spotify: it integrated cleanly, but its developer-mode user cap couldn't scale to a public launch. Rather than build the product on it, the team made it an optional importer and built a first-party taste profile from onboarding, ratings, RSVPs, favorite venues, and show history. Recommendations now work for someone who never connects a streaming account at all.</p>
+
+        <br>
+
+        <h2>Where it's at</h2>
+
+        <p>Soundchek is in beta prep. The landing page at <a href="https://soundchek.app" target="_blank">soundchek.app</a> is live and taking beta signups, the catalog covers the Bay Area, and the work in front of us is expanding coverage past it, deepening the taste signals, and getting show detection out of shared social posts more reliable.</p>
+
+        <p>Here's the team demo from earlier in development:</p>
+
+        <br>
+
+        <iframe src="https://www.youtube.com/embed/k-yGSHncgog" title="Soundchek demo" allowfullscreen
+                style="display: block; margin: auto; border: 0; width: min(340px, 90%); aspect-ratio: 9 / 16;"></iframe>
+
+        <br><br><br>
+
+    </main>
+</body>
+</html>
