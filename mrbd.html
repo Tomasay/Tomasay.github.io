@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="../css/projects.css">
+    <link rel="stylesheet" href="css/projects.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<title>Meta Ray-Ban Display Prototypes</title>
+    <meta name="description" content="Three working prototypes built on Meta Ray-Ban Display in a week: a sensor-driven fitness coach, a vision-model pool assistant, and a gesture memory game.">
 </head>
 <body class="light-mode">
     <main>
@@ -44,7 +45,7 @@
         <p>Nothing here is a mockup. Everything in the videos below is running on-device. The goal wasn't polish, it was to move fast, put real interactions on the glasses, and turn each build into concrete learnings about glanceable, hands-free UX.</p> <br>
 
         <video class="largeVideo" controls autoplay muted loop>
-        <source src="../media/MRBD%20Protos/3%20in%20one.mp4" type="video/mp4">
+        <source src="media/MRBD%20Protos/3%20in%20one.mp4" type="video/mp4">
         whoops, your browser does not support videos :/
         </video>
 
@@ -59,7 +60,7 @@
         <p>The obvious limit is that it only tracks the arm wearing the watch, which is fine for bilateral movements like bicep curls but not unilateral ones. For exercises where the arm doesn't travel, like squats, the glasses' own IMU is the more promising signal. Next steps: EMG from the wristband for cleaner detection, stored workout history, and a live camera and pose-detection feed.</p> <br>
 
         <video class="portraitVideo" controls autoplay muted loop>
-        <source src="../media/MRBD%20Protos/Fitness%20Coach.mp4" type="video/mp4">
+        <source src="media/MRBD%20Protos/Fitness%20Coach.mp4" type="video/mp4">
         whoops, your browser does not support videos :/
         </video> <br> <br> <br>
 
@@ -70,7 +71,7 @@
         <p>This one doubled as an AI reality check. Gemini 2.5 Pro runs about 15 seconds per shot and isn't consistently accurate, frequently drawing ball and pocket targets off the table entirely. Claude Fable was the most accurate model I tested but took 2-3 minutes per shot, far too slow to feel interactive. Next steps: a faster and more accurate vision model, personalization over time (shots to clear, shot types you miss, game-over-game trends), and a live feed that auto-detects the table between turns so the whole thing gets closer to genuinely hands-free.</p> <br>
 
         <video class="portraitVideo" controls autoplay muted loop>
-        <source src="../media/MRBD%20Protos/Pool%20Assistant.mp4" type="video/mp4">
+        <source src="media/MRBD%20Protos/Pool%20Assistant.mp4" type="video/mp4">
         whoops, your browser does not support videos :/
         </video> <br> <br> <br>
 
@@ -81,7 +82,7 @@
         <p>The Web App track stands up fastest but can't reach capabilities like the camera, which made this a useful boundary to map when choosing between build tracks. As a design object the game is a stress test for input precision. A single misdetected gesture on round 10 ends the run, which makes gesture reliability visceral in a way a utility app never would. Next steps: friend leaderboards and shared high scores.</p> <br>
 
         <video class="portraitVideo" controls autoplay muted loop>
-        <source src="../media/MRBD%20Protos/Simon%20Swipes.mp4" type="video/mp4">
+        <source src="media/MRBD%20Protos/Simon%20Swipes.mp4" type="video/mp4">
         whoops, your browser does not support videos :/
         </video> <br> <br> <br>
 
@@ -100,5 +101,23 @@
         <p>The hardware supports these patterns today. The bottlenecks, model latency and gesture recognition reliability, are solvable and actively improving.</p> <br> <br> <br>
 
     </main>
+
+    <!--
+      This page has two lives. Inside a modal on the portfolio it is an iframe,
+      and index.html's script wires the button above to close that modal. It is
+      also the landing page for dev-tom.com/mrbd, the URL printed on my resume —
+      and opened that way there is no parent to close, so the button would do
+      nothing and there would be no route back into the site. Point it home
+      instead. Only bind when there is no parent, so the modal keeps its own
+      handler and doesn't get both.
+    -->
+    <script>
+      if (window.self === window.top) {
+        var back = document.querySelector('button');
+        if (back) back.addEventListener('click', function () {
+          window.location.href = 'index.html#projects';
+        });
+      }
+    </script>
 </body>
 </html>
