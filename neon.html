@@ -51,8 +51,19 @@
         
         <br><br>
 
+        <!--
+          Self-hosted rather than a YouTube embed: the original upload went private
+          and broke the embed. Unlike the short loops below this is a 2m20s trailer
+          with audio, so it does not autoplay -- preload="metadata" means the 18MB
+          never downloads for visitors who don't press play, and no video decoder is
+          claimed until they do. Reuses .iframe-container/.trailer so the responsive
+          16:9 box is unchanged from the embed it replaced.
+        -->
         <div class="iframe-container">
-            <iframe title="Neon" class="trailer" src="https://www.youtube.com/embed/FCwzXBNk2IY?autoplay=1&mute=1" allowfullscreen></iframe>
+            <video class="trailer" controls preload="metadata" playsinline poster="media/Neon/Trailer%20Poster.jpg">
+            <source src="media/Neon/Trailer.mp4" type="video/mp4">
+            whoops, your browser does not support videos :/
+            </video>
         </div>
         
         <br><br>
