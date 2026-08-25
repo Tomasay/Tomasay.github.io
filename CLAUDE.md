@@ -11,7 +11,9 @@ is only used for local preview (`npx vite`), not to produce anything shipped.
 - `js/main.js` — unrelated page scripts (GSAP/ScrollTrigger, project data). Both are
   loaded from `index.html`; don't confuse them.
 - `model.glb` — the single 3D asset, meshopt-compressed
-- `ProjectHTML/` — per-project pages
+- `ProjectHTML/` — per-project pages, reached only by opening a modal on the home page
+- `mrbd.html`, `neon.html` — project pages that also have their own URL, so they sit at
+  the root instead. See **Standalone project URLs**.
 
 ## The 3D model pipeline
 
@@ -99,6 +101,69 @@ reads as broken; AA and shadows are shed instead.
 
 Meshopt quantization helps here as a side effect: decoded vertex memory dropped from
 1.46 MB to 0.64 MB (~56% less VRAM), which works against the context-loss pressure.
+
+## Standalone project URLs
+
+Most project pages are only reachable through their modal. A few need a link that can
+be printed on a resume or handed out on its own, so they live at the site root instead
+of in `ProjectHTML/`: GitHub Pages serves extensionless paths, which is what makes
+`/resume` work, so `neon.html` at the root is served at `dev-tom.com/neon` with no
+redirect hop and no duplicated content.
+
+Such a page has two lives, and the close button is the thing that breaks. `js/main.js`
+wires that button to dismiss the modal, so opened directly it does nothing and the
+visitor has no route into the rest of the site. Each root page binds its own handler
+pointing home, **guarded by `window.self === window.top`** so the modal keeps the
+parent's handler and doesn't get both.
+
+Moving a page in or out of `ProjectHTML/` changes the depth of every relative path in
+it (`../media/` ⇄ `media/`) — including paths inside commented-out blocks, or
+uncommenting them later resurrects broken links. `index.html`'s `data-src` has to
+follow the file too.
+
+A page having its own URL is independent of whether it's listed in Selected Work. Neon
+and Party Crashers are both commented out of the grid with their modals and media left
+intact; `/neon` exists anyway.
+
+## Encoding project videos
+
+Most clips on project pages are short silent loops (`autoplay muted loop`, ~1–2 MB).
+`media/Neon/Trailer.mp4` is the exception — 2m20s with audio — and it gets
+`controls preload="metadata"` plus a poster frame instead. **Don't autoplay a long
+clip:** `preload="metadata"` keeps its ~18 MB off the wire until someone presses play
+and claims no video decoder until then, which matters given the decoder pressure
+described under **Mobile GPU handling**.
+
+The source captures are Quest passthrough recordings, and **sensor noise is what costs
+the bitrate**, not the neon. Denoising before x264 is worth far more than raising CRF:
+
+```bash
+ffmpeg -i in.MP4 -vf "scale=1280:720:flags=lanczos,hqdn3d=1.5:1.5:6:6" \
+  -c:v libx264 -preset slower -b:v 960k -pass 1 -pix_fmt yuv420p -an -f mp4 /dev/null
+ffmpeg -i in.MP4 -vf "scale=1280:720:flags=lanczos,hqdn3d=1.5:1.5:6:6" \
+  -c:v libx264 -preset slower -b:v 960k -pass 2 -pix_fmt yuv420p \
+  -c:a aac -b:a 96k -ac 2 -movflags +faststart out.mp4
+```
+
+| encode | size | SSIM vs source |
+|---|---|---|
+| source capture (1080p, 9.9 Mbps) | 168 MB | — |
+| 720p CRF 23, no denoise | 35.1 MB | 0.987 |
+| **720p 2-pass 960k + hqdn3d** | **17.7 MB** | **0.983** |
+
+Half the size for 0.4% of SSIM, and the denoise removes grain from flat walls, so it
+reads *better* than the source rather than worse. Judge these by eye as well —
+SSIM is measured against a noisy reference, so removing noise counts against the score
+while looking better.
+
+**`-movflags +faststart` is load-bearing.** It moves `moov` ahead of `mdat` so playback
+starts before the file finishes downloading; verify with
+`head -c 200000 out.mp4 | grep -abo -e moov -e mdat` and check `moov` comes first. Pages
+also answers Range requests with `206`, so seeking works without a full re-download.
+
+Repo weight is a weaker argument here than it looks: `media/` is already ~275 MB with
+several tracked clips over 7 MB. Page weight is the real constraint, and
+`preload="metadata"` is what addresses it.
 
 ## Verifying model changes without a browser
 
