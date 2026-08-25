@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="../css/projects.css">
+    <link rel="stylesheet" href="css/projects.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 	<title>Neon</title>
+    <meta name="description" content="Neon is a mixed-reality drawing app built for the Meta Quest Presence Platform Hackathon 2024: draw neon designs by hand, controller, or Logitech MX Ink, lit and reflected in real time off your own room.">
 </head>
 <body class="light-mode">
     <main>
@@ -19,7 +20,7 @@
         <button type="button"><i class="fa fa-times-circle-o" aria-hidden="true" style="font-size:36px; color: white;"></i></button>
         
         <br>
-        <!--<img border="0" alt="Joining Game" style="width: 300px;" src="../media/Neon/title.png">-->
+        <!--<img border="0" alt="Joining Game" style="width: 300px;" src="media/Neon/title.png">-->
         <h1>Neon</h1>
         <br>
         
@@ -61,7 +62,7 @@
         <br>
         
         <video width="320" height="240" autoplay muted loop>
-        <source src="../media/Neon/Lighting.mp4" type="video/mp4">
+        <source src="media/Neon/Lighting.mp4" type="video/mp4">
         whoops, your browser does not support videos :/
         </video>
         
@@ -72,7 +73,7 @@
         <br>
         
         <video width="320" height="240" autoplay muted loop>
-        <source src="../media/Neon/MX%20Ink.mp4" type="video/mp4">
+        <source src="media/Neon/MX%20Ink.mp4" type="video/mp4">
         whoops, your browser does not support videos :/
         </video>
         
@@ -80,17 +81,35 @@
         
         <!--
         <div class="imageContainer">
-            <a href="../media/Neon/gallery1.jpg" target="_blank"><img border="0" alt="screenshot 1" src="../media/Neon/gallery1.jpg" width="400px"></a>
-            <a href="../media/Neon/gallery3.jpg" target="_blank"><img border="0" alt="screenshot 1" src="../media/Neon/gallery3.jpg" width="400px"></a>
-            <a href="../media/Neon/gallery2.jpg" target="_blank"><img border="0" alt="screenshot 1" src="../media/Neon/gallery4.jpg" width="400px"></a>
+            <a href="media/Neon/gallery1.jpg" target="_blank"><img border="0" alt="screenshot 1" src="media/Neon/gallery1.jpg" width="400px"></a>
+            <a href="media/Neon/gallery3.jpg" target="_blank"><img border="0" alt="screenshot 1" src="media/Neon/gallery3.jpg" width="400px"></a>
+            <a href="media/Neon/gallery2.jpg" target="_blank"><img border="0" alt="screenshot 1" src="media/Neon/gallery4.jpg" width="400px"></a>
         </div>
         
         <br>
         
-        <a href="../media/Neon/gallery2.jpg" target="_blank"><img border="0" alt="screenshot 1" src="../media/Neon/gallery5.jpg" width="400px"></a>
+        <a href="media/Neon/gallery2.jpg" target="_blank"><img border="0" alt="screenshot 1" src="media/Neon/gallery5.jpg" width="400px"></a>
 -->
         
         
     </main>
+
+    <!--
+      This page has two lives. Inside a modal on the portfolio it is an iframe,
+      and index.html's script wires the button above to close that modal. It is
+      also the landing page for dev-tom.com/neon, a link handed out on its own --
+      and opened that way there is no parent to close, so the button would do
+      nothing and there would be no route back into the site. Point it home
+      instead. Only bind when there is no parent, so the modal keeps its own
+      handler and doesn't get both.
+    -->
+    <script>
+      if (window.self === window.top) {
+        var back = document.querySelector('button');
+        if (back) back.addEventListener('click', function () {
+          window.location.href = 'index.html#projects';
+        });
+      }
+    </script>
 </body>
 </html>
